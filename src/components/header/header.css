@@ -1,0 +1,13 @@
+.page__header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0px 20px;
+    z-index: 20;
+}
+
+.header__logo {
+    width: 60px;
+}

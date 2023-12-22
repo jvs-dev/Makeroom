@@ -1,0 +1,30 @@
+.section--home {
+    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+.home__divSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+.home__divSection__h1 {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-weight: 400;
+    font-size: 36px;
+    margin: 20px 0px 20px 0px;
+}
+.home__divSection__videoCarroussel {
+    display: flex;
+    padding: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    width: 100%;
+}
+.home__divSection__videoCarroussel .projectCard {
+    scroll-snap-align: center;
+    flex: 0 0 234px;
+}

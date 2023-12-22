@@ -1,0 +1,67 @@
+.backgroundCircles--1 {
+    background: var(--secundary-color);
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 30vh;
+    margin-right: 20px;
+    z-index: -1;
+}
+
+.backgroundCircles--2 {
+    background: var(--primary-color);
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin-bottom: 20vh;
+    margin-left: 40px;
+    z-index: -1;
+}
+
+.backgroundCircles--3 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 50vh;
+    background: var(--secundary-color);
+    width: 47px;
+    border-radius: 105px;
+    rotate: 304deg;
+    z-index: 0;
+    margin-right: calc(25vw - 176px);
+    margin-bottom: calc(-25vh + 9px);
+}
+
+.backgroundCircles--4 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 50vh;
+    background: var(--primary-color);
+    width: 90px;
+    border-radius: 105px;
+    rotate: 304deg;
+    z-index: -1;
+    margin-right: calc(25vw - 45px);
+    margin-bottom: calc(-25vh + 45px);
+}
+
+.backgroundCircles--5 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 50vh;
+    background: var(--secundary-color);
+    width: 80px;
+    border-radius: 105px;
+    rotate: 304deg;
+    z-index: -1;
+    margin-right: calc(25vw - 7px);
+    margin-bottom: calc(-25vh + -33px);
+}

@@ -1,0 +1,13 @@
+.loginSection__btn {
+    width: 100%;
+    max-width: 300px;
+    background: var(--primary-color);
+    border-radius: 10px;
+    color: var(--white);
+    border: 0px;
+    outline-width: 0px;
+    padding: 5px 0px;
+    font-size: 24px;
+    font-family: 'Teko', sans-serif;
+    margin-top: 10px;
+}
