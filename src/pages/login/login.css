@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-attachment: fixed;
 }
 
 .main__section.section--login {
@@ -83,6 +84,7 @@ div.loginSection__div:has(input.loginSection__input:focus) {
     font-family: 'Teko', sans-serif;
     font-weight: 500;
     font-size: 45px;
+    text-transform: uppercase;
 }
 
 .loginSquare--1 {

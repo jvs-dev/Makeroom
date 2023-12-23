@@ -1,3 +1,4 @@
+import {verifyIfUserLogged} from "../../scripts/verifylogin"
 let introductionSection = document.getElementById("introductionSection")
 let introductionText1 = document.getElementById("introductionText1")
 let introductionText2 = document.getElementById("introductionText2")
@@ -5,6 +6,7 @@ let introductionLoader = document.getElementById("introductionLoader")
 let introductionLogo = document.getElementById("introductionLogo")
 
 function initIntroduction() {
+    verifyIfUserLogged()
     return new Promise(resolve => {
         setTimeout(() => {
             introductionText1.style.display = "flex";
@@ -46,7 +48,7 @@ function initIntroduction() {
                     }, 500);
                 }, 1500);
             }, 1);
-        }, 1000);
+        }, 2000);
     });
 }
 

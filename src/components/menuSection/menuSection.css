@@ -12,15 +12,18 @@
     transition: 0.2s ease;
     transform: translateX(100vw);
 }
+
 .menuSection__ul {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    padding: 80px 0px 0px 0px;
+    padding: 50px 0px 0px 0px;
     width: 100%;
     height: 100%;
+    margin: 0px;
 }
+
 .menuSection__btn {
     font-family: 'Teko', sans-serif;
     font-weight: 400;
@@ -30,6 +33,52 @@
     border: 0px;
     outline-width: 0px;
 }
+
 .menuSection__btn.active {
     border-bottom: solid 2px var(--black);
+}
+
+.menuSection__perfilBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    background: var(--light-gray);
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 50px;
+    width: 50px;
+    margin: 80px 15px 0px 0px;
+    overflow: hidden;
+}
+
+.menuSection__perfilBtn__img {
+    height: 100%;
+    max-width: none;
+}
+
+.menuSection__adminBtn {
+    background: transparent;
+    border: 0px;
+    padding: 0px;
+    color: var(--black);
+    outline-width: 0px;
+    font-size: 30px;
+    position: fixed;
+    right: 0;
+    top: 0;
+    margin: 80px 25px 0px 0px;
+}
+
+.adminBtn1 {
+    transform: translateY(60px);
+}
+
+.adminBtn2 {
+    transform: translateY(110px);
+}
+
+.adminBtn3 {
+    transform: translateY(160px);
 }

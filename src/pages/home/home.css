@@ -1,5 +1,7 @@
 .section--home {
+    display: none;
     background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     justify-content: flex-start;
 }
@@ -26,5 +28,9 @@
 }
 .home__divSection__videoCarroussel .projectCard {
     scroll-snap-align: center;
-    flex: 0 0 234px;
+    flex: 0 0 80vw;
+}
+
+.home__divSection__videoCarroussel::-webkit-scrollbar { 
+	display: none;
 }
