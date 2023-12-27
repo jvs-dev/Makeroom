@@ -64,7 +64,11 @@
     padding: 0px;
     color: var(--black);
     outline-width: 0px;
-    font-size: 30px;    
+    font-size: 30px;
+}
+
+.menuSection__adminBtn.active {
+    color: var(--primary-color);
 }
 
 .menuSection__sideUl {
@@ -77,4 +81,53 @@
     align-items: center;
     gap: 10px;
     padding: 0px;
+}
+.menuSection__adminAdds {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: var(--white);
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 0px;
+    margin: 0px;
+    padding-top: 80px;
+    transform: translateX(100vw);
+    transition: 0.2s;
+}
+.adminAdds__btn {
+    background: radial-gradient(100.06% 141.42% at 0% 100%, #FD9327 100%, #1E1E1E 100%);
+    width: calc(100vw - 80px);
+    max-width: 300px;
+    border-radius: 32px;
+    font-family: 'Teko', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border: 0px;
+    outline-width: 0px;
+    margin: 10px 0px;
+    gap: 10px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.menuSection__adminAdds__back {
+    width: calc(100vw - 80px);
+    max-width: 300px;
+    margin: 0px 0px 15px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: end;
+    gap: 5px;
+    font-family: 'Teko', sans-serif;
+    font-weight: 400;
+    font-size: 23px;
 }

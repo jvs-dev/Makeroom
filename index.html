@@ -26,6 +26,8 @@
   <link rel="stylesheet" href="src/components/menuSection/menuSection.css">
   <link rel="stylesheet" href="src/pages/createAccount/createAccount.css">
   <link rel="stylesheet" href="src/components/alerts/alert.css">
+  <link rel="stylesheet" href="src/pages/ranking/ranking.css">
+  <link rel="stylesheet" href="src/components/cards/rankingCard.css">
 </head>
 
 <body>
@@ -65,18 +67,25 @@
       <div class="loginSquare--5"></div>
     </section>
     <section class="main__menuSection" id="menuSection">
+      <ul class="menuSection__adminAdds" id="AdminAdds">
+        <li class="menuSection__adminAdds__back" id="closeAddContent">Voltar<ion-icon name="arrow-forward-outline"></ion-icon></li>
+        <li><button class="adminAdds__btn"><ion-icon name="school-outline"></ion-icon>Criar aula</button></li>
+        <li><button class="adminAdds__btn"><ion-icon name="help-circle-outline"></ion-icon>Criar desafio</button></li>
+        <li><button class="adminAdds__btn"><i class="bi bi-box-seam"></i>Criar componente</button></li>
+        <li><button class="adminAdds__btn"><ion-icon name="pricetag-outline"></ion-icon>Criar venda</button></li>
+        <li><button class="adminAdds__btn" id="goToCreateAccount"><i class="bi bi-envelope-plus"></i>Criar conta</button></li>
+      </ul>
       <ul class="menuSection__sideUl">
         <li><button class="menuSection__adminBtn" id="logOutBtn"><i class="bi bi-box-arrow-right"></i></button></li>
-        <li><button class="menuSection__adminBtn"><i class="bi bi-box-seam"></i></button></li>
-        <li><button class="menuSection__adminBtn"><i class="bi bi-envelope-plus"></i></button></li>
-        <li><button class="menuSection__adminBtn"><i class="bi bi-plus-circle"></i></button></li>
+        <li><button class="menuSection__adminBtn" id="goToStock" style="display: none;"><i class="bi bi-box-seam"></i></button></li>        
+        <li><button class="menuSection__adminBtn" id="goToAddContent" style="display: none;"><i class="bi bi-plus-circle"></i></button></li>
       </ul>
       <ul class="menuSection__ul">
         <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome">Home</button></li>
         <li class="menuSection__li"><button class="menuSection__btn">Desafios</button></li>
         <li class="menuSection__li"><button class="menuSection__btn">Planos</button></li>
         <li class="menuSection__li"><button class="menuSection__btn">Loja maker</button></li>
-        <li class="menuSection__li"><button class="menuSection__btn">Ranking</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToRanking">Ranking</button></li>
       </ul>
     </section>
     <section class="main__section section--home" id="homeSection">
@@ -121,7 +130,7 @@
       </div>
 
       <div class="home__divSection">
-        <h1 class="home__divSection__h1">Projetos</h1>
+        <h1 class="home__divSection__h1">Componentes</h1>
         <div class="home__divSection__videoCarroussel">
           <article class="projectCard">
             <img
@@ -152,6 +161,71 @@
         </div>
       </div>
 
+    </section>
+
+    <section class="main__section section--ranking" id="rankingSection">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="home__divSection__h1">Ranking</h1>
+      <div class="rankingSection__div" id="rankingSectionDiv">
+
+        <article class="rankingCard">
+          <span class="rankingCard__span">1°</span>
+          <div class="rankingCard__div--1">
+            <div class="rankingCard__resetImg">
+              <img class="rankingCard__photo" src="https://images.pexels.com/photos/261895/pexels-photo-261895.jpeg?auto=compress&cs=tinysrgb&w=600" alt="">
+            </div>            
+            <div class="rankingCard__div--2">
+              <p class="rankingCard__name">Davi Gustavo</p>
+              <p class="rankingCard__ponts">Pontos: 120</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rankingCard">
+          <span class="rankingCard__span">2°</span>
+          <div class="rankingCard__div--1">
+            <div class="rankingCard__resetImg">
+              <img class="rankingCard__photo" src="https://images.pexels.com/photos/261895/pexels-photo-261895.jpeg?auto=compress&cs=tinysrgb&w=600" alt="">
+            </div>            
+            <div class="rankingCard__div--2">
+              <p class="rankingCard__name">Davi Gustavo</p>
+              <p class="rankingCard__ponts">Pontos: 120</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rankingCard">
+          <span class="rankingCard__span">3°</span>
+          <div class="rankingCard__div--1">
+            <div class="rankingCard__resetImg">
+              <img class="rankingCard__photo" src="https://images.pexels.com/photos/261895/pexels-photo-261895.jpeg?auto=compress&cs=tinysrgb&w=600" alt="">
+            </div>            
+            <div class="rankingCard__div--2">
+              <p class="rankingCard__name">Davi Gustavo</p>
+              <p class="rankingCard__ponts">Pontos: 120</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="rankingCard">
+          <span class="rankingCard__span">4°</span>
+          <div class="rankingCard__div--1">
+            <div class="rankingCard__resetImg">
+              <img class="rankingCard__photo" src="https://images.pexels.com/photos/261895/pexels-photo-261895.jpeg?auto=compress&cs=tinysrgb&w=600" alt="">
+            </div>            
+            <div class="rankingCard__div--2">
+              <p class="rankingCard__name">Davi Gustavo</p>
+              <p class="rankingCard__ponts">Pontos: 120</p>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </section>
 
     <section class="main__section section--createAccount" id="createAccountSection">
@@ -229,6 +303,8 @@
   <script type="module" src="src/components/alerts/alert.js"></script>
   <script type="module" src="src/pages/login/login.js"></script>
   <script type="module" src="src/components/buttoms/logOutBtn.js"></script>
+  <script type="module" src="src/scripts/verifyAdmin.js"></script>
+  <script type="module" src="src/pages/ranking/ranking.js"></script>
 </body>
 
 </html>

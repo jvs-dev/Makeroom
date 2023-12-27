@@ -14,19 +14,25 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
-
+let i = 0
 
 export function verifyIfUserLogged() {
     onAuthStateChanged(auth, (user) => {
         if (user) {
             // User is signed in, see docs for a list of available properties
-            // https://firebase.google.com/docs/reference/js/auth.user
-            const uid = user.uid;
-            let homeSection = document.getElementById("homeSection")
-            homeSection.style.display = "flex"
+            // https://firebase.google.com/docs/reference/js/auth.user            
+            if (i == 0) {
+                const uid = user.uid;
+                let homeSection = document.getElementById("homeSection")
+                homeSection.style.display = "flex"
+                i++
+            }
         } else {
-            let loginSection = document.getElementById("loginSection")
-            loginSection.style.display = "flex"
+            if (i == 0) {
+                let loginSection = document.getElementById("loginSection")
+                loginSection.style.display = "flex"
+                i++
+            }
         }
     });
 }

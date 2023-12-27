@@ -1,3 +1,5 @@
+import { alertThis } from "../alerts/alert"
+import { logoAlternateAnimation } from "../../scripts/alternatePages"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -29,6 +31,6 @@ document.getElementById("logOutBtn").onclick = function () {
         });
         logoAlternateAnimation(document.getElementById("loginSection"))
     }).catch((error) => {
-
+        alertThis("Erro 201", "")
     });
 }
