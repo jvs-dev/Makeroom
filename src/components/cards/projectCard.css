@@ -16,6 +16,8 @@
     position: absolute;    
     border-radius: 12px;
     height: 100%;    
+    max-width: none;
+    max-height: none;
 }
 
 .projectCard__imgMask {

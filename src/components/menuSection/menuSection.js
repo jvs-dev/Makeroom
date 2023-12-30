@@ -73,3 +73,18 @@ document.getElementById("goToCreateAccount").onclick = function () {
         }
     });
 }
+
+document.getElementById("goTocreateLesson").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("createLessonSection"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColorAll()
+            setTimeout(() => {
+                AdminAdds.style.transform = "translateX(100vw)"
+            }, 200);
+        }
+    });
+}
