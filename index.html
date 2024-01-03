@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="src/components/cards/rankingCard.css">
   <link rel="stylesheet" href="src/pages/createLesson/createLesson.css">
   <link rel="stylesheet" href="src/components/uploadingSection/uploadingSection.css">
+  <link rel="stylesheet" href="src/pages/stock/stock.css">
+  <link rel="stylesheet" href="src/components/cards/stockCard.css">
 </head>
 
 <body>
@@ -111,7 +113,7 @@
       <div class="home__divSection">
         <h1 class="home__divSection__h1">Projetos</h1>
         <div class="home__divSection__videoCarroussel" id="LessonProjectsDiv">
-                    
+
         </div>
       </div>
 
@@ -321,7 +323,8 @@
           <button type="button" class="createLessonSection__selectClassRoom" id="lessonFor6">6°</button>
           <button type="button" class="createLessonSection__selectClassRoom" id="lessonFor7">7°</button>
         </div>
-        <button type="button" class="createLessonSection__selectClassRoom extra" id="lessonForExtra">Extracurricular</button>
+        <button type="button" class="createLessonSection__selectClassRoom extra"
+          id="lessonForExtra">Extracurricular</button>
         <label for="lessonExtraFile" class="createLessonSection__extraFileLabel">
           <span class="createAccount loginSection__btn lessonExtraFileBtn">Arquivo (opcional)</span>
           <input type="file" name="lessonExtraFile" id="lessonExtraFile" class="createLessonSection__extraFileInput">
@@ -333,6 +336,30 @@
       <div class="createAccount loginSquare--3"></div>
       <div class="createAccount loginSquare--4"></div>
       <div class="createAccount loginSquare--5"></div>
+    </section>
+
+    <section class="main__section section--stock" id="stockSection">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1>ESTOQUE DE ITENS</h1>
+      <div class="stockSection__divStockCards">
+        <article class="item-card">
+          <div class="item-card__divImg">
+            <div class="item-card__loading" id="loadingImg0" style="display: none;"></div>
+            <img class="item-card__img"
+              src="https://firebasestorage.googleapis.com/v0/b/makeritems.appspot.com/o/items%2FNuplPPHBBWNfuDgH5mvK.jpg?alt=media&amp;token=10f7903b-ce10-47a9-8c54-a2c97a89961d"
+              alt="">
+          </div>
+          <p class="item-card__name">Porta pilhas tipo moeda</p>
+          <p class="item-card__quanty">TOTAL: 3 unid.</p>
+          <div class="item-card__div"><button class="item-card__btn" style="--clr: #132330;">-</button><button
+              class="item-card__btn" style="--clr: #4684B5;">+</button></div>
+        </article>
+      </div>
     </section>
 
   </main>
@@ -348,7 +375,8 @@
   <script type="module" src="src/components/buttoms/logOutBtn.js"></script>
   <script type="module" src="src/scripts/verifyAdmin.js"></script>
   <script type="module" src="src/pages/ranking/ranking.js"></script>
-  <script type="module" src="src/pages/createLesson/createLesson.js"></script>  
+  <script type="module" src="src/pages/createLesson/createLesson.js"></script>
+  <script type="module" src="src/pages/stock/stock.js"></script>
 </body>
 
 </html>

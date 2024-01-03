@@ -59,6 +59,18 @@ document.getElementById("goToRanking").onclick = function () {
     });
 }
 
+document.getElementById("goToStock").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("stockSection"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToStock"))
+        }
+    });
+}
+
 document.getElementById("goToCreateAccount").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active")) {

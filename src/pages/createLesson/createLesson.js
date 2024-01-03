@@ -92,7 +92,7 @@ createLessonBtn.onclick = async function () {
         existsExtraFile = true
     }
     createLessonBtn.disabled = true
-    if (lessonTitleValue != "" && lessonMaskSrc != "" && lessonVideoSrc != "" && lessonCategoryValue != "" && lessonSelected.length != 0) {
+    if (lessonTitleValue != "" && lessonMaskSrc != window.location.href && lessonVideoSrc != window.location.href && lessonCategoryValue != "" && lessonSelected.length != 0) {
         uploadsCompleteds = 0
         activeLoading(uploadsCompleteds)
         let docRef = await addDoc(collection(db, "lessons"), {
@@ -107,9 +107,7 @@ createLessonBtn.onclick = async function () {
             alertThis("Aula criada com sucesso", "sucess")
             createLessonBtn.disabled = false
             clearInputs()
-        }
-
-
+        }        
 
         let storageRef = ref(storage, `lessons/${docRef.id}/mask`);
         uploadString(storageRef, lessonMaskSrc, 'data_url').then((snapshot) => {
