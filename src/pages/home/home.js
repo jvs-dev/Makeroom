@@ -41,8 +41,7 @@ async function loadProjects() {
             }
             if (signatureToAcess != 1 && signatureToAcess != 3) {
                 signatureToAcess = 2
-            }            
-            const storage = getStorage();
+            }                        
             getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
                 .then((url) => {
                     const xhr = new XMLHttpRequest();
@@ -95,8 +94,7 @@ async function loadComponents() {
             }
             if (signatureToAcess != 1 && signatureToAcess != 3) {
                 signatureToAcess = 2
-            }            
-            const storage = getStorage();
+            }                        
             getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
                 .then((url) => {
                     const xhr = new XMLHttpRequest();
@@ -148,8 +146,7 @@ async function loadCircuits() {
             }
             if (signatureToAcess != 1 && signatureToAcess != 3) {
                 signatureToAcess = 2
-            }            
-            const storage = getStorage();
+            }                        
             getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
                 .then((url) => {
                     const xhr = new XMLHttpRequest();

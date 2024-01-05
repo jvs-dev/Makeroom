@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="src/components/uploadingSection/uploadingSection.css">
   <link rel="stylesheet" href="src/pages/stock/stock.css">
   <link rel="stylesheet" href="src/components/cards/stockCard.css">
+  <link rel="stylesheet" href="src/pages/createStockItem/createStockItem.css">
 </head>
 
 <body>
@@ -83,7 +84,7 @@
         <li><button class="adminAdds__btn" id="goTocreateLesson"><ion-icon name="school-outline"></ion-icon>Criar
             aula</button></li>
         <li><button class="adminAdds__btn"><ion-icon name="help-circle-outline"></ion-icon>Criar desafio</button></li>
-        <li><button class="adminAdds__btn"><i class="bi bi-box-seam"></i>Criar componente</button></li>
+        <li><button class="adminAdds__btn" id="goToCreateStockItem"><i class="bi bi-box-seam"></i>Criar componente</button></li>
         <li><button class="adminAdds__btn"><ion-icon name="pricetag-outline"></ion-icon>Criar venda</button></li>
         <li><button class="adminAdds__btn" id="goToCreateAccount"><i class="bi bi-envelope-plus"></i>Criar
             conta</button></li>
@@ -338,6 +339,45 @@
       <div class="createAccount loginSquare--5"></div>
     </section>
 
+    <section class="main__section section--createStockItem" id="createStockItem">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <form class="createAccount loginSection__form">
+        <h1 class="createAccount loginSection__h1">Criar componente</h1>
+
+        <label for="StockItemName" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="create-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Nome" class="createAccount loginSection__input" id="StockItemName">
+          </div>
+        </label>
+
+        <label for="StockItemImage" class="createLessonSection__label--file">
+          <div class="createLessonSection__divPreviewFile">
+            <img src="" class="createLessonSection__previewFile" id="stockItemPreviewImg">
+            <p class="createLessonSection__previewText">Carregar uma foto</p>
+            <input type="file" name="StockItemImage" id="StockItemImage" class="createLessonSection__input--file"
+              accept="image/*">
+          </div>
+        </label>
+
+        <label for="StockItemQuanty" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="briefcase-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="number" placeholder="Em estoque" name="StockItemQuanty" id="StockItemQuanty" class="createAccount loginSection__input">
+          </div>
+        </label>
+        <button class="createAccount loginSection__btn" type="button" id="createStockItemBtn">Criar</button>
+      </form>
+      <div class="createAccount loginSquare--2"></div>      
+      <div class="createAccount loginSquare--4"></div>
+      <div class="createAccount loginSquare--5"></div>
+    </section>
+
     <section class="main__section section--stock" id="stockSection">
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
@@ -346,19 +386,8 @@
         </button>
       </header>
       <h1>ESTOQUE DE ITENS</h1>
-      <div class="stockSection__divStockCards">
-        <article class="item-card">
-          <div class="item-card__divImg">
-            <div class="item-card__loading" id="loadingImg0" style="display: none;"></div>
-            <img class="item-card__img"
-              src="https://firebasestorage.googleapis.com/v0/b/makeritems.appspot.com/o/items%2FNuplPPHBBWNfuDgH5mvK.jpg?alt=media&amp;token=10f7903b-ce10-47a9-8c54-a2c97a89961d"
-              alt="">
-          </div>
-          <p class="item-card__name">Porta pilhas tipo moeda</p>
-          <p class="item-card__quanty">TOTAL: 3 unid.</p>
-          <div class="item-card__div"><button class="item-card__btn" style="--clr: #132330;">-</button><button
-              class="item-card__btn" style="--clr: #4684B5;">+</button></div>
-        </article>
+      <div class="stockSection__divStockCards" id="showStockItens">
+                
       </div>
     </section>
 
@@ -377,6 +406,7 @@
   <script type="module" src="src/pages/ranking/ranking.js"></script>
   <script type="module" src="src/pages/createLesson/createLesson.js"></script>
   <script type="module" src="src/pages/stock/stock.js"></script>
+  <script type="module" src="src/pages/createStockItem/createStockItem.js"></script>
 </body>
 
 </html>
