@@ -1,0 +1,32 @@
+.section--createChallenge {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    background: transparent;
+    overflow: hidden;
+    justify-content: flex-start;
+}
+
+.createChallengeSection__selectClassRoom {
+    border: solid 2px #1e1e1e;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-family: 'Teko', sans-serif;
+    margin: 10px 0px 0px 0px;
+}
+
+.createChallengeSection__selectClassRoom.extra {
+    width: 100%;
+    padding: 6px 0px;
+    margin: 10px 0px 10px 0px;
+}
+
+.createChallengeSection__selectClassRoom.active {
+    background: #27FD49;
+}

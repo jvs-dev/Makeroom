@@ -114,3 +114,30 @@ document.getElementById("goToCreateStockItem").onclick = function () {
         }
     });
 }
+
+document.getElementById("goToChallenge").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("challengeSection"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToChallenge"))
+        }
+    });
+}
+
+document.getElementById("goToCreateChallenge").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("createChallenge"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColorAll()
+            setTimeout(() => {
+                AdminAdds.style.transform = "translateX(100vw)"
+            }, 200);
+        }
+    });
+}

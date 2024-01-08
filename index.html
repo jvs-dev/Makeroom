@@ -33,6 +33,9 @@
   <link rel="stylesheet" href="src/pages/stock/stock.css">
   <link rel="stylesheet" href="src/components/cards/stockCard.css">
   <link rel="stylesheet" href="src/pages/createStockItem/createStockItem.css">
+  <link rel="stylesheet" href="src/pages/challenge/challenge.css">
+  <link rel="stylesheet" href="src/components/cards/challengeCard.css">
+  <link rel="stylesheet" href="src/pages/createChallenge/createChallenge.css">
 </head>
 
 <body>
@@ -83,8 +86,10 @@
             name="arrow-forward-outline"></ion-icon></li>
         <li><button class="adminAdds__btn" id="goTocreateLesson"><ion-icon name="school-outline"></ion-icon>Criar
             aula</button></li>
-        <li><button class="adminAdds__btn"><ion-icon name="help-circle-outline"></ion-icon>Criar desafio</button></li>
-        <li><button class="adminAdds__btn" id="goToCreateStockItem"><i class="bi bi-box-seam"></i>Criar componente</button></li>
+        <li><button class="adminAdds__btn" id="goToCreateChallenge"><ion-icon
+              name="help-circle-outline"></ion-icon>Criar desafio</button></li>
+        <li><button class="adminAdds__btn" id="goToCreateStockItem"><i class="bi bi-box-seam"></i>Criar
+            componente</button></li>
         <li><button class="adminAdds__btn"><ion-icon name="pricetag-outline"></ion-icon>Criar venda</button></li>
         <li><button class="adminAdds__btn" id="goToCreateAccount"><i class="bi bi-envelope-plus"></i>Criar
             conta</button></li>
@@ -98,7 +103,7 @@
       </ul>
       <ul class="menuSection__ul">
         <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome">Home</button></li>
-        <li class="menuSection__li"><button class="menuSection__btn">Desafios</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToChallenge">Desafios</button></li>
         <li class="menuSection__li"><button class="menuSection__btn">Planos</button></li>
         <li class="menuSection__li"><button class="menuSection__btn">Loja maker</button></li>
         <li class="menuSection__li"><button class="menuSection__btn" id="goToRanking">Ranking</button></li>
@@ -132,6 +137,19 @@
         </div>
       </div>
 
+    </section>
+
+    <section class="main__section section--challenge" id="challengeSection">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="home__divSection__h1">Desafios</h1>
+      <div class="challengeSection__divCards" id="challengesDiv">        
+
+      </div>
     </section>
 
     <section class="main__section section--ranking" id="rankingSection">
@@ -368,12 +386,78 @@
         <label for="StockItemQuanty" class="createAccount loginSection__label">
           <div class="createAccount loginSection__div">
             <ion-icon name="briefcase-outline" class="createAccount loginSection__icon"></ion-icon>
-            <input type="number" placeholder="Em estoque" name="StockItemQuanty" id="StockItemQuanty" class="createAccount loginSection__input">
+            <input type="number" placeholder="Em estoque" name="StockItemQuanty" id="StockItemQuanty"
+              class="createAccount loginSection__input">
           </div>
         </label>
         <button class="createAccount loginSection__btn" type="button" id="createStockItemBtn">Criar</button>
       </form>
-      <div class="createAccount loginSquare--2"></div>      
+      <div class="createAccount loginSquare--2"></div>
+      <div class="createAccount loginSquare--4"></div>
+      <div class="createAccount loginSquare--5"></div>
+    </section>
+
+    <section class="main__section section--createChallenge" id="createChallenge">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <form class="createAccount loginSection__form">
+        <h1 class="createAccount loginSection__h1">Criar desafio</h1>
+
+        <label for="challengeTitle" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="create-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Titulo" class="createAccount loginSection__input" id="challengeTitle">
+          </div>
+        </label>
+
+        <label for="challengeMask" class="createLessonSection__label--file">
+          <div class="createLessonSection__divPreviewFile">
+            <img src="" class="createLessonSection__previewFile" id="challengePreviewMask">
+            <p class="createLessonSection__previewText">Carregar uma capa</p>
+            <input type="file" name="challengeMask" id="challengeMask" class="createLessonSection__input--file"
+              accept="image/*">
+          </div>
+        </label>
+
+        <label for="challengeTitle" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="list-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Descrição" class="createAccount loginSection__input"
+              id="challengeDescription">
+          </div>
+        </label>
+
+        <label for="challengeTitle" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="information-circle-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Detalhes da atividade" class="createAccount loginSection__input"
+              id="challengeDetails">
+          </div>
+        </label>
+
+        <label for="challengeTitle" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <i class="bi bi-coin createAccount loginSection__icon"></i>
+            <input type="number" placeholder="Pontos" class="createAccount loginSection__input" id="challengePoints">
+          </div>
+        </label>
+
+        <div class="createLessonSection__div-row">
+          <button type="button" class="createChallengeSection__selectClassRoom" id="challengeFor4">4°</button>
+          <button type="button" class="createChallengeSection__selectClassRoom" id="challengeFor5">5°</button>
+          <button type="button" class="createChallengeSection__selectClassRoom" id="challengeFor6">6°</button>
+          <button type="button" class="createChallengeSection__selectClassRoom" id="challengeFor7">7°</button>
+        </div>
+        <button type="button" class="createChallengeSection__selectClassRoom extra"
+          id="challengeForExtra">Extracurricular</button>
+
+        <button class="createAccount loginSection__btn" type="button" id="createChallengeBtn">Criar</button>
+      </form>
+      <div class="createAccount loginSquare--2"></div>
       <div class="createAccount loginSquare--4"></div>
       <div class="createAccount loginSquare--5"></div>
     </section>
@@ -387,7 +471,7 @@
       </header>
       <h1>ESTOQUE DE ITENS</h1>
       <div class="stockSection__divStockCards" id="showStockItens">
-                
+
       </div>
     </section>
 
@@ -407,6 +491,8 @@
   <script type="module" src="src/pages/createLesson/createLesson.js"></script>
   <script type="module" src="src/pages/stock/stock.js"></script>
   <script type="module" src="src/pages/createStockItem/createStockItem.js"></script>
+  <script type="module" src="src/pages/challenge/challenge.js"></script>
+  <script type="module" src="src/pages/createChallenge/createChallenge.js"></script>
 </body>
 
 </html>
