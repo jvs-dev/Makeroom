@@ -12,3 +12,92 @@
     flex-direction: column;
     align-items: center;
 }
+
+.section--challengeWindow {
+    display: none;
+    background: #fff;
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.challengeWindow__closeWindow {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 18px;
+    gap: 5px;
+}
+
+.challengeWindow__resetMaskImg {
+    width: calc(100% - 40px);    
+    aspect-ratio: 1/1;
+    border: solid 1px var(--primary-color);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.challengeWindow__mask {
+    max-height: none;
+    max-width: none;
+    min-width: 100%;
+}
+
+.challengeWindow__description {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    padding: 0px 20px;
+    margin: 10px 0px;
+    color: var(--black);
+    font-size: 18px;
+}
+
+.challengeWindow__hr {
+    width: 100%;
+    background: var(--light-gray);
+    border: solid 1px var(--light-gray);
+}
+
+.challengeWindow__details {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-size: 24px;
+    margin: 10px 0px;
+    padding: 0px 20px;
+}
+
+.challengeWindow__resolve {
+    font-family: 'Zen Dots', sans-serif;
+    border-radius: 12px;
+    border: 2px solid #199CDB;
+    background: linear-gradient(90deg, #199CDB 0%, #FFF 10.42%, #FFF 91.15%, #199CDB 100%);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: calc(100% - 40px);    
+    color: #199CDB;
+    padding: 12px 0px;
+    margin: 10px 0px 0px 0px;
+}
+
+.challengeWindow__points {
+    color: #199CDB;
+    text-align: center;
+    margin: 4px 0px 0px 0px;
+    font-family: 'Teko', sans-serif;
+    font-size: 22px;
+}
+
+.challengeWindow__SectionComent {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}

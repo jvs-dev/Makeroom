@@ -36,6 +36,8 @@
   <link rel="stylesheet" href="src/pages/challenge/challenge.css">
   <link rel="stylesheet" href="src/components/cards/challengeCard.css">
   <link rel="stylesheet" href="src/pages/createChallenge/createChallenge.css">
+  <link rel="stylesheet" href="src/components/comentControls/comentControls.css">
+  <link rel="stylesheet" href="src/components/cards/commentCard.css">
 </head>
 
 <body>
@@ -147,8 +149,59 @@
         </button>
       </header>
       <h1 class="home__divSection__h1">Desafios</h1>
-      <div class="challengeSection__divCards" id="challengesDiv">        
+      <div class="challengeSection__divCards" id="challengesDiv">
 
+      </div>
+    </section>
+
+    <section class="main__section section--challengeWindow" id="challengeWindow">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <div class="challengeWindow__closeWindow" id="closeChallengeWindow">Voltar<ion-icon
+            name="arrow-forward-outline"></ion-icon></div>
+      </header>
+      <h1 class="home__divSection__h1"></h1>
+      <div class="challengeWindow__resetMaskImg">
+        <img class="challengeWindow__mask" src="" alt="">
+      </div>
+      <p class="challengeWindow__description"></p>
+      <hr class="challengeWindow__hr">
+      <p class="challengeWindow__details"></p>
+      <button class="challengeWindow__resolve">Enviar desafio</button>
+      <span class="challengeWindow__points"></span>
+      <hr class="challengeWindow__hr">
+      <h1 class="home__divSection__h1" style="color: var(--primary-color);">Comentarios</h1>
+      <div class="challengeWindow__SectionComent">
+        <div class="allComentsDiv">
+
+
+          <article class="commentCard">
+            <div class="commentCard__div--1">
+              <div class="commentCard__resetPhoto"><img class="commentCard__photo" src="" alt=""></div>
+              <p class="commentCard__dateTime">02/12/23<br>20:25</p>
+            </div>
+            <div class="commentCard__div--2">
+              <p class="commentCard__name">João Vitor Santana</p>
+              <div class="commentCard__resetText">
+                <p class="commentCard__text">Atenção!! Este desafio será cobrado em sala de aula amanhã e ira valer ponto. Treinem bastante se quiserem subir no placar</p>
+              </div>
+            </div>
+          </article>
+
+
+          
+        </div>
+        <div class="comentControls">
+          <div class="comentControls__div">
+            <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
+            <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
+            <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
+          </div>
+          <label for="inputImgComent-challengeWindow" class="comentControls__label">
+            <ion-icon name="attach-outline" class="comentControls__fileImg"></ion-icon>
+            <input type="file" name="inputImgComent-challengeWindow" id="inputImgComent-challengeWindow" class="comentControls__inputFile">
+          </label>
+        </div>
       </div>
     </section>
 

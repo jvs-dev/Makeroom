@@ -1,4 +1,4 @@
-import { actualUserData } from "../../scripts/returnUserInfos"
+import { actualUserData, thisUserData } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -15,8 +15,14 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
+let challengeWindow = document.getElementById("challengeWindow")
+let closeChallengeWindow = document.getElementById("closeChallengeWindow")
+let challengeSection = document.getElementById("challengeSection")
 
-
+closeChallengeWindow.onclick = () => {
+    challengeSection.style.display = "flex"
+    challengeWindow.style.display = "none"
+}
 
 async function loadChallenges() {
     actualUserData().then(async (UserData) => {
@@ -67,6 +73,9 @@ async function loadChallenges() {
                         <p class="challengeCard__description">${doc.data().challengeDescription}</p>
                         <span class="challengeCard__points">${doc.data().challengePoints} Pontos</span>                                            
                     `
+                    article.onclick = () => {
+                        ChallengeWindowData(doc.data(), doc.id, url)
+                    }
                 })
                 .catch((error) => {
                     // Handle any errors
@@ -74,5 +83,19 @@ async function loadChallenges() {
         });
     })
 }
+
+function ChallengeWindowData(obj, id, url) {
+    challengeWindow.children[1].textContent = `${obj.challengeTitle}`
+    challengeWindow.children[2].children[0].src = `${url}`
+    challengeWindow.children[3].textContent = `${obj.challengeDescription}`
+    challengeWindow.children[5].textContent = `Detalhes da atividade: ${obj.challengeDetails}`
+    challengeWindow.children[7].textContent = `+${obj.challengePoints} Pontos`
+    challengeSection.style.display = "none"
+    challengeWindow.style.display = "flex"
+}
+
+thisUserData("gabrielbastos@maker.com").then( UserData => {
+    console.log(UserData);
+})
 
 loadChallenges()

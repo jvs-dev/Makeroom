@@ -41,3 +41,15 @@ export async function actualUserData() {
         })
     })
 }
+
+export async function thisUserData(email) {
+    return new Promise(async resolve => {
+        const docRef = doc(db, "users", `${email}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            resolve(docSnap.data());
+        } else {
+            resolve("no such document");
+        }
+    })
+}
