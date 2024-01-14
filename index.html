@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="src/pages/createChallenge/createChallenge.css">
   <link rel="stylesheet" href="src/components/comentControls/comentControls.css">
   <link rel="stylesheet" href="src/components/cards/commentCard.css">
+  <link rel="stylesheet" href="src/components/cards/accountCard.css">
 </head>
 
 <body>
@@ -118,6 +119,19 @@
           <div class="header__menuToggle__div"></div>
         </button>
       </header>
+
+      <article class="accountCard">
+        <div class="accountCard__userCover" id="homeUserCover"></div>
+        <div class="accountCard__resetUserPhoto">
+          <img class="accountCard__userPhoto" src="" alt="" id="homeUserImg">
+        </div>
+        <div class="accountCard__div">
+          <p class="accountCard__signature" id="homeUserSignature"></p>
+          <h1 class="accountCard__name" id="homeUserName"></h1>
+          <button class="accountCard__btn" id="homeViewPerfil">Acessar meu perfil ></button>
+        </div>
+      </article>
+
       <div class="home__divSection">
         <h1 class="home__divSection__h1">Projetos</h1>
         <div class="home__divSection__videoCarroussel" id="LessonProjectsDiv">
@@ -173,7 +187,7 @@
       <h1 class="home__divSection__h1" style="color: var(--primary-color);">Comentarios</h1>
       <div class="challengeWindow__SectionComent">
         <div class="allComentsDiv">
-          
+
         </div>
         <div class="comentControls">
           <div class="comentControls__div">
@@ -183,7 +197,8 @@
           </div>
           <label for="inputImgComent-challengeWindow" class="comentControls__label">
             <ion-icon name="attach-outline" class="comentControls__fileImg"></ion-icon>
-            <input type="file" name="inputImgComent-challengeWindow" id="inputImgComent-challengeWindow" class="comentControls__inputFile">
+            <input type="file" name="inputImgComent-challengeWindow" id="inputImgComent-challengeWindow"
+              class="comentControls__inputFile">
           </label>
         </div>
       </div>
@@ -529,7 +544,7 @@
   <script type="module" src="src/pages/stock/stock.js"></script>
   <script type="module" src="src/pages/createStockItem/createStockItem.js"></script>
   <script type="module" src="src/pages/challenge/challenge.js"></script>
-  <script type="module" src="src/pages/createChallenge/createChallenge.js"></script>  
+  <script type="module" src="src/pages/createChallenge/createChallenge.js"></script>
 </body>
 
 </html>

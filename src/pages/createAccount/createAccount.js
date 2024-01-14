@@ -44,7 +44,8 @@ async function registerAccount(createAccountClass, createAccountPassword, create
     points: 0,
     email: `${createAccountEmail}`,
     firstUse: true,
-    noPhoto: true
+    noPhoto: true,
+    noCover: true
   });
   document.getElementById("createAccountPassword").value = ""
   document.getElementById("createAccountEmail").value = ""
