@@ -20,7 +20,7 @@
     background: var(--light-gray);
     border-radius: 360px;
     padding: 8px 12px;
-    width: 100%;
+    width: auto;
     gap: 10px;
 }
 .comentControls__input {

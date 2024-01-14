@@ -5,6 +5,7 @@
     width: 100%;
     padding: 0px 0px 20px 0px;
 }
+
 .commentCard {
     display: flex;
     align-items: flex-start;
@@ -12,11 +13,17 @@
     padding: 0px 20px;
     gap: 12px;
 }
+
+.otherUser.commentCard {
+    flex-direction: row-reverse;
+}
+
 .commentCard__div--1 {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 .commentCard__resetPhoto {
     display: flex;
     align-items: center;
@@ -27,36 +34,76 @@
     height: 60px;
     border-radius: 100%;
     border: solid 1px var(--secundary-color);
+    background: linear-gradient(45deg, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4, #808080, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4) no-repeat;
+    background-size: 1500%, 1500%;
+    animation: gradient 1s linear infinite;
 }
+
 .commentCard__dateTime {
     text-align: center;
     font-family: 'Kanit', sans-serif;
-    margin: 5px 0px 0px 0px;
+    margin: 5px 0px 5px 0px;
     font-size: 15px;
     line-height: 108%;
+    opacity: 0.8;
 }
+
 .commentCard__name {
     font-family: 'Teko', sans-serif;
     color: var(--black);
     font-size: 22px;
-    margin: 0px;   
+    margin: 0px;
 }
+
+.otherUser .commentCard__clasRoom {
+    color: var(--primary-color);
+    font-family: 'Teko', sans-serif;
+    font-size: 22px;
+    margin: 0px 5px 0px;
+}
+
 .commentCard__div--2 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
+
+.otherUser .commentCard__div--2 {
+    align-items: flex-end;
+}
+
 .commentCard__resetText {
     background: var(--light-gray);
     height: auto;
     width: auto;
     border-radius: 0px 12px 12px 12px;
-    padding: 6px 10px;
+    padding: 8px 10px;
+    margin: 0px 0px 10px 0px;
 }
+
+.otherUser .commentCard__resetText {
+    background: #4A5CFF;
+    border-radius: 12px 0px 12px 12px;
+}
+
 .commentCard__text {
     margin: 0px;
     font-size: 15px;
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
     line-height: 112%;
+}
+
+.otherUser .commentCard__text {
+    color: var(--white);
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 100% 50%;
+    }
 }
