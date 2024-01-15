@@ -1,4 +1,5 @@
-import { actualUserData } from "../../scripts/returnUserInfos"
+import { getComments, postComment, getThisComment } from "../../scripts/postGetcoments"
+import { actualUserData, thisUserData, actualUserEmail } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -16,6 +17,16 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+let lessonWindow = document.getElementById("lessonWindow")
+let homeSection = document.getElementById("homeSection")
+let closeLessonWindow = document.getElementById("closeLessonWindow")
+
+closeLessonWindow.onclick = () => {
+    homeSection.style.display = "flex"
+    lessonWindow.style.display = "none"
+    lessonWindow.children[2].src = ``
+}
+
 actualUserData().then(actualUser => {
     let photoUrl = ""
     let coverUrl = ""
@@ -31,115 +42,12 @@ actualUserData().then(actualUser => {
     document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
 })
 
-async function loadProjects() {
+async function loadLessons() {
     actualUserData().then(async (UserData) => {
         let LessonProjectsDiv = document.getElementById("LessonProjectsDiv")
-        let q = query(collection(db, "lessons"), where("lessonCategory", "==", "Projeto"));
-        let querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            let acess = false
-            let signatureToAcess
-            doc.data().lessonClass.forEach(element => {
-                if (element == UserData.class.replace("°", "")) {
-                    acess = true
-                    signatureToAcess = 1
-                }
-            });
-            if (acess == false) {
-                doc.data().lessonClass.forEach(element => {
-                    if (element == "Extra") {
-                        signatureToAcess = 3
-                    }
-                })
-            }
-            if (signatureToAcess != 1 && signatureToAcess != 3) {
-                signatureToAcess = 2
-            }
-            getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
-                .then((url) => {
-                    const xhr = new XMLHttpRequest();
-                    xhr.responseType = 'blob';
-                    xhr.onload = (event) => {
-                        const blob = xhr.response;
-                    };
-                    xhr.open('GET', url);
-                    xhr.send();
-
-                    let article = document.createElement("article")
-                    LessonProjectsDiv.insertAdjacentElement("beforeend", article)
-                    article.classList.add("projectCard")
-                    article.innerHTML = `
-                        <img src="${url}" alt="cover" class="projectCard__cover">
-                        <div class="projectCard__imgMask">                            
-                            <p class="projectCard__title">${doc.data().lessonTitle}</p>
-                            <span class="projectCard__span" ${signatureToAcess == 1 ? `style="background: #0d8a4f;"` : `style="background: var(--primary-color);"`}>${signatureToAcess == 1 ? "Grátis" : "Assinatura"}</span>
-                        </div>
-                    `
-                })
-                .catch((error) => {
-                    // Handle any errors
-                });
-        });
-    })
-}
-
-
-async function loadComponents() {
-    actualUserData().then(async (UserData) => {
         let LessonComponentsDiv = document.getElementById("LessonComponentsDiv")
-        let q = query(collection(db, "lessons"), where("lessonCategory", "==", "Componente"));
-        let querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            let acess = false
-            let signatureToAcess
-            doc.data().lessonClass.forEach(element => {
-                if (element == UserData.class.replace("°", "")) {
-                    acess = true
-                    signatureToAcess = 1
-                }
-            });
-            if (acess == false) {
-                doc.data().lessonClass.forEach(element => {
-                    if (element == "Extra") {
-                        signatureToAcess = 3
-                    }
-                })
-            }
-            if (signatureToAcess != 1 && signatureToAcess != 3) {
-                signatureToAcess = 2
-            }
-            getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
-                .then((url) => {
-                    const xhr = new XMLHttpRequest();
-                    xhr.responseType = 'blob';
-                    xhr.onload = (event) => {
-                        const blob = xhr.response;
-                    };
-                    xhr.open('GET', url);
-                    xhr.send();
-
-                    let article = document.createElement("article")
-                    LessonComponentsDiv.insertAdjacentElement("beforeend", article)
-                    article.classList.add("projectCard")
-                    article.innerHTML = `
-                        <img src="${url}" alt="cover" class="projectCard__cover">
-                        <div class="projectCard__imgMask">                            
-                            <p class="projectCard__title">${doc.data().lessonTitle}</p>
-                            <span class="projectCard__span" ${signatureToAcess == 1 ? `style="background: #0d8a4f;"` : `style="background: var(--primary-color);"`}>${signatureToAcess == 1 ? "Grátis" : "Assinatura"}</span>
-                        </div>
-                    `
-                })
-                .catch((error) => {
-                    // Handle any errors
-                });
-        });
-    })
-}
-
-async function loadCircuits() {
-    actualUserData().then(async (UserData) => {
         let LessonCircuitsDiv = document.getElementById("LessonCircuitsDiv")
-        let q = query(collection(db, "lessons"), where("lessonCategory", "==", "Circuito"));
+        let q = query(collection(db, "lessons"), where("lessonCategory", "!=", ""));
         let querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let acess = false
@@ -169,9 +77,18 @@ async function loadCircuits() {
                     };
                     xhr.open('GET', url);
                     xhr.send();
-
                     let article = document.createElement("article")
-                    LessonCircuitsDiv.insertAdjacentElement("beforeend", article)
+                    switch (doc.data().lessonCategory) {
+                        case "Projeto":
+                            LessonProjectsDiv.insertAdjacentElement("beforeend", article)
+                            break;
+                        case "Componente":
+                            LessonComponentsDiv.insertAdjacentElement("beforeend", article)
+                            break;
+                        case "Circuito":
+                            LessonCircuitsDiv.insertAdjacentElement("beforeend", article)
+                            break;
+                    }
                     article.classList.add("projectCard")
                     article.innerHTML = `
                         <img src="${url}" alt="cover" class="projectCard__cover">
@@ -180,6 +97,9 @@ async function loadCircuits() {
                             <span class="projectCard__span" ${signatureToAcess == 1 ? `style="background: #0d8a4f;"` : `style="background: var(--primary-color);"`}>${signatureToAcess == 1 ? "Grátis" : "Assinatura"}</span>
                         </div>
                     `
+                    article.onclick = () => {
+                        lessonWindowData(doc.data(), doc.id, url)
+                    }
                 })
                 .catch((error) => {
                     // Handle any errors
@@ -187,6 +107,133 @@ async function loadCircuits() {
         });
     })
 }
-loadProjects()
-loadComponents()
-loadCircuits()
+
+function getLessonVideo(id) {
+    return new Promise(async resolve => {
+        getDownloadURL(ref(storage, `lessons/${id}/video`))
+            .then((url) => {
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                    const blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+                resolve(url)
+            })
+            .catch((error) => {
+                // Handle any errors
+            });
+    })
+}
+
+function lessonWindowData(obj, id, url) {
+    actualUserEmail().then(actualUser => {
+        lessonWindow.children[1].textContent = `${obj.lessonTitle}`
+        if (obj.existsExtraFile == false) {
+            lessonWindow.children[4].innerHTML = `<p class="lessonWindow__notExtraFile">Sem anexos</p>`   
+        } else {
+            lessonWindow.children[4].innerHTML = `<a class="lessonWindow__extraFileDownload" href="" download>Baixar Arquivo</a>`
+        }        
+        getLessonVideo(id).then(videoUrl => {
+            lessonWindow.children[2].src = `${videoUrl}`
+        })
+        lessonWindow.children[3].children[0].onclick = function () {
+            lessonWindow.children[3].children[0].classList.add("active")
+            lessonWindow.children[3].children[1].classList.remove("active")
+            lessonWindow.children[4].style.display = "none"
+            lessonWindow.children[5].style.display = ""
+        }
+        lessonWindow.children[3].children[1].onclick = function () {
+            lessonWindow.children[3].children[1].classList.add("active")
+            lessonWindow.children[3].children[0].classList.remove("active")
+            lessonWindow.children[4].style.display = "flex"
+            lessonWindow.children[5].style.display = "none"
+        }
+        
+        loadComents(lessonWindow.children[5].children[1].children[0], obj, id, url)
+        lessonWindow.children[5].children[1].children[1].children[0].children[2].onclick = function () {
+            if (lessonWindow.children[5].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
+                postComment("lessons", id, actualUser, lessonWindow.children[5].children[1].children[1].children[0].children[1].value).then(posted => {
+                    lessonWindow.children[5].children[1].children[1].children[0].children[1].value = ""
+                    unrefreshLoadComents(lessonWindow.children[5].children[1].children[0], obj, id, posted, url)
+                })
+            }
+        }
+        homeSection.style.display = "none"
+        lessonWindow.style.display = "flex"
+    })
+}
+
+function loadComents(section, obj, id, url) {
+    let photoUrl = ""
+    actualUserEmail().then(actualUser => {
+        section.innerHTML = ""
+        getComments("lessons", `${id}`).then(coment => {
+            coment.forEach(element => {
+                thisUserData(element.email).then(UserData => {
+                    if (UserData.noPhoto == true) {
+                        photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                    } else {
+
+                    }
+                    let article = document.createElement("article")
+                    section.insertAdjacentElement("beforeend", article)
+                    article.classList.add(`${element.email == actualUser ? "actualUser" : "otherUser"}`)
+                    article.classList.add(`commentCard`)
+                    article.innerHTML = `
+                <div class="commentCard__div--1">
+                    <div class="commentCard__resetPhoto">
+                        <img class="commentCard__photo" src="${photoUrl}">
+                    </div>
+                    <p class="commentCard__dateTime">${element.date}<br>${element.time}</p>
+                </div>
+                <div class="commentCard__div--2">
+                    <p class="commentCard__name">${element.email == actualUser ? "" : `<span class="commentCard__clasRoom">${UserData.class}${UserData.room}</span>`}${UserData.name}</p>
+                    <div class="commentCard__resetText">
+                        <p class="commentCard__text">${element.text}</p>
+                    </div>
+                </div>`
+                    article.style.order = `${element.timestamp.seconds}`
+
+                });
+            })
+        })
+    })
+}
+
+function unrefreshLoadComents(section, obj, id, postId, url) {
+    let photoUrl = ""
+    actualUserEmail().then(actualUser => {
+        getThisComment("lessons", id, postId).then(element => {
+            thisUserData(element.email).then(UserData => {
+                if (UserData.noPhoto == true) {
+                    photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                } else {
+
+                }
+                let article = document.createElement("article")
+                section.insertAdjacentElement("beforeend", article)
+                article.classList.add(`${element.email == actualUser ? "actualUser" : "otherUser"}`)
+                article.classList.add(`commentCard`)
+                article.innerHTML = `
+                    <div class="commentCard__div--1">
+                        <div class="commentCard__resetPhoto">
+                            <img class="commentCard__photo" src="${photoUrl}">
+                        </div>
+                        <p class="commentCard__dateTime">${element.date}<br>${element.time}</p>
+                    </div>
+                    <div class="commentCard__div--2">
+                        <p class="commentCard__name">${element.email == actualUser ? "" : `<span class="commentCard__clasRoom">${UserData.class}${UserData.room}</span>`}${UserData.name}</p>
+                        <div class="commentCard__resetText">
+                            <p class="commentCard__text">${element.text}</p>
+                        </div>
+                    </div>`
+                article.style.order = `${element.timestamp.seconds}`
+            });
+        })
+    })
+}
+
+
+loadLessons()

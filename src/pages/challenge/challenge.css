@@ -6,6 +6,18 @@
     justify-content: flex-start;
 }
 
+.challenge__h1 {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-weight: 400;
+    font-size: 36px;
+    margin: 10px 0px 20px 0px;
+    width: 100%;
+    text-align: center;
+    padding: 0px 0px 0px 20px;
+    line-height: 100%;
+}
+
 .challengeSection__divCards {
     display: flex;
     width: 100%;

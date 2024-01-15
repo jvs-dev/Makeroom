@@ -120,6 +120,8 @@
         </button>
       </header>
 
+      <h1 class="home__divSection__h1">Início</h1>
+
       <article class="accountCard">
         <div class="accountCard__userCover" id="homeUserCover"></div>
         <div class="accountCard__resetUserPhoto">
@@ -155,6 +157,43 @@
 
     </section>
 
+    <section class="main__section section--lessonWindow" id="lessonWindow">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <div class="challengeWindow__closeWindow" id="closeLessonWindow">Voltar<ion-icon
+            name="arrow-forward-outline"></ion-icon></div>
+      </header>
+      <h1 class="lessonWindow__title"></h1>
+      <video class="lessonWindow__video" src="" preload controls></video>
+      <div class="lessonWindow__divSelectView">
+        <button class="lessonWindow__divSelectView__btn active"><ion-icon name="chatbubbles-outline"></ion-icon></button>
+        <button class="lessonWindow__divSelectView__btn"><ion-icon name="attach-outline"></ion-icon></button>
+      </div>
+      <div class="lessonWindow__extraFileDiv">
+        
+      </div>
+      <div class="lessonWindow__comentsDiv">
+        <h1 class="challenge__h1" style="color: var(--primary-color);">Comentarios</h1>
+        <div class="challengeWindow__SectionComent">
+          <div class="allComentsDiv">
+
+          </div>
+          <div class="lessonWindow comentControls">
+            <div class="comentControls__div">
+              <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
+              <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
+              <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
+            </div>
+            <label for="inputImgComent-lessonWindow" class="comentControls__label">
+              <ion-icon name="attach-outline" class="comentControls__fileImg"></ion-icon>
+              <input type="file" name="inputImgComent-lessonWindow" id="inputImgComent-lessonWindow"
+                class="comentControls__inputFile">
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="main__section section--challenge" id="challengeSection">
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
@@ -162,7 +201,7 @@
           <div class="header__menuToggle__div"></div>
         </button>
       </header>
-      <h1 class="home__divSection__h1">Desafios</h1>
+      <h1 class="challenge__h1">Desafios</h1>
       <div class="challengeSection__divCards" id="challengesDiv">
 
       </div>
@@ -174,7 +213,7 @@
         <div class="challengeWindow__closeWindow" id="closeChallengeWindow">Voltar<ion-icon
             name="arrow-forward-outline"></ion-icon></div>
       </header>
-      <h1 class="home__divSection__h1"></h1>
+      <h1 class="challenge__h1"></h1>
       <div class="challengeWindow__resetMaskImg">
         <img class="challengeWindow__mask" src="" alt="">
       </div>
@@ -184,7 +223,7 @@
       <button class="challengeWindow__resolve">Enviar desafio</button>
       <span class="challengeWindow__points"></span>
       <hr class="challengeWindow__hr">
-      <h1 class="home__divSection__h1" style="color: var(--primary-color);">Comentarios</h1>
+      <h1 class="challenge__h1" style="color: var(--primary-color);">Comentarios</h1>
       <div class="challengeWindow__SectionComent">
         <div class="allComentsDiv">
 

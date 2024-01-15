@@ -2,8 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    padding: 0px 20px;
+    width: calc(100% - 40px);    
     position: relative;
     margin-bottom: 20px;
     background: #fff;

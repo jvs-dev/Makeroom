@@ -43,6 +43,7 @@
     padding: 40px 0px 0px 20px;
     transition: 0.2s;
     text-transform: capitalize;
+    line-height: 100%;
 }
 
 .projectCard__signatureIcon {

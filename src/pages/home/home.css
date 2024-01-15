@@ -5,12 +5,14 @@
     min-height: 100vh;
     justify-content: flex-start;
 }
+
 .home__divSection {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
+
 .home__divSection__h1 {
     font-family: 'Teko', sans-serif;
     color: var(--black);
@@ -22,6 +24,7 @@
     padding: 0px 0px 0px 20px;
     line-height: 100%;
 }
+
 .home__divSection__videoCarroussel {
     display: flex;
     padding: 20px;
@@ -30,11 +33,107 @@
     gap: 12px;
     width: 100%;
 }
+
 .home__divSection__videoCarroussel .projectCard {
     scroll-snap-align: center;
     flex: 0 0 80vw;
 }
 
-.home__divSection__videoCarroussel::-webkit-scrollbar { 
-	display: none;
+.home__divSection__videoCarroussel::-webkit-scrollbar {
+    display: none;
+}
+
+.section--lessonWindow {
+    display: none;
+    background: #fff;
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.lessonWindow__title {
+    font-family: 'Teko', sans-serif;
+    font-size: 34px;
+    line-height: 100%;
+    margin: 10px 0px;
+    color: var(--black);
+    text-align: center;
+    width: 100%;
+    padding: 0px 20px;
+    font-weight: 400;
+}
+
+.lessonWindow__video {
+    width: calc(100% - 40px);
+    height: auto;
+    border-radius: 12px;
+}
+
+.lessonWindow__divSelectView {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 40px);
+    background: var(--light-gray);
+    margin: 10px 0px 20px 0px;
+    border-radius: 12px;
+}
+
+.lessonWindow__divSelectView__btn {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: transparent;
+    color: var(--black);
+    border-radius: 8px;
+    padding: 10px 0px;
+    border: 0px;
+    outline-width: 0px;
+    font-size: 24px;
+    transition: 0.2s;
+}
+
+.lessonWindow__divSelectView__btn.active {
+    background: var(--secundary-color);
+    color: var(--white);
+}
+
+.lessonWindow__extraFileDiv {
+    display: none;
+}
+
+.lessonWindow__extraFileDownload {
+    background: var(--primary-color);
+    border-radius: 12px;
+    font-size: 24px;
+    font-family: 'Teko', sans-serif;
+    text-decoration: none;
+    padding: 4px 35px;
+    color: var(--black);
+    margin: 10px 0px 0px 0px;
+}
+
+.lessonWindow__notExtraFile {
+    font-family: 'Kanit', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+    padding: 0px 20px;
+    color: var(--black);
+    opacity: 0.5;
+    margin: 10px 0px 0px 0px;
+}
+
+.lessonWindow__comentsDiv {
+    height: 100%;
+    width: 100%;
+    padding: 0px 0px 60px 0px;
+}
+
+.lessonWindow.comentControls {
+    position: fixed;
+    bottom: 0;
 }

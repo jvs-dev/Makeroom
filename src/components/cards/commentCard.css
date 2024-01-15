@@ -30,8 +30,8 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
     border: solid 1px var(--secundary-color);
     background: linear-gradient(45deg, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4, #808080, #d4d4d4, #d4d4d4, #d4d4d4, #d4d4d4) no-repeat;
