@@ -25,6 +25,7 @@ closeLessonWindow.onclick = () => {
     homeSection.style.display = "flex"
     lessonWindow.style.display = "none"
     lessonWindow.children[2].src = ``
+    lessonWindow.children[5].children[1].children[0].innerHTML = ""
 }
 
 actualUserData().then(actualUser => {
@@ -130,10 +131,10 @@ function getLessonVideo(id) {
 function loadLessonIntro(obj, id, url) {
     let pressTime;
     let backgroundAnimation;
-    let i = 0
+    let i = 0    
     let lessonIntroduction = document.getElementById("lessonIntroduction")
     lessonIntroduction.children[0].textContent = `${obj.lessonIntro}`
-    lessonIntroduction.children[1].addEventListener('touchstart', () => {
+    lessonIntroduction.children[1].ontouchstart = function () {
         pressTime = setTimeout(() => {
             lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
             i = 0
@@ -142,19 +143,20 @@ function loadLessonIntro(obj, id, url) {
             clearTimeout(pressTime);
             clearInterval(backgroundAnimation)
             lessonWindowData(obj, id, url)
+            lessonIntroduction.children[1].ontouchstart = function () { }
+            lessonIntroduction.children[1].ontouchend = function () { }
         }, 3000);
         backgroundAnimation = setInterval(() => {
             i++
             lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) ${i}%)`
         }, 22);
-    });
-
-    lessonIntroduction.children[1].addEventListener('touchend', () => {
+    }
+    lessonIntroduction.children[1].ontouchend = function () {
         clearTimeout(pressTime);
         clearInterval(backgroundAnimation)
         lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
         i = 0
-    });
+    }
     lessonIntroduction.style.opacity = "1"
     setTimeout(() => {
         lessonIntroduction.style.display = "flex"
@@ -211,8 +213,9 @@ function lessonWindowData(obj, id, url) {
             lessonWindow.children[4].style.display = "flex"
             lessonWindow.children[5].style.display = "none"
         }
-
+        lessonWindow.children[5].children[1].children[0].innerHTML = ""
         loadComents(lessonWindow.children[5].children[1].children[0], obj, id, url)
+        console.log(id);
         lessonWindow.children[5].children[1].children[1].children[0].children[2].onclick = function () {
             if (lessonWindow.children[5].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
                 postComment("lessons", id, actualUser, lessonWindow.children[5].children[1].children[1].children[0].children[1].value).then(posted => {
@@ -227,6 +230,7 @@ function lessonWindowData(obj, id, url) {
 }
 
 function loadComents(section, obj, id, url) {
+    section.innerHTML = ""
     let photoUrl = ""
     actualUserEmail().then(actualUser => {
         section.innerHTML = ""

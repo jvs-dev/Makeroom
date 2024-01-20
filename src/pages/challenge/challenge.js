@@ -177,3 +177,5 @@ function unrefreshLoadComents(section, obj, id, postId, url) {
 }
 
 loadChallenges()
+
+/* Sistema de envio de desafios para correção e sistema de correção */
