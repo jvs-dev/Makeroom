@@ -133,7 +133,7 @@ function loadLessonIntro(obj, id, url) {
     let i = 0
     let lessonIntroduction = document.getElementById("lessonIntroduction")
     lessonIntroduction.children[0].textContent = `${obj.lessonIntro}`
-    lessonIntroduction.children[1].addEventListener('mousedown', () => {
+    lessonIntroduction.children[1].addEventListener('touchstart', () => {
         pressTime = setTimeout(() => {
             lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
             i = 0
@@ -149,7 +149,7 @@ function loadLessonIntro(obj, id, url) {
         }, 22);
     });
 
-    lessonIntroduction.children[1].addEventListener('mouseup', () => {
+    lessonIntroduction.children[1].addEventListener('touchend', () => {
         clearTimeout(pressTime);
         clearInterval(backgroundAnimation)
         lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
