@@ -127,14 +127,38 @@ function getLessonVideo(id) {
     })
 }
 
+function getLessonExtraFile(id) {
+    return new Promise(async resolve => {
+        getDownloadURL(ref(storage, `lessons/${id}/extraFile`))
+            .then((url) => {
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                    const blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+                resolve(url)
+            })
+            .catch((error) => {
+                // Handle any errors
+            });
+    })
+}
+
 function lessonWindowData(obj, id, url) {
     actualUserEmail().then(actualUser => {
         lessonWindow.children[1].textContent = `${obj.lessonTitle}`
         if (obj.existsExtraFile == false) {
-            lessonWindow.children[4].innerHTML = `<p class="lessonWindow__notExtraFile">Sem anexos</p>`   
+            lessonWindow.children[4].innerHTML = `<p class="lessonWindow__notExtraFile">Sem anexos</p>`
         } else {
-            lessonWindow.children[4].innerHTML = `<a class="lessonWindow__extraFileDownload" href="" download>Baixar Arquivo</a>`
-        }        
+            lessonWindow.children[4].innerHTML = `<button class="lessonWindow__extraFileDownload">Baixar Arquivo</button>`
+            lessonWindow.children[4].children[0].onclick = function () {
+                getLessonExtraFile(id).then(fileUrl => {
+                    window.location.href = fileUrl
+                })
+            }
+        }
         getLessonVideo(id).then(videoUrl => {
             lessonWindow.children[2].src = `${videoUrl}`
         })
@@ -150,7 +174,7 @@ function lessonWindowData(obj, id, url) {
             lessonWindow.children[4].style.display = "flex"
             lessonWindow.children[5].style.display = "none"
         }
-        
+
         loadComents(lessonWindow.children[5].children[1].children[0], obj, id, url)
         lessonWindow.children[5].children[1].children[1].children[0].children[2].onclick = function () {
             if (lessonWindow.children[5].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
