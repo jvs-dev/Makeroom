@@ -80,6 +80,7 @@ lessonExtraFile.onchange = function () {
 }
 
 createLessonBtn.onclick = async function () {
+    let lessonIntroValue = document.getElementById("lessonIntro").value
     let lessonTitleValue = document.getElementById("lessonTitle").value
     let lessonMaskSrc = document.getElementById('lessonPreviewImg').src
     let lessonVideoSrc = document.getElementById('lessonPreviewVideo').src
@@ -92,10 +93,11 @@ createLessonBtn.onclick = async function () {
         existsExtraFile = true
     }
     createLessonBtn.disabled = true
-    if (lessonTitleValue != "" && lessonMaskSrc != window.location.href && lessonVideoSrc != window.location.href && lessonCategoryValue != "" && lessonSelected.length != 0) {
+    if (lessonTitleValue != "" && lessonIntroValue != "" && lessonMaskSrc != window.location.href && lessonVideoSrc != window.location.href && lessonCategoryValue != "" && lessonSelected.length != 0) {
         uploadsCompleteds = 0
         activeLoading(uploadsCompleteds)
         let docRef = await addDoc(collection(db, "lessons"), {
+            lessonIntro: `${lessonIntroValue}`,
             lessonTitle: `${lessonTitleValue}`,
             lessonCategory: `${lessonCategoryValue}`,
             lessonClass: lessonSelected,

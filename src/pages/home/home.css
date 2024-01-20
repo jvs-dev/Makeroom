@@ -137,3 +137,59 @@
     position: fixed;
     bottom: 0;
 }
+
+.section--lessonIntroduction {
+    display: none;
+    background: #fff;
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    z-index: 100;
+    transition: 0.5s;
+}
+
+.lessonIntroduction__button {
+    background: linear-gradient(0deg, var(--primary-color), var(--white) 0%);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 60px;
+    padding: 0px;
+    font-size: 30px;
+    border: 0px;
+    outline-width: 0px;
+    height: 54px;
+    width: 54px;
+    border-radius: 100%;
+    transition: 3s;
+}
+
+.lessonIntroduction__button ion-icon {
+    background: var(--white);
+    position: absolute;
+    border-radius: 100%;
+    padding: 10px;
+}
+
+.lessonIntroduction__span {
+    color: var(--primary-color);
+    font-family: 'Teko', sans-serif;
+    margin: 0px 0px 10px 0px;
+    font-size: 20px;
+}
+
+.lessonIntroduction__h1 {
+    font-family: 'Kanit', sans-serif;
+    font-weight: 500;
+    margin: 0px;
+    padding: 20px;
+    color: var(--black);
+    font-size: 22px;
+    width: 100%;
+}

@@ -157,6 +157,12 @@
 
     </section>
 
+    <section class="main__section section--lessonIntroduction" id="lessonIntroduction">
+      <h1 class="lessonIntroduction__h1"></h1>
+      <button class="lessonIntroduction__button"><ion-icon name="arrow-forward-outline"></ion-icon></button>
+      <span class="lessonIntroduction__span">clique para continuar</span>
+    </section>
+
     <section class="main__section section--lessonWindow" id="lessonWindow">
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
@@ -166,11 +172,12 @@
       <h1 class="lessonWindow__title"></h1>
       <video class="lessonWindow__video" src="" preload controls></video>
       <div class="lessonWindow__divSelectView">
-        <button class="lessonWindow__divSelectView__btn active"><ion-icon name="chatbubbles-outline"></ion-icon></button>
+        <button class="lessonWindow__divSelectView__btn active"><ion-icon
+            name="chatbubbles-outline"></ion-icon></button>
         <button class="lessonWindow__divSelectView__btn"><ion-icon name="attach-outline"></ion-icon></button>
       </div>
       <div class="lessonWindow__extraFileDiv">
-        
+
       </div>
       <div class="lessonWindow__comentsDiv">
         <h1 class="challenge__h1" style="color: var(--primary-color);">Comentarios</h1>
@@ -424,6 +431,13 @@
               <option value="Componente">Componente</option>
               <option value="Circuito">Circuito</option>
             </select>
+          </div>
+        </label>
+
+        <label for="lessonIntro" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="compass-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Introdução" class="createAccount loginSection__input" id="lessonIntro">
           </div>
         </label>
 

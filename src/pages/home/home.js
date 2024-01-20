@@ -98,7 +98,7 @@ async function loadLessons() {
                         </div>
                     `
                     article.onclick = () => {
-                        lessonWindowData(doc.data(), doc.id, url)
+                        loadLessonIntro(doc.data(), doc.id, url)
                     }
                 })
                 .catch((error) => {
@@ -125,6 +125,42 @@ function getLessonVideo(id) {
                 // Handle any errors
             });
     })
+}
+
+function loadLessonIntro(obj, id, url) {
+    let pressTime;
+    let backgroundAnimation;
+    let i = 0
+    let lessonIntroduction = document.getElementById("lessonIntroduction")
+    lessonIntroduction.children[0].textContent = `${obj.lessonIntro}`
+    lessonIntroduction.children[1].addEventListener('mousedown', () => {
+        pressTime = setTimeout(() => {
+            lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
+            i = 0
+            lessonIntroduction.style.opacity = "0"
+            lessonIntroduction.style.display = "none"
+            clearTimeout(pressTime);
+            clearInterval(backgroundAnimation)
+            lessonWindowData(obj, id, url)
+        }, 3000);
+        backgroundAnimation = setInterval(() => {
+            i++
+            lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) ${i}%)`
+        }, 22);
+    });
+
+    lessonIntroduction.children[1].addEventListener('mouseup', () => {
+        clearTimeout(pressTime);
+        clearInterval(backgroundAnimation)
+        lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
+        i = 0
+    });
+    lessonIntroduction.style.opacity = "1"
+    setTimeout(() => {
+        lessonIntroduction.style.display = "flex"
+        homeSection.style.display = "none"
+    }, 500);
+
 }
 
 function getLessonExtraFile(id) {
@@ -161,6 +197,7 @@ function lessonWindowData(obj, id, url) {
         }
         getLessonVideo(id).then(videoUrl => {
             lessonWindow.children[2].src = `${videoUrl}`
+            lessonWindow.children[2].autoplay = true
         })
         lessonWindow.children[3].children[0].onclick = function () {
             lessonWindow.children[3].children[0].classList.add("active")
