@@ -41,6 +41,10 @@ actualUserData().then(actualUser => {
     document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
     document.getElementById("homeUserImg").src = `${photoUrl}`
     document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
+    document.getElementById("homeViewPerfil").onclick = function () {
+        homeSection.style.display = "none"
+        document.getElementById("perfilSection").style.display = "flex"
+    }
 })
 
 async function loadLessons() {
@@ -131,7 +135,7 @@ function getLessonVideo(id) {
 function loadLessonIntro(obj, id, url) {
     let pressTime;
     let backgroundAnimation;
-    let i = 0    
+    let i = 0
     let lessonIntroduction = document.getElementById("lessonIntroduction")
     lessonIntroduction.children[0].textContent = `${obj.lessonIntro}`
     lessonIntroduction.children[1].ontouchstart = function () {
@@ -147,9 +151,9 @@ function loadLessonIntro(obj, id, url) {
             lessonIntroduction.children[1].ontouchend = function () { }
         }, 3000);
         backgroundAnimation = setInterval(() => {
-            i++
+            i = i + 1.5
             lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) ${i}%)`
-        }, 22);
+        }, 20);
     }
     lessonIntroduction.children[1].ontouchend = function () {
         clearTimeout(pressTime);
