@@ -27,7 +27,14 @@ closeChallengeWindow.onclick = () => {
 
 async function loadChallenges() {
     actualUserData().then(async (UserData) => {
-        let challengesDiv = document.getElementById("challengesDiv")
+        let challengesDiv1 = document.getElementById("challengesDiv1")
+        let challengesDiv2 = document.getElementById("challengesDiv2")
+        let challengesDiv3 = document.getElementById("challengesDiv3")
+        let challengesDiv4 = document.getElementById("challengesDiv4")
+        let challengesDiv5 = document.getElementById("challengesDiv5")
+        let challengesDiv6 = document.getElementById("challengesDiv6")
+        let challengesDiv7 = document.getElementById("challengesDiv7")
+        /* let challengesDivExtra = document.getElementById("challengesDivExtra") */
         let q = query(collection(db, "challenges"), where("challengeTitle", "!=", ""));
         let querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -60,23 +67,126 @@ async function loadChallenges() {
                     xhr.send();
 
                     let article = document.createElement("article")
-                    challengesDiv.insertAdjacentElement("beforeend", article)
+                    doc.data().challengeClass.forEach(element => {
+                        switch (element) {
+                            case "1":
+                                challengesDiv1.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "2":
+                                challengesDiv2.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "3":
+                                challengesDiv3.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "4":
+                                challengesDiv4.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "5":
+                                challengesDiv5.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "6":
+                                challengesDiv6.insertAdjacentElement("beforeend", article)
+                                break;
+                            case "7":
+                                challengesDiv7.insertAdjacentElement("beforeend", article)
+                                break;
+                            /* case "Extra":
+                                challengesDivExtra.insertAdjacentElement("beforeend", article)
+                                break; */
+                            default:
+                                break;
+                        }
+                    });
                     article.classList.add("challengeCard")
                     article.innerHTML = `
                         <div class="challengeCard__div--1">
-                            <div class="challengeCard__div--2">
-                                ${acess == true ? `<ion-icon class="challengeCard__signatureIcon" name="school-outline"></ion-icon>` : `${signatureToAcess == 2 ? `<ion-icon name="construct-outline" class="challengeCard__signatureIcon"></ion-icon>` : `<ion-icon name="rocket-outline" class="challengeCard__signatureIcon"></ion-icon>`}`}
-                                <p class="challengeCard__levelText">Nivel:${doc.data().challengeClass.map(level => `${level != "Extra" ? ` ${level}°` : ` Extracurricular`}`)}</p>
+                            <p class="challengeCard__title">${doc.data().challengeTitle}</p>
+                            <div class="challengeCard__div--2">                                
+                                <div class="challengeCard__mask"></div>
+                                <img src="${url}" class="challengeCard__cover">
                             </div>
-                            <img class="challengeCard__mask" src="${url}" alt="mask">
+                            <span class="challengeCard__points">+${doc.data().challengePoints} pontos</span>
+                        </div>                        
+                        <p class="challengeCard__resolved">Já resolveram esse desafio:</p>
+                        <div class="challengeCard__resolvedDiv">
+                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
+                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
+                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
+                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
+                            <span class="challengeCard__resolvedSpan">+10</span>
                         </div>
-                        <p class="challengeCard__title">${doc.data().challengeTitle}</p>
-                        <p class="challengeCard__description">${doc.data().challengeDescription}</p>
-                        <span class="challengeCard__points">${doc.data().challengePoints} Pontos</span>                                            
+                        <div class="challengeCard__div--3">
+                            <p class="challengeCard__description">${doc.data().challengeDescription}</p>
+                            <button class="challengeCard__play"><i class="bi bi-play"></i></button>
+                        </div>
                     `
-                    article.onclick = () => {
+                    article.children[3].children[1].onclick = () => {
                         ChallengeWindowData(doc.data(), doc.id, url)
                     }
+
+                    /* if (challengesDivExtra.children[0] == undefined) {
+                        challengesDivExtra.previousElementSibling.style.display = "none"
+                        challengesDivExtra.style.display = "none"
+                    } else {
+                        challengesDivExtra.previousElementSibling.style.display = ""
+                        challengesDivExtra.style.display = ""
+                    }; */
+
+                    if (challengesDiv1.children[0] == undefined) {
+                        challengesDiv1.previousElementSibling.style.display = "none"
+                        challengesDiv1.style.display = "none"
+                    } else {
+                        challengesDiv1.previousElementSibling.style.display = ""
+                        challengesDiv1.style.display = ""
+                    };
+
+                    if (challengesDiv2.children[0] == undefined) {
+                        challengesDiv2.previousElementSibling.style.display = "none"
+                        challengesDiv2.style.display = "none"
+                    } else {
+                        challengesDiv2.previousElementSibling.style.display = ""
+                        challengesDiv2.style.display = ""
+                    };
+
+                    if (challengesDiv3.children[0] == undefined) {
+                        challengesDiv3.previousElementSibling.style.display = "none"
+                        challengesDiv3.style.display = "none"
+                    } else {
+                        challengesDiv3.previousElementSibling.style.display = ""
+                        challengesDiv3.style.display = ""
+                    };
+
+                    if (challengesDiv4.children[0] == undefined) {
+                        challengesDiv4.previousElementSibling.style.display = "none"
+                        challengesDiv4.style.display = "none"
+                    } else {
+                        challengesDiv4.previousElementSibling.style.display = ""
+                        challengesDiv4.style.display = ""
+                    };
+
+                    if (challengesDiv5.children[0] == undefined) {
+                        challengesDiv5.previousElementSibling.style.display = "none"
+                        challengesDiv5.style.display = "none"
+                    } else {
+                        challengesDiv5.previousElementSibling.style.display = ""
+                        challengesDiv5.style.display = ""
+                    };
+
+                    if (challengesDiv6.children[0] == undefined) {
+                        challengesDiv6.previousElementSibling.style.display = "none"
+                        challengesDiv6.style.display = "none"
+                    } else {
+                        challengesDiv6.previousElementSibling.style.display = ""
+                        challengesDiv6.style.display = ""
+                    };
+
+                    if (challengesDiv7.children[0] == undefined) {
+                        challengesDiv7.previousElementSibling.style.display = "none"
+                        challengesDiv7.style.display = "none"
+                    } else {
+                        challengesDiv7.previousElementSibling.style.display = ""
+                        challengesDiv7.style.display = ""
+                    };
                 })
                 .catch((error) => {
                     // Handle any errors

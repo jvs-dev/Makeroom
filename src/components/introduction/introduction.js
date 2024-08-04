@@ -74,5 +74,5 @@ export function removeIntroduction() {
 initIntroduction().then(result => {
     setTimeout(() => {
         removeIntroduction()
-    }, 2000);
+    }, 500);
 })
