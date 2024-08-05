@@ -41,6 +41,8 @@
   <link rel="stylesheet" href="src/components/cards/accountCard.css">
   <link rel="stylesheet" href="src/pages/perfil/perfil.css">
   <link rel="stylesheet" href="src/pages/store/store.css">
+  <link rel="stylesheet" href="src/pages/createStoreItem/createStoreItem.css">
+  <link rel="stylesheet" href="src/components/cards/storeCard.css">
 </head>
 
 <body>
@@ -95,7 +97,8 @@
               name="help-circle-outline"></ion-icon>Criar desafio</button></li>
         <li><button class="adminAdds__btn" id="goToCreateStockItem"><i class="bi bi-box-seam"></i>Criar
             componente</button></li>
-        <li><button class="adminAdds__btn"><ion-icon name="pricetag-outline"></ion-icon>Criar venda</button></li>
+        <li><button class="adminAdds__btn" id="goToCreateStoreItem"><ion-icon name="pricetag-outline"></ion-icon>Criar
+            venda</button></li>
         <li><button class="adminAdds__btn" id="goToCreateAccount"><i class="bi bi-envelope-plus"></i>Criar
             conta</button></li>
       </ul>
@@ -295,6 +298,9 @@
         </div>
         <button class="store__cartBtn" type="button"><ion-icon name="cart-outline"></ion-icon><span>1</span></button>
       </div>
+      <div class="store__divCards" id="storeDiv">
+
+      </div>
     </section>
 
     <section class="main__section section--ranking" id="rankingSection">
@@ -486,6 +492,46 @@
       <div class="createAccount loginSquare--5"></div>
     </section>
 
+    <section class="main__section section--createStoreItem" id="createStoreItem">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <form class="createAccount loginSection__form">
+        <h1 class="createAccount loginSection__h1">Criar Venda</h1>
+
+        <label for="storeItemName" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="create-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Nome" class="createAccount loginSection__input" id="storeItemName">
+          </div>
+        </label>
+
+        <label for="storeItemImage" class="createLessonSection__label--file">
+          <div class="createLessonSection__divPreviewFile">
+            <img src="" class="createLessonSection__previewFile" id="storeItemPreviewImg">
+            <p class="createLessonSection__previewText">Carregar uma foto</p>
+            <input type="file" name="storeItemImage" id="storeItemImage" class="createLessonSection__input--file"
+              accept="image/*">
+          </div>
+        </label>
+
+        <label for="storeItemPrice" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="cash-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="number" placeholder="Preço" name="storeItemPrice" id="storeItemPrice"
+              class="createAccount loginSection__input">
+          </div>
+        </label>
+        <button class="createAccount loginSection__btn" type="button" id="createStoreItemBtn">Criar</button>
+      </form>
+      <div class="createAccount loginSquare--2"></div>
+      <div class="createAccount loginSquare--4"></div>
+      <div class="createAccount loginSquare--5"></div>
+    </section>
+
     <section class="main__section section--createChallenge" id="createChallenge">
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
@@ -584,6 +630,7 @@
   <script type="module" src="src/pages/createChallenge/createChallenge.js"></script>
   <script type="module" src="src/pages/perfil/perfil.js"></script>
   <script type="module" src="src/pages/store/store.js"></script>
+  <script type="module" src="src/pages/createStoreItem/createStoreItem.js"></script>
 </body>
 
 </html>

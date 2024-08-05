@@ -1,0 +1,8 @@
+.section--createStoreItem {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+    background: transparent;
+    overflow: hidden;
+    justify-content: flex-start;
+}

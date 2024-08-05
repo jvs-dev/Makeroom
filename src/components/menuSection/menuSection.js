@@ -127,6 +127,21 @@ document.getElementById("goToCreateStockItem").onclick = function () {
     });
 }
 
+document.getElementById("goToCreateStoreItem").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("createStoreItem"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColorAll()
+            setTimeout(() => {
+                AdminAdds.style.transform = "translateX(100vw)"
+            }, 200);
+        }
+    });
+}
+
 document.getElementById("goToChallenge").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active")) {
