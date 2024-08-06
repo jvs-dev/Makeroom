@@ -4,6 +4,8 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, updateDoc, where, increment, getDoc, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { alertThis } from "../../components/alerts/alert";
+import { alternatePage } from "../../scripts/alternatePages";
+import { initCart } from "../cart/cart";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -125,6 +127,11 @@ function updateCartQuanty() {
             storeCartBtn.children[1].textContent = `${cartCount}`
         });
     })
+}
+
+document.getElementById("storeCartBtn").onclick = function () {
+    alternatePage(document.getElementById("cartSection"))
+    initCart()
 }
 
 onAuthStateChanged(auth, (user) => {

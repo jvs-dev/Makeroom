@@ -44,6 +44,7 @@
   <link rel="stylesheet" href="src/pages/createStoreItem/createStoreItem.css">
   <link rel="stylesheet" href="src/components/cards/storeCard.css">
   <link rel="stylesheet" href="src/pages/cart/cart.css">
+  <link rel="stylesheet" href="src/components/cards/cartItemCard.css">
 </head>
 
 <body>
@@ -285,7 +286,19 @@
     </section>
 
     <section class="main__section section--cart" id="cartSection">
-      <h1 class="store__h1">Seu carrinho maker</h1>
+      <div class="cart__div--1">
+        <button class="cart__backBtn" id="closeCartSection"><i class="bi bi-arrow-left"></i></button>
+      </div>
+      <h1 class="cart__h1">Seu carrinho maker</h1>
+      <div class="cart__div--2" id="cartItemsDiv">
+      </div>
+      <div class="cart__div--3">
+        <div class="cart__div--4">
+          <p class="cart__p">Total</p>
+          <span class="cart__total">$13.90</span>
+        </div>
+        <button class="cart__Continue">continuar</button>
+      </div>
     </section>
 
     <section class="main__section section--store" id="storeSection">
@@ -301,7 +314,8 @@
           <ion-icon class="store__searchIcon" name="search-outline"></ion-icon>
           <input class="store__searchInput" type="text" placeholder="Pesquisar">
         </div>
-        <button class="store__cartBtn" type="button" id="storeCartBtn"><ion-icon name="cart-outline"></ion-icon><span>0</span></button>
+        <button class="store__cartBtn" type="button" id="storeCartBtn"><ion-icon
+            name="cart-outline"></ion-icon><span>0</span></button>
       </div>
       <div class="store__divCards" id="storeDiv">
 
