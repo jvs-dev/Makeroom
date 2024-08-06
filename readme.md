@@ -94,13 +94,14 @@ Todas as funções js e componentes serão documentados aqui.
 **Retorna**: Dados da database "user" do usuario atualmente conectado ou "no such document" se o documento não for encontrado
 
 <br/>
-<br/>
+
+## Alertas
 
 ```javascript
-  thisUserData(email)
+  alertThis(message, alert)
 ```
 
 | Parâmetro   | Tipo       | Descrição                                   |
 | :---------- | :--------- | :------------------------------------------ |
-| `email`     | `string`   | **Obrigatório**. Email do usuario que será requisitado os dados |
-**Retorna**: Dados do usuario que foi passado o email da database "users" |
+| `message`     | `string`   | **Obrigatório**. menssagem a ser exibida no card de alerta. |
+| `alert`     | `string`   | **Obrigatório**. se igual a "sucess" o alerta será verde. |

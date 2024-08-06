@@ -26,6 +26,7 @@
     align-items: flex-end;
     justify-content: space-between;
     width: 100%;
+    overflow: hidden;
 }
 
 .storeCard__div--2 {
@@ -76,4 +77,36 @@
     width: 45px;
     height: 45px;
     box-shadow: 0px 0px 6px #FED3A8;
+}
+
+.storeCard__divInput {
+    width: calc(100% - 55px);
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eee;
+    border-radius: 4px;
+    padding: 0px 2px;
+}
+
+.storeCard__input {
+    min-width: 0px;
+    width: 100%;
+    text-align: center;
+    padding: 0px;
+    border: 0px;
+    outline-width: 0px;
+    color: var(--black);
+    background: transparent;
+    font-size: 18px;
+}
+
+.storeCard__inputIcon {
+    background: transparent;
+    color: var(--black);
+    border: 0px;
+    outline-width: 0px;
+    font-size: 22px;
+    padding: 0px;
 }

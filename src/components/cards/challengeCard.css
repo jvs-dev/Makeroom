@@ -117,7 +117,7 @@
 }
 
 .challengeCard__description::after {
-    content: 'continue...';
+    content: 'continuar...';
     position: absolute;
     right: 0;
     top: 0;

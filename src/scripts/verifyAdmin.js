@@ -19,18 +19,22 @@ let goToAddContent = document.getElementById("goToAddContent")
 let goToCreateAccount = document.getElementById("goToCreateAccount")
 let goToStock = document.getElementById("goToStock")
 
-
-actualUserData().then(result => {
-  if (result.admin == true) {
-    goToStock.style.display = ""
-    goToCreateAccount.style.display = ""
-    goToAddContent.style.display = ""
-  } else {
-    goToStock.style.display = "none"
-    goToCreateAccount.style.display = "none"
-    goToAddContent.style.display = "none"
-    goToStock.parentNode.removeChild(goToStock);
-    goToCreateAccount.parentNode.removeChild(goToCreateAccount);
-    goToAddContent.parentNode.removeChild(goToAddContent);
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    actualUserData().then(result => {
+      if (result.admin == true) {
+        goToStock.style.display = ""
+        goToCreateAccount.style.display = ""
+        goToAddContent.style.display = ""
+      } else {
+        goToStock.style.display = "none"
+        goToCreateAccount.style.display = "none"
+        goToAddContent.style.display = "none"
+        goToStock.parentNode.removeChild(goToStock);
+        goToCreateAccount.parentNode.removeChild(goToCreateAccount);
+        goToAddContent.parentNode.removeChild(goToAddContent);
+      }
+    })
   }
-})
+});

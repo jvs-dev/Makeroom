@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="src/pages/store/store.css">
   <link rel="stylesheet" href="src/pages/createStoreItem/createStoreItem.css">
   <link rel="stylesheet" href="src/components/cards/storeCard.css">
+  <link rel="stylesheet" href="src/pages/cart/cart.css">
 </head>
 
 <body>
@@ -283,6 +284,10 @@
       </div>
     </section>
 
+    <section class="main__section section--cart" id="cartSection">
+      <h1 class="store__h1">Seu carrinho maker</h1>
+    </section>
+
     <section class="main__section section--store" id="storeSection">
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
@@ -296,7 +301,7 @@
           <ion-icon class="store__searchIcon" name="search-outline"></ion-icon>
           <input class="store__searchInput" type="text" placeholder="Pesquisar">
         </div>
-        <button class="store__cartBtn" type="button"><ion-icon name="cart-outline"></ion-icon><span>1</span></button>
+        <button class="store__cartBtn" type="button" id="storeCartBtn"><ion-icon name="cart-outline"></ion-icon><span>0</span></button>
       </div>
       <div class="store__divCards" id="storeDiv">
 
@@ -631,6 +636,7 @@
   <script type="module" src="src/pages/perfil/perfil.js"></script>
   <script type="module" src="src/pages/store/store.js"></script>
   <script type="module" src="src/pages/createStoreItem/createStoreItem.js"></script>
+  <script type="module" src="src/pages/cart/cart.js"></script>
 </body>
 
 </html>
