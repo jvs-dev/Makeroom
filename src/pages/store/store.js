@@ -20,6 +20,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const storeCartBtn = document.getElementById("storeCartBtn")
+let cartCount = 0
 
 async function loadStore() {
     let storeDiv = document.getElementById("storeDiv")
@@ -118,8 +119,19 @@ async function addCartFct(itemId, quanty) {
     })
 }
 
+export function refreshCartQuanty() {
+    cartCount = 0
+    actualUserEmail().then(async (email) => {
+        const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+        querySnapshot.forEach((doc) => {
+            cartCount = cartCount + Number(doc.data().quanty)
+            storeCartBtn.children[1].textContent = `${cartCount}`
+        });
+    })
+}
+
 function updateCartQuanty() {
-    let cartCount = 0
+    cartCount = 0
     actualUserEmail().then(async (email) => {
         const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
         querySnapshot.forEach((doc) => {
