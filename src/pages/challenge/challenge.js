@@ -2,8 +2,10 @@ import { getComments, postComment, getThisComment } from "../../scripts/postGetc
 import { actualUserData, thisUserData, actualUserEmail } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDoc, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { activeLoading } from "../../components/uploadingSection/uploadingSection";
+import { alertThis } from "../../components/alerts/alert";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -19,6 +21,7 @@ const storage = getStorage(app);
 let challengeWindow = document.getElementById("challengeWindow")
 let closeChallengeWindow = document.getElementById("closeChallengeWindow")
 let challengeSection = document.getElementById("challengeSection")
+let sendChallengeFile = document.getElementById("sendChallengeFile")
 
 closeChallengeWindow.onclick = () => {
     challengeSection.style.display = "flex"
@@ -200,19 +203,59 @@ function ChallengeWindowData(obj, id, url) {
         challengeWindow.children[1].textContent = `${obj.challengeTitle}`
         challengeWindow.children[2].children[0].src = `${url}`
         challengeWindow.children[3].textContent = `${obj.challengeDescription}`
-        challengeWindow.children[5].textContent = `Detalhes da atividade: ${obj.challengeDetails}`
-        challengeWindow.children[7].textContent = `+${obj.challengePoints} Pontos`
-        loadComents(challengeWindow.children[10].children[0], obj, id, url)
-        challengeWindow.children[10].children[1].children[0].children[2].onclick = function () {
-            if (challengeWindow.children[10].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                postComment("challenges", id, actualUser, challengeWindow.children[10].children[1].children[0].children[1].value).then(posted => {
-                    challengeWindow.children[10].children[1].children[0].children[1].value = ""
-                    unrefreshLoadComents(challengeWindow.children[10].children[0], obj, id, posted, url)
+        challengeWindow.children[2].children[1].textContent = `+${obj.challengePoints} Pontos`
+        loadComents(challengeWindow.children[6].children[0], obj, id, url)
+        challengeWindow.children[6].children[1].children[0].children[2].onclick = function () {
+            if (challengeWindow.children[6].children[1].children[0].children[1].value.replace(" ", "") != "") {
+                postComment("challenges", id, actualUser, challengeWindow.children[6].children[1].children[0].children[1].value).then(posted => {
+                    challengeWindow.children[6].children[1].children[0].children[1].value = ""
+                    unrefreshLoadComents(challengeWindow.children[6].children[0], obj, id, posted, url)
+                })
+            }
+        }
+        sendChallengeFile.onchange = async function () {
+            if (sendChallengeFile.files[0] != undefined) {
+                actualUserData().then(async (userData) => {
+                    verifySend(id, userData.email).then(async (res) => {
+                        if (res == false) {
+                            let uploadsCompleteds = 0
+                            activeLoading(uploadsCompleteds)
+                            await setDoc(doc(db, "challenges", `${id}`, "resolves", `${userData.email}`), {
+                                senderEmail: `${userData.email}`,
+                                senderName: `${userData.name}`,
+                                senderClass: `${userData.class}`,
+                                senderRoom: `${userData.room}`
+                            });
+                            uploadsCompleteds = uploadsCompleteds + 50
+                            activeLoading(uploadsCompleteds)
+                            if (sendChallengeFile.files[0] != undefined) {
+                                const storageRef3 = ref(storage, `challengesResolveds/${id}/${userData.email}`);
+                                uploadBytes(storageRef3, sendChallengeFile.files[0]).then((snapshot) => {
+                                    uploadsCompleteds = uploadsCompleteds + 50
+                                    activeLoading(uploadsCompleteds)
+                                });
+                            }
+                        } else {
+                            alertThis("Atividade já enviada", "")
+                        }
+                    })
                 })
             }
         }
         challengeSection.style.display = "none"
         challengeWindow.style.display = "flex"
+    })
+}
+
+async function verifySend(challengeId, email) {
+    return new Promise(async (resolve) => {
+        const docRef = doc(db, "challenges", `${challengeId}`, "resolves", `${email}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            resolve(true)
+        } else {
+            resolve(false)
+        }
     })
 }
 

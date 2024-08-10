@@ -255,17 +255,17 @@
         <div class="challengeWindow__closeWindow" id="closeChallengeWindow">Voltar<ion-icon
             name="arrow-forward-outline"></ion-icon></div>
       </header>
-      <h1 class="challenge__h1"></h1>
+      <h1 class="challengeWindow__h1"></h1>
       <div class="challengeWindow__resetMaskImg">
         <img class="challengeWindow__mask" src="" alt="">
+        <span class="challengeWindow__points"></span>
       </div>
       <p class="challengeWindow__description"></p>
-      <hr class="challengeWindow__hr">
-      <p class="challengeWindow__details"></p>
-      <button class="challengeWindow__resolve">Enviar desafio</button>
-      <span class="challengeWindow__points"></span>
-      <hr class="challengeWindow__hr">
-      <h1 class="challenge__h1" style="color: var(--primary-color);">Comentarios</h1>
+      <label for="sendChallengeFile" class="challengeWindow__sendChallengeLabel">
+        Enviar
+        <input type="file" name="sendChallengeFile" class="challengeWindow__fileInput" id="sendChallengeFile">
+      </label>
+      <h1 class="challenge__h1 comentTitle" style="color: var(--primary-color);">Comentarios</h1>
       <div class="challengeWindow__SectionComent">
         <div class="allComentsDiv">
 
