@@ -200,24 +200,36 @@ async function loadChallenges() {
 
 function ChallengeWindowData(obj, id, url) {
     actualUserEmail().then(actualUser => {
-        challengeWindow.children[1].textContent = `${obj.challengeTitle}`
-        challengeWindow.children[2].children[0].src = `${url}`
-        challengeWindow.children[3].textContent = `${obj.challengeDescription}`
-        challengeWindow.children[2].children[1].textContent = `+${obj.challengePoints} Pontos`
-        loadComents(challengeWindow.children[6].children[0], obj, id, url)
-        challengeWindow.children[6].children[1].children[0].children[2].onclick = function () {
-            if (challengeWindow.children[6].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                postComment("challenges", id, actualUser, challengeWindow.children[6].children[1].children[0].children[1].value).then(posted => {
-                    challengeWindow.children[6].children[1].children[0].children[1].value = ""
-                    unrefreshLoadComents(challengeWindow.children[6].children[0], obj, id, posted, url)
-                })
+        verifySend(id, actualUser).then(async (isSended) => {
+            challengeWindow.children[5].innerHTML = `Enviar
+                <input type="file" name="sendChallengeFile" class="challengeWindow__fileInput" id="sendChallengeFile">`
+            sendChallengeFile = document.getElementById("sendChallengeFile")
+            challengeWindow.children[5].style.background = ""
+            challengeWindow.children[5].style.boxShadow = ""
+            challengeWindow.children[5].style.color = ""
+            if (isSended == true) {
+                challengeWindow.children[5].textContent = "Enviado"
+                challengeWindow.children[5].style.background = "#20E3BB"
+                challengeWindow.children[5].style.boxShadow = "0px 0px 6px #20E3BB"
+                challengeWindow.children[5].style.color = "#fff"
             }
-        }
-        sendChallengeFile.onchange = async function () {
-            if (sendChallengeFile.files[0] != undefined) {
-                actualUserData().then(async (userData) => {
-                    verifySend(id, userData.email).then(async (res) => {
-                        if (res == false) {
+            challengeWindow.children[2].textContent = `${obj.challengeTitle}`
+            challengeWindow.children[3].children[0].src = `${url}`
+            challengeWindow.children[4].textContent = `${obj.challengeDescription}`
+            challengeWindow.children[3].children[1].textContent = `+${obj.challengePoints} Pontos`
+            loadComents(challengeWindow.children[7].children[0], obj, id, url)
+            challengeWindow.children[7].children[1].children[0].children[2].onclick = function () {
+                if (challengeWindow.children[7].children[1].children[0].children[1].value.replace(" ", "") != "") {
+                    postComment("challenges", id, actualUser, challengeWindow.children[7].children[1].children[0].children[1].value).then(posted => {
+                        challengeWindow.children[7].children[1].children[0].children[1].value = ""
+                        unrefreshLoadComents(challengeWindow.children[7].children[0], obj, id, posted, url)
+                    })
+                }
+            }
+            sendChallengeFile.onchange = async function () {
+                if (sendChallengeFile.files[0] != undefined) {
+                    actualUserData().then(async (userData) => {
+                        if (isSended == false) {
                             let uploadsCompleteds = 0
                             activeLoading(uploadsCompleteds)
                             await setDoc(doc(db, "challenges", `${id}`, "resolves", `${userData.email}`), {
@@ -228,23 +240,50 @@ function ChallengeWindowData(obj, id, url) {
                             });
                             uploadsCompleteds = uploadsCompleteds + 50
                             activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                challengeSended(challengeWindow.children[0])
+                            }
                             if (sendChallengeFile.files[0] != undefined) {
                                 const storageRef3 = ref(storage, `challengesResolveds/${id}/${userData.email}`);
                                 uploadBytes(storageRef3, sendChallengeFile.files[0]).then((snapshot) => {
                                     uploadsCompleteds = uploadsCompleteds + 50
                                     activeLoading(uploadsCompleteds)
+                                    if (uploadsCompleteds == 100) {
+                                        challengeSended(challengeWindow.children[0])
+                                    }
                                 });
                             }
                         } else {
                             alertThis("Atividade já enviada", "")
                         }
                     })
-                })
+                }
             }
-        }
-        challengeSection.style.display = "none"
-        challengeWindow.style.display = "flex"
+            challengeSection.style.display = "none"
+            challengeWindow.style.display = "flex"
+        })
     })
+}
+
+function challengeSended(section) {
+    section.style.opacity = "0"
+    section.style.transition = "0.5s"
+    section.style.display = "flex"
+    setTimeout(() => {
+        section.style.opacity = "1"
+    }, 400);
+}
+
+challengeWindow.children[0].children[0].children[3].onclick = () => {
+    challengeWindow.children[5].textContent = "Enviado"
+    challengeWindow.children[5].style.background = "#20E3BB"
+    challengeWindow.children[5].style.boxShadow = "0px 0px 6px #20E3BB"
+    challengeWindow.children[5].style.color = "#fff"
+    challengeWindow.children[0].style.opacity = "0"
+    setTimeout(() => {
+        challengeWindow.children[0].style.transition = ""
+        challengeWindow.children[0].style.display = ""
+    }, 500);
 }
 
 async function verifySend(challengeId, email) {
