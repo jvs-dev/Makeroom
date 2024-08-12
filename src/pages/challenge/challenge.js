@@ -37,6 +37,13 @@ async function loadChallenges() {
         let challengesDiv5 = document.getElementById("challengesDiv5")
         let challengesDiv6 = document.getElementById("challengesDiv6")
         let challengesDiv7 = document.getElementById("challengesDiv7")
+        challengesDiv1.innerHTML = ""
+        challengesDiv2.innerHTML = ""
+        challengesDiv3.innerHTML = ""
+        challengesDiv4.innerHTML = ""
+        challengesDiv5.innerHTML = ""
+        challengesDiv6.innerHTML = ""
+        challengesDiv7.innerHTML = ""
         /* let challengesDivExtra = document.getElementById("challengesDivExtra") */
         let q = query(collection(db, "challenges"), where("challengeTitle", "!=", ""));
         let querySnapshot = await getDocs(q);
