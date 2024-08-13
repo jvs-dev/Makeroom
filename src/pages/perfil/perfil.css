@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;    
+    position: relative;
     width: 100vw;
     aspect-ratio: 2/1;
     border-bottom: solid 3px var(--primary-color);
@@ -30,7 +30,7 @@
     background: transparent;
     color: var(--black);
     border: 0px;
-    outline-width: 0px;    
+    outline-width: 0px;
 }
 
 .perfilSection__backBtn ion-icon {
@@ -62,13 +62,13 @@
     align-items: center;
     justify-content: center;
     bottom: 0;
-    z-index: 2;    
+    z-index: 2;
     width: 40vw;
     aspect-ratio: 1/1;
     border-radius: 100%;
     overflow: hidden;
     transform: translateY(40%);
-    padding: 3px;
+    padding: 4px;
     background: linear-gradient(var(--primary-color), #fff);
 }
 
@@ -135,4 +135,74 @@
     font-weight: 400;
     margin: 0px;
     padding: 0px;
+}
+
+.perfilSection__div--5 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 25px 0px;
+    padding: 0px 20px;
+}
+
+.perfilSection__div--6 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.perfilSection__dataBtn {
+    color: #545454;
+    background: transparent;
+    border: 0px;
+    outline-width: 0px;
+    font-size: 34px;
+}
+
+.perfilSection__dataBtn.active {
+    color: var(--black);
+}
+
+.perfilSection__div--7 {
+    width: 100%;
+    background: #eee;
+    padding: 15px 20px 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    margin: 0px 0px 20px 0px;
+}
+
+.perfilSection__inputDiv {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #D9D9D9;
+    border: 0px;
+    outline-width: 0px;
+    border-radius: 12px;
+    padding: 6px 12px;
+}
+
+.perfilSection__inputDiv input {
+    background: transparent;
+    outline-width: 0px;
+    border: 0px;
+    width: 100%;
+    font-size: 16px;
+    color: var(--black);
+    padding: 0px;
+    font-weight: 500;
+}
+
+.perfilSection__dataText {
+    font-family: 'Teko', sans-serif;
+    font-size: 25px;
+    margin: 5px 0px 0px 0px;
 }
