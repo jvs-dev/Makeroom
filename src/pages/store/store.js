@@ -49,7 +49,7 @@ async function loadStore() {
                         </div>
                         <div class="storeCard__div--2">
                             <p class="storeCard__name">${doc.data().name}</p>
-                            <p class="storeCard__price">$${doc.data().price}</p>
+                            <p class="storeCard__price">$${doc.data().price.toFixed(2)}</p>
                         </div>
                         <button type="button" class="storeCard__addCart"><i class="bi bi-cart-plus"></i></button>
                         <button type="button" class="storeCard__addCart" style="display: none;"><i class="bi bi-check2" style="font-size: 24px;"></i></button>
