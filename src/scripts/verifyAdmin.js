@@ -18,6 +18,7 @@ const storage = getStorage(app);
 let goToAddContent = document.getElementById("goToAddContent")
 let goToCreateAccount = document.getElementById("goToCreateAccount")
 let goToStock = document.getElementById("goToStock")
+let goToFolders = document.getElementById("goToFolders")
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -27,13 +28,16 @@ onAuthStateChanged(auth, (user) => {
         goToStock.style.display = ""
         goToCreateAccount.style.display = ""
         goToAddContent.style.display = ""
+        goToFolders.style.display = ""
       } else {
         goToStock.style.display = "none"
         goToCreateAccount.style.display = "none"
         goToAddContent.style.display = "none"
+        goToFolders.style.display = "none"
         goToStock.parentNode.removeChild(goToStock);
         goToCreateAccount.parentNode.removeChild(goToCreateAccount);
         goToAddContent.parentNode.removeChild(goToAddContent);
+        goToFolders.parentNode.removeChild(goToFolders);
       }
     })
   }
