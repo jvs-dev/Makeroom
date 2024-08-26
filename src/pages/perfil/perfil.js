@@ -18,6 +18,9 @@ const storage = getStorage(app);
 let homeSection = document.getElementById("homeSection")
 let closePerfil = document.getElementById("closePerfil")
 let perfilSection = document.getElementById("perfilSection")
+let perfilViewPassword = document.getElementById("perfilViewPassword")
+let perfilPassword = document.getElementById("perfilPassword")
+let perfilEmail = document.getElementById("perfilEmail")
 
 closePerfil.onclick = function () {
     homeSection.style.display = "flex"
@@ -42,6 +45,9 @@ onAuthStateChanged(auth, (user) => {
             perfilSection.children[2].children[1].innerHTML = `${actualUser.points} Pontos`
             perfilSection.children[0].children[2].src = `${coverUrl}`
             perfilSection.children[0].children[3].children[0].children[0].src = `${photoUrl}`
+            perfilEmail.value = `${actualUser.email}`
+            perfilViewPassword.onclick = function () {
+            }
             /* document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
             document.getElementById("homeUserImg").src = `${photoUrl}`
             document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`

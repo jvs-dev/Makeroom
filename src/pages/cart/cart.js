@@ -28,6 +28,7 @@ export function initCart() {
     let cartTotalSpan = document.getElementById("cartTotalSpan")
     let cartItemsDiv = document.getElementById("cartItemsDiv")
     let cartBuyDiv = document.getElementById("cartBuyDiv")
+    let buyCartItens = document.getElementById("buyCartItens")
     cartBuyDiv.style.display = "none"
     cartItemsDiv.innerHTML = ""
     cartItemsDiv.classList.add("empity")
@@ -92,6 +93,10 @@ export function initCart() {
                     })
             }
         })
+        buyCartItens.onclick = function () {
+            console.log("comprar");
+            
+        }
     })
 }
 

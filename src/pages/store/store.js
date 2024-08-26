@@ -24,6 +24,7 @@ let cartCount = 0
 
 async function loadStore() {
     let storeDiv = document.getElementById("storeDiv")
+    storeDiv.innerHTML = ""
     const querySnapshot = await getDocs(collection(db, "store"));
     querySnapshot.forEach((doc) => {
         getDownloadURL(ref(storage, `store/${doc.id}/image`))
