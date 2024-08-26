@@ -18,6 +18,7 @@
 .rank__div--1 {
     display: flex;
     align-items: flex-end;
+    flex-direction: row-reverse;
     width: 100%;
     padding: 0px 0px 0px 0px;
     justify-content: center;
@@ -31,10 +32,12 @@
 }
 
 .rank__firstsArticle__img {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 100%;
     object-fit: cover;
+    padding: 2px;
+    border: solid 2px var(--primary-color);
 }
 
 .rank__firstsArticle__name {
@@ -43,6 +46,9 @@
     font-weight: 600;
     text-align: center;
     font-size: 16px;
+    max-width: calc((100vw / 3) - 6px);
+    max-height: 36px;
+    overflow: hidden;
 }
 
 .rank__firstsArticle__points {
@@ -143,8 +149,9 @@
     align-items: center;
     justify-content: flex-start;
     width: 100%;
-    padding: 0px 20px;
+    padding: 0px 20px 40px 20px;
     margin: 20px 0px 0px 0px;
+    gap: 14px;
 }
 
 .rankOuthersCard {
