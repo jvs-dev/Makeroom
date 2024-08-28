@@ -1,3 +1,4 @@
+import QRCode from 'qrcode';
 import { actualUserData, thisUserData, actualUserEmail } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -96,7 +97,33 @@ export function initCart() {
             }
         })
         buyCartItens.onclick = function () {
-            buyThisItems(email, Number(totalCount), items)
+            buyThisItems(email, Number(totalCount), items).then(payRes => {
+                let cartPaymentDiv = document.getElementById("cartPaymentDiv")
+                cartPaymentDiv.style.display = "flex"
+                generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                    cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
+                })
+                cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
+                cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
+                    let tempTextArea = document.createElement("textarea");
+                    tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
+                    document.body.appendChild(tempTextArea);
+                    tempTextArea.select();
+                    document.execCommand("copy");
+                    document.body.removeChild(tempTextArea);
+                    cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon>`
+                    cartPaymentDiv.children[0].children[3].children[0].style.background = "#20E3BB"
+                    cartPaymentDiv.children[0].children[3].children[0].style.color = "#fff"
+                    setTimeout(() => {
+                        cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="copy-outline"></ion-icon>`
+                        cartPaymentDiv.children[0].children[3].children[0].style.background = ""
+                        cartPaymentDiv.children[0].children[3].children[0].style.color = ""
+                    }, 3000);
+                }
+                cartPaymentDiv.children[0].children[4].onclick = ()=> {
+                    cartPaymentDiv.style.display = ""
+                }
+            })
         }
     })
 }
@@ -160,14 +187,17 @@ async function generateQRCode(text) {
 }
 
 async function buyThisItems(email, value, items) {
-    createPay(email, value, items).then(async (payRes) => {
-        let docRef = await addDoc(collection(db, "payments"), {
-            payerEmail: `${email}`,
-            paymentStatus: "pending",
-            totalAmount: Number(value),
-            items: items,
-            paymentId: payRes.result.id,
-            delivered: false
-        });
+    return new Promise(resolve => {
+        createPay(email, value, items).then(async (payRes) => {
+            let docRef = await addDoc(collection(db, "payments"), {
+                payerEmail: `${email}`,
+                paymentStatus: "pending",
+                totalAmount: Number(value),
+                items: items,
+                paymentId: payRes.result.id,
+                delivered: false
+            });
+            resolve(payRes.result)
+        })
     })
 }
