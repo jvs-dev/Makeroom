@@ -127,8 +127,8 @@ async function loadChallenges() {
                             <span class="challengeCard__points">+${doc.data().challengePoints} pontos</span>
                         </div>                        
                         <p class="challengeCard__resolved">Já resolveram esse desafio:</p>
-                        <div class="challengeCard__resolvedDiv">
-                            ${sendersImages.length > 0 ? `${sendersImages.length > 3 ? `${sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`)}<span class="challengeCard__resolvedSpan">+10</span>` : sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`)}` : `<p class="challengeCard__resolveText">Seja o primeiro a resolver!</p>`}                            
+                        <div class="challengeCard__resolvedDiv" ${sendersImages.length > 3 ? `` : `style="justify-content: flex-start; gap: 12px;"`}>
+                            ${sendersImages.length > 0 ? `${sendersImages.length > 3 ? `${sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`).join('')}<span class="challengeCard__resolvedSpan">+10</span>` : sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`).join('')}` : `<p class="challengeCard__resolveText">Seja o primeiro a resolver!</p>`}                            
                         </div>
                         <div class="challengeCard__div--3">
                             <p class="challengeCard__description">${doc.data().challengeDescription}</p>

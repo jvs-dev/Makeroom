@@ -14,7 +14,7 @@
     margin: 10px 0px 0px 0px;
     width: 100%;
     text-align: center;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 0px;
     line-height: 100%;
 }
 
@@ -191,10 +191,12 @@
     margin: 0px;
 }
 
-.sentWindow__img {
+.sentWindow__img {    
     width: 60vw;
+    height: 297px;
     max-width: 210px;
-    margin: 0px 0px 20px 0px;
+    margin: -40px 0px -40px 0px;
+    object-fit: cover;
 }
 
 .sentWindow__p {

@@ -35,6 +35,18 @@ document.getElementById("closeAddContent").onclick = function () {
     AdminAdds.style.transform = "translateX(100vw)"
 }
 
+document.querySelectorAll(".header__logo").forEach(element => {
+    element.onclick = function () {
+        menuToggle.forEach(menuBtn => {
+            alternatePage(document.getElementById("homeSection"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToHome"))
+        });
+    }
+});
+
 document.getElementById("goToHome").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active")) {
