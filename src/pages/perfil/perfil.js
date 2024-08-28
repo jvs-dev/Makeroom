@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, updateDoc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { actualUserData } from "../../scripts/returnUserInfos";
 const firebaseConfig = {
@@ -21,6 +21,7 @@ let perfilSection = document.getElementById("perfilSection")
 let perfilViewPassword = document.getElementById("perfilViewPassword")
 let perfilPassword = document.getElementById("perfilPassword")
 let perfilEmail = document.getElementById("perfilEmail")
+let perfilPhotoInput = document.getElementById("perfilPhotoInput")
 
 closePerfil.onclick = function () {
     homeSection.style.display = "flex"
@@ -31,11 +32,22 @@ closePerfil.onclick = function () {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
-        actualUserData().then(actualUser => {
-            let photoUrl = ""
+        actualUserData().then(actualUser => {            
             let coverUrl = ""
             if (actualUser.noPhoto == true) {
-                photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                perfilSection.children[0].children[3].children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+            } else {
+                getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        perfilSection.children[0].children[3].children[0].children[0].children[0].src = `${url}`
+                    })
             }
             if (actualUser.noCover == true) {
                 coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -44,9 +56,24 @@ onAuthStateChanged(auth, (user) => {
             perfilSection.children[2].children[0].innerHTML = `${actualUser.signature}`
             perfilSection.children[2].children[1].innerHTML = `${actualUser.points} Pontos`
             perfilSection.children[0].children[2].src = `${coverUrl}`
-            perfilSection.children[0].children[3].children[0].children[0].src = `${photoUrl}`
             perfilEmail.value = `${actualUser.email}`
             perfilViewPassword.onclick = function () {
+            }
+            perfilPhotoInput.onchange = function () {
+                if (perfilPhotoInput.files && perfilPhotoInput.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        perfilSection.children[0].children[3].children[0].children[0].children[0].src = e.target.result;
+                        let storageRef = ref(storage, `users/${actualUser.email}/photo`);
+                        uploadString(storageRef, e.target.result, 'data_url').then(async (snapshot) => {
+                            const userPhotoDataRef = doc(db, "users", `${actualUser.email}`);
+                            await updateDoc(userPhotoDataRef, {
+                                noPhoto: false
+                            });
+                        });
+                    }
+                    reader.readAsDataURL(perfilPhotoInput.files[0]);
+                }
             }
             /* document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
             document.getElementById("homeUserImg").src = `${photoUrl}`
