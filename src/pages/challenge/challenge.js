@@ -67,7 +67,7 @@ async function loadChallenges() {
                 signatureToAcess = 2
             }
             getDownloadURL(ref(storage, `challenges/${doc.id}/mask`))
-                .then((url) => {
+                .then(async (url) => {
                     const xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
                     xhr.onload = (event) => {
@@ -107,6 +107,15 @@ async function loadChallenges() {
                                 break;
                         }
                     });
+                    let sendersImages = []
+                    const senderSnapshot = await getDocs(collection(db, "challenges", `${doc.id}`, "resolves"));
+                    senderSnapshot.forEach((senderDoc) => {
+                        if (senderDoc.data().senderNoPhoto == true) {
+                            sendersImages.push(`https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d`)
+                        } else {
+                            sendersImages.push(`https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d`)
+                        }
+                    });
                     article.classList.add("challengeCard")
                     article.innerHTML = `
                         <div class="challengeCard__div--1">
@@ -119,11 +128,7 @@ async function loadChallenges() {
                         </div>                        
                         <p class="challengeCard__resolved">Já resolveram esse desafio:</p>
                         <div class="challengeCard__resolvedDiv">
-                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
-                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
-                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
-                            <img src="https://images.pexels.com/photos/1068205/pexels-photo-1068205.jpeg?auto=compress&cs=tinysrgb&w=600" class="challengeCard__resolvedImage">
-                            <span class="challengeCard__resolvedSpan">+10</span>
+                            ${sendersImages.length > 0 ? `${sendersImages.length > 3 ? `${sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`)}<span class="challengeCard__resolvedSpan">+10</span>` : sendersImages.map(element => `<img src="${element}" class="challengeCard__resolvedImage">`)}` : `<p class="challengeCard__resolveText">Seja o primeiro a resolver!</p>`}                            
                         </div>
                         <div class="challengeCard__div--3">
                             <p class="challengeCard__description">${doc.data().challengeDescription}</p>
@@ -243,7 +248,8 @@ function ChallengeWindowData(obj, id, url) {
                                 senderEmail: `${userData.email}`,
                                 senderName: `${userData.name}`,
                                 senderClass: `${userData.class}`,
-                                senderRoom: `${userData.room}`
+                                senderRoom: `${userData.room}`,
+                                senderNoPhoto: `${userData.noPhoto}`
                             });
                             uploadsCompleteds = uploadsCompleteds + 50
                             activeLoading(uploadsCompleteds)

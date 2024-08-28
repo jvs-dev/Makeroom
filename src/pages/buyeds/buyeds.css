@@ -1,0 +1,88 @@
+.section--buyedsSection {
+    display: none;
+    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.buyedsSection__div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    padding: 0px 20px 60px 20px;
+}
+
+.buyedsCard {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--white);
+    box-shadow: -1px 2px 8px 1px rgba(00, 00, 00, 0.25);
+    border-radius: 12px;
+    padding: 20px;
+    width: 100%;
+}
+
+.buyedsCard__div--1 {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.buyedsCard__name {
+    color: var(--black);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0px;
+    text-transform: capitalize;
+}
+
+.buyedsCard__price {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+
+.buyedsCard__date {
+    color: var(--black);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 2px 0px 0px 0px;    
+}
+
+.buyedsCard__ul {
+    list-style: disc;
+    padding: 0px 0px 0px 20px;    
+    width: 100%;
+    margin: 15px 0px;
+}
+
+.buyedsCard__li {
+    color: var(--black);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.buyedsCard__Btn {
+    background: #20E3BB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 5px 0px;
+    border: none;
+    outline-width: 0px;
+    color: var(--white);
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+}

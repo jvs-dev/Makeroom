@@ -50,18 +50,18 @@ challengeMask.onchange = function () {
 createChallengeBtn.onclick = async function () {
     let challengeTitleValue = document.getElementById("challengeTitle").value
     let challengeDescriptionValue = document.getElementById("challengeDescription").value
-    let challengeDetailsValue = document.getElementById("challengeDetails").value
+    let challengeCertifiedTitleValue = document.getElementById("challengeCertifiedTitle").value
     let challengePointsValue = document.getElementById("challengePoints").value
     let challengeMaskSrc = document.getElementById('challengePreviewMask').src
     createChallengeBtn.disabled = true
-    if (challengeTitleValue != "" && challengeDescriptionValue != "" && challengeDetailsValue != "" && challengePointsValue > 0 && challengeMaskSrc != window.location.href && challengeSelected.length != 0) {
+    if (challengeTitleValue != "" && challengeDescriptionValue != "" && challengePointsValue > 0 && challengeMaskSrc != window.location.href && challengeSelected.length != 0) {
         uploadsCompleteds = 0
         activeLoading(uploadsCompleteds)
         let docRef = await addDoc(collection(db, "challenges"), {
             challengeTitle: `${challengeTitleValue}`,
             challengeClass: challengeSelected,
-            challengeDescription: `${challengeDescriptionValue}`,
-            challengeDetails: `${challengeDetailsValue}`,
+            challengeDescription: `${challengeDescriptionValue}`,      
+            challengeCertifiedTitle:  `${challengeCertifiedTitleValue}`,     
             challengePoints: Number(challengePointsValue)
         });
         uploadsCompleteds = uploadsCompleteds + 50
@@ -92,8 +92,7 @@ createChallengeBtn.onclick = async function () {
 
 function clearInputs() {
     document.getElementById("challengeTitle").value = ""
-    document.getElementById("challengeDescription").value = ""
-    document.getElementById("challengeDetails").value = ""
+    document.getElementById("challengeDescription").value = ""    
     document.getElementById("challengePoints").value = ""
     document.getElementById('challengePreviewMask').src = ""
     challengeSelected = []

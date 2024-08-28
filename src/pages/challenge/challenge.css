@@ -221,3 +221,10 @@
     width: 100%;
     max-width: 260px;
 }
+
+.challengeCard__resolveText {
+    color: #f00;
+    font-size: 15px;
+    font-weight: 500;
+    margin: 15px 0px 0px 0px;
+}

@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="src/components/cards/storeCard.css">
   <link rel="stylesheet" href="src/pages/cart/cart.css">
   <link rel="stylesheet" href="src/components/cards/cartItemCard.css">
+  <link rel="stylesheet" href="src/pages/buyeds/buyeds.css">
 </head>
 
 <body>
@@ -240,10 +241,11 @@
         <div class="perfilSection__div--7">
           <div class="perfilSection__dataDiv active">
             <p class="perfilSection__dataText">Email:</p>
-            <div class="perfilSection__inputDiv"><input type="text" disabled value="example@maker.com" id="perfilEmail"></div>
+            <div class="perfilSection__inputDiv"><input type="text" disabled value="example@maker.com" id="perfilEmail">
+            </div>
             <p class="perfilSection__dataText">Senha:</p>
-            <div class="perfilSection__inputDiv"><input type="password" disabled value="*********" id="perfilPassword"><ion-icon
-                name="eye-outline" id="perfilViewPassword"></ion-icon></div>
+            <div class="perfilSection__inputDiv"><input type="password" disabled value="*********"
+                id="perfilPassword"><ion-icon name="eye-outline" id="perfilViewPassword"></ion-icon></div>
           </div>
           <div class="perfilSection__dataDiv">
 
@@ -336,6 +338,16 @@
     </section>
 
     <section class="main__section section--cart" id="cartSection">
+      <div class="cartPaymentDiv" id="cartPaymentDiv">
+        <div class="cartPaymentDiv__div--1">
+          <h1 class="cartPaymentDiv__h1">Agora é com você!</h1>
+          <p class="cartPaymentDiv__p">Continue no seu app do banco</p>
+          <img class="cartPaymentDiv__img" src="" alt="">
+          <div class="cartPaymentDiv__div--2"><button class="cartPaymentDiv__copy"><ion-icon name="copy-outline"></ion-icon></button><span
+              class="cartPaymentDiv__span">5759807561711985awdwad125124awdawfals</span></div>
+          <button class="cartPaymentDiv__btn">Confirmar</button>
+        </div>
+      </div>
       <div class="cart__div--1">
         <button class="cart__backBtn" id="closeCartSection"><i class="bi bi-arrow-left"></i></button>
       </div>
@@ -396,7 +408,34 @@
           <span class="youCard__span" id="rankCardYouPosition"></span>
         </div>
       </article>
-      <div class="rank__outhersDiv" id="rankOuthersDiv">        
+      <div class="rank__outhersDiv" id="rankOuthersDiv">
+      </div>
+    </section>
+
+    <section class="main__section section--buyedsSection" id="buyedsSection">
+      <header class="page__header">
+        <img src="assets/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="store__h1">Compras</h1>
+      <div class="buyedsSection__div" id="buyedsSectionDiv">
+        <article class="buyedsCard">
+          <div class="buyedsCard__div--1">
+            <div class="buyedsCard__div--2">
+              <p class="buyedsCard__name">Rebeca Andrade</p>
+              <p class="buyedsCard__price">R$ 62.90</p>
+            </div>
+            <p class="buyedsCard__date">12/08/24</p>
+          </div>
+          <ul class="buyedsCard__ul">
+            <li class="buyedsCard__li">Roda: 1</li>
+            <li class="buyedsCard__li">Motor: 2</li>
+            <li class="buyedsCard__li">Pilhas AA(2): 2</li>
+          </ul>
+          <button class="buyedsCard__Btn">Entregue</button>
+        </article>
       </div>
     </section>
 
@@ -655,9 +694,9 @@
 
         <label for="challengeTitle" class="createAccount loginSection__label">
           <div class="createAccount loginSection__div">
-            <ion-icon name="information-circle-outline" class="createAccount loginSection__icon"></ion-icon>
-            <input type="text" placeholder="Detalhes da atividade" class="createAccount loginSection__input"
-              id="challengeDetails">
+            <ion-icon name="ribbon-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Titulo do certificado(opcional)" class="createAccount loginSection__input"
+              id="challengeCertifiedTitle">
           </div>
         </label>
 
@@ -719,6 +758,7 @@
   <script type="module" src="src/pages/store/store.js"></script>
   <script type="module" src="src/pages/createStoreItem/createStoreItem.js"></script>
   <script type="module" src="src/pages/cart/cart.js"></script>
+  <script type="module" src="src/pages/buyeds/buyeds.js"></script>
 </body>
 
 </html>

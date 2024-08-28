@@ -29,6 +29,7 @@ export function initCart() {
     let cartItemsDiv = document.getElementById("cartItemsDiv")
     let cartBuyDiv = document.getElementById("cartBuyDiv")
     let buyCartItens = document.getElementById("buyCartItens")
+    let items = []
     cartBuyDiv.style.display = "none"
     cartItemsDiv.innerHTML = ""
     cartItemsDiv.classList.add("empity")
@@ -48,6 +49,7 @@ export function initCart() {
                         };
                         xhr.open('GET', url);
                         xhr.send();
+                        items.push(` '${docSnap.data().name}: ${cartDoc.data().quanty}' `)
                         cartBuyDiv.style.display = ""
                         cartItemsDiv.classList.remove("empity")
                         totalCount = totalCount + (docSnap.data().price * cartDoc.data().quanty)
@@ -94,8 +96,7 @@ export function initCart() {
             }
         })
         buyCartItens.onclick = function () {
-            console.log("comprar");
-            
+            buyThisItems(email, Number(totalCount), items)
         }
     })
 }
@@ -117,5 +118,56 @@ async function alterCartQuanty(itemId, quanty) {
             });
             refreshCartQuanty()
         }
+    })
+}
+
+async function createPay(email, value, items) {
+    return new Promise(resolve => {
+        let requestBody = {
+            payerEmail: `${email}`,
+            value: `${value}`,
+            items: items
+        };
+        let requestOptions = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        };
+        fetch('http://localhost:3000/api/createpay', requestOptions)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao enviar requisição: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                resolve(data)
+            })
+    })
+}
+
+async function generateQRCode(text) {
+    return new Promise(async (resolve) => {
+        try {
+            const qrCodeImage = await QRCode.toDataURL(text);
+            resolve(qrCodeImage)
+        } catch (error) {
+            resolve('error')
+        }
+    })
+}
+
+async function buyThisItems(email, value, items) {
+    createPay(email, value, items).then(async (payRes) => {
+        let docRef = await addDoc(collection(db, "payments"), {
+            payerEmail: `${email}`,
+            paymentStatus: "pending",
+            totalAmount: Number(value),
+            items: items,
+            paymentId: payRes.result.id,
+            delivered: false
+        });
     })
 }

@@ -15,6 +15,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
+let logins = 0
 let goToAddContent = document.getElementById("goToAddContent")
 let goToCreateAccount = document.getElementById("goToCreateAccount")
 let goToStock = document.getElementById("goToStock")
@@ -24,6 +25,7 @@ let goToBuyeds = document.getElementById("goToBuyeds")
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
+    logins = logins + 1
     actualUserData().then(result => {
       if (result.admin == true) {
         goToStock.style.display = ""
@@ -31,6 +33,9 @@ onAuthStateChanged(auth, (user) => {
         goToAddContent.style.display = ""
         goToFolders.style.display = ""
         goToBuyeds.style.display = ""
+        if (logins > 1) {          
+          window.location.reload()
+        }
       } else {
         goToStock.style.display = "none"
         goToCreateAccount.style.display = "none"
@@ -41,7 +46,7 @@ onAuthStateChanged(auth, (user) => {
         goToCreateAccount.parentNode.removeChild(goToCreateAccount);
         goToAddContent.parentNode.removeChild(goToAddContent);
         goToFolders.parentNode.removeChild(goToFolders);
-        goToBuyeds.parentNode.removeChild(goToFolders);
+        goToBuyeds.parentNode.removeChild(goToBuyeds);
       }
     })
   }

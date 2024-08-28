@@ -102,3 +102,110 @@
     outline-width: 0px;
     margin-top: 10px;
 }
+
+.cartPaymentDiv {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: rgba(00, 00, 00, 0.69);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+.cartPaymentDiv__div--1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px;
+    width: calc(100% - 40px);
+}
+
+.cartPaymentDiv__h1 {
+    font-family: 'Teko', sans-serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: #20E3BB;
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    line-height: 100%;
+}
+
+.cartPaymentDiv__p {
+    font-family: 'Teko', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--black);
+    width: 100%;
+    text-align: center;
+    margin: 0px;
+    line-height: 100%;
+}
+
+.cartPaymentDiv__img {    
+    width: 50%;
+    min-width: 215px;
+    aspect-ratio: 1/1;    
+}
+
+.cartPaymentDiv__btn {
+    width: 100%;
+    color: var(--white);
+    background: #20E3BB;
+    box-shadow: 0px 0px 6px #20E3BB;
+    padding: 3px 0px;
+    font-family: 'Teko', sans-serif;
+    font-size: 32px;
+    font-weight: 200;
+    letter-spacing: 1.2px;
+    border: 0px;
+    outline-width: 0px;
+    border-radius: 12px;
+}
+
+.cartPaymentDiv__div--2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: hidden;
+    padding: 6px 8px;
+    gap: 10px;
+    border-radius: 12px;
+    background: #eee;
+    margin: 20px 0px;
+}
+
+.cartPaymentDiv__span {
+    color: var(--black);
+    margin: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cartPaymentDiv__copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FED3A8;
+    color: #FF8203;
+    font-size: 20px;
+    height: 38px;
+    width: 38px;
+    min-width: 38px;
+    border-radius: 12px;
+    padding: 0px;
+    outline-width: 0px;
+    border: none;
+}
