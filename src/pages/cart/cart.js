@@ -120,7 +120,7 @@ export function initCart() {
                         cartPaymentDiv.children[0].children[3].children[0].style.color = ""
                     }, 3000);
                 }
-                cartPaymentDiv.children[0].children[4].onclick = ()=> {
+                cartPaymentDiv.children[0].children[4].onclick = () => {
                     cartPaymentDiv.style.display = ""
                 }
             })
@@ -188,16 +188,26 @@ async function generateQRCode(text) {
 
 async function buyThisItems(email, value, items) {
     return new Promise(resolve => {
-        createPay(email, value, items).then(async (payRes) => {
-            let docRef = await addDoc(collection(db, "payments"), {
-                payerEmail: `${email}`,
-                paymentStatus: "pending",
-                totalAmount: Number(value),
-                items: items,
-                paymentId: payRes.result.id,
-                delivered: false
-            });
-            resolve(payRes.result)
+        actualUserData().then(async (userData) => {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const year = String(today.getFullYear()).slice(-2);
+            const formattedDate = `${day}/${month}/${year}`;
+            createPay(email, value, items).then(async (payRes) => {
+                let docRef = await addDoc(collection(db, "payments"), {
+                    payerEmail: `${email}`,
+                    paymentStatus: "pending",
+                    totalAmount: Number(value),
+                    items: items,
+                    paymentId: payRes.result.id,
+                    delivered: false,
+                    noticed: false,
+                    payDate: formattedDate,
+                    payerName: userData.name
+                });
+                resolve(payRes.result)
+            })
         })
     })
 }

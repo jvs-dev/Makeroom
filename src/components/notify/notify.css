@@ -1,0 +1,90 @@
+.notifyCard {
+    position: fixed;
+    z-index: 20;
+    top: 0;
+    margin: 20px 0px 0px 0px;
+    width: calc(100% - 20px);
+    padding: 14px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    background: #212121c9;
+    backdrop-filter: blur(2px);
+    border-radius: 18px;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    animation: upDown 4s linear infinite;
+    transition: 0.5s;
+    opacity: 0;
+}
+
+.notifyCard__icon {
+    background: #20E3BB;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 38px;
+    padding: 8px;
+    border-radius: 14px;
+    box-shadow: 0px 0px 45px #20E3BB;
+    min-width: 38px;
+}
+
+.notifyCard__div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 0px 0px 0px 10px;
+}
+
+.notifyCard__title {
+    font-family: 'Teko', sans-serif;
+    color: #20E3BB;
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0px;
+    line-height: 100%;
+    text-transform: uppercase;
+}
+
+.notifyCard__p {
+    font-family: 'Teko', sans-serif;
+    color: var(--white);
+    font-weight: 200;
+    font-size: 18px;
+    margin: 0px;
+    line-height: 100%;
+}
+
+.notifyCard__btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    color: var(--white);
+    border: 0px;
+    outline-width: 0px;
+    margin: 8px 8px 0px 0px;
+    font-size: 25px;
+    padding: 0px;
+}
+
+@keyframes upDown {
+    0% {
+        transform: translate(-50%, 0px);
+    }
+
+    50% {
+        transform: translate(-50%, 4px);
+    }
+
+    100% {
+        transform: translate(-50%, 0px);
+    }
+}
