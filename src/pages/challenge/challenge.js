@@ -313,36 +313,44 @@ async function verifySend(challengeId, email) {
 }
 
 function loadComents(section, obj, id, url) {
-    let photoUrl = ""
     actualUserEmail().then(actualUser => {
         section.innerHTML = ""
         getComments("challenges", `${id}`).then(coment => {
             coment.forEach(element => {
                 thisUserData(element.email).then(UserData => {
-                    if (UserData.noPhoto == true) {
-                        photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
-                    } else {
-
-                    }
                     let article = document.createElement("article")
                     section.insertAdjacentElement("beforeend", article)
                     article.classList.add(`${element.email == actualUser ? "actualUser" : "otherUser"}`)
                     article.classList.add(`commentCard`)
                     article.innerHTML = `
-                <div class="commentCard__div--1">
-                    <div class="commentCard__resetPhoto">
-                        <img class="commentCard__photo" src="${photoUrl}">
-                    </div>
-                    <p class="commentCard__dateTime">${element.date}<br>${element.time}</p>
-                </div>
-                <div class="commentCard__div--2">
-                    <p class="commentCard__name">${element.email == actualUser ? "" : `<span class="commentCard__clasRoom">${UserData.class}${UserData.room}</span>`}${UserData.name}</p>
-                    <div class="commentCard__resetText">
-                        <p class="commentCard__text">${element.text}</p>
-                    </div>
-                </div>`
+                        <div class="commentCard__div--1">
+                            <div class="commentCard__resetPhoto">
+                                <img class="commentCard__photo" src="">
+                            </div>
+                            <p class="commentCard__dateTime">${element.date}<br>${element.time}</p>
+                        </div>
+                        <div class="commentCard__div--2">
+                            <p class="commentCard__name">${element.email == actualUser ? "" : `<span class="commentCard__clasRoom">${UserData.class}${UserData.room}</span>`}${UserData.name}</p>
+                            <div class="commentCard__resetText">
+                                <p class="commentCard__text">${element.text}</p>
+                            </div>
+                        </div>`
+                    if (UserData.noPhoto == true) {
+                        article.children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                    } else {
+                        getDownloadURL(ref(storage, `users/${element.email}/photo`))
+                            .then((url) => {
+                                let xhr = new XMLHttpRequest();
+                                xhr.responseType = 'blob';
+                                xhr.onload = (event) => {
+                                    let blob = xhr.response;
+                                };
+                                xhr.open('GET', url);
+                                xhr.send();
+                                article.children[0].children[0].children[0].src = `${url}`
+                            })
+                    }
                     article.style.order = `${element.timestamp.seconds}`
-
                 });
             })
         })
@@ -350,15 +358,9 @@ function loadComents(section, obj, id, url) {
 }
 
 function unrefreshLoadComents(section, obj, id, postId, url) {
-    let photoUrl = ""
     actualUserEmail().then(actualUser => {
         getThisComment("challenges", id, postId).then(element => {
             thisUserData(element.email).then(UserData => {
-                if (UserData.noPhoto == true) {
-                    photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
-                } else {
-
-                }
                 let article = document.createElement("article")
                 section.insertAdjacentElement("beforeend", article)
                 article.classList.add(`${element.email == actualUser ? "actualUser" : "otherUser"}`)
@@ -366,7 +368,7 @@ function unrefreshLoadComents(section, obj, id, postId, url) {
                 article.innerHTML = `
                     <div class="commentCard__div--1">
                         <div class="commentCard__resetPhoto">
-                            <img class="commentCard__photo" src="${photoUrl}">
+                            <img class="commentCard__photo" src="">
                         </div>
                         <p class="commentCard__dateTime">${element.date}<br>${element.time}</p>
                     </div>
@@ -376,6 +378,21 @@ function unrefreshLoadComents(section, obj, id, postId, url) {
                             <p class="commentCard__text">${element.text}</p>
                         </div>
                     </div>`
+                if (UserData.noPhoto == true) {
+                    article.children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                } else {
+                    getDownloadURL(ref(storage, `users/${element.email}/photo`))
+                        .then((url) => {
+                            let xhr = new XMLHttpRequest();
+                            xhr.responseType = 'blob';
+                            xhr.onload = (event) => {
+                                let blob = xhr.response;
+                            };
+                            xhr.open('GET', url);
+                            xhr.send();
+                            article.children[0].children[0].children[0].src = `${url}`
+                        })
+                }
                 article.style.order = `${element.timestamp.seconds}`
             });
         })
