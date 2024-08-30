@@ -47,6 +47,7 @@
   <link rel="stylesheet" href="src/components/cards/cartItemCard.css">
   <link rel="stylesheet" href="src/pages/buyeds/buyeds.css">
   <link rel="stylesheet" href="src/components/notify/notify.css">
+  <link rel="stylesheet" href="src/components/cards/certifiedCard.css">
 </head>
 
 <body>
@@ -235,13 +236,15 @@
       </div>
       <div class="perfilSection__div--5">
         <div class="perfilSection__div--6">
-          <button class="perfilSection__dataBtn active" type="button"><ion-icon name="person"></ion-icon></button>
-          <button class="perfilSection__dataBtn" type="button"><ion-icon name="ribbon"></ion-icon></button>
+          <button id="perfilShowData" class="perfilSection__dataBtn active" type="button"><ion-icon
+              name="person"></ion-icon></button>
+          <button id="perfilShowCertifies" class="perfilSection__dataBtn" type="button"><ion-icon
+              name="ribbon"></ion-icon></button>
         </div>
-        <div class="perfilSection__div--7">
+        <div class="perfilSection__div--7" id="perfilDataDiv">
           <div class="perfilSection__dataDiv active">
             <p class="perfilSection__dataText">Email:</p>
-            <div class="perfilSection__inputDiv"><input type="text" disabled value="example@maker.com" id="perfilEmail">
+            <div class="perfilSection__inputDiv"><input type="text" disabled value="" id="perfilEmail">
             </div>
             <p class="perfilSection__dataText">Senha:</p>
             <div class="perfilSection__inputDiv"><input type="password" disabled value="*********"
@@ -250,6 +253,8 @@
           <div class="perfilSection__dataDiv">
 
           </div>
+        </div>
+        <div class="perfilSection__div--8" id="perfilCertifiesDiv">
         </div>
       </div>
     </section>

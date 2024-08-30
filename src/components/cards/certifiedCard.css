@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Sassy+Frass&family=Teko:wght@300..700&display=swap');
+
+.certifiedCard {
+    position: relative;
+    background: #fff;
+    border: solid 5px var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 295px;
+    min-width: 295px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.certifiedCard__logo {
+    height: 45px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0px 0px 0px 5px;
+    z-index: 2;
+}
+
+.certifiedCard__flag {
+    height: 80px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 10px 10px 0px 0px;
+    z-index: 2;
+}
+
+.certifiedCard__div--1 {
+    margin: 0px 0px 0px 30px;
+    padding: 0px 65px 0px 0px;
+    z-index: 2;
+}
+
+.certifiedCard__p--1 {
+    color: var(--black);
+    font-size: 10px;
+    margin: 0px;
+    line-height: 110%;
+}
+
+.certifiedCard__p--2 {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-size: 20px;
+    line-height: 100%;
+    margin: 0px;
+}
+
+.certifiedCard__span--1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    rotate: -90deg;
+    color: var(--black);
+    font-size: 5px;
+    margin: 0px 0px 0px 13px;
+    aspect-ratio: 1 / 1;
+    width: calc(100% - 95px);
+    text-align: center;
+}
+
+.certifiedCard__div--2 {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 2;
+}
+
+.certifiedCard__signature {
+    font-family: "Sassy Frass", cursive;
+    font-weight: 400;
+    font-size: 20px;
+    margin: 0px;
+}
+
+.certifiedCard__chefName {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 100%;
+    margin: 0px;
+}
+
+.certifiedCard__chefPosisie {
+    font-size: 8px;
+    margin: -2px 0px 0px 0px;
+}
+
+.certifiedCard__retangle--1 {
+    position: absolute;
+    height: 120%;
+    width: 60px;
+    background: #FFE4C8;
+    rotate: 25deg;
+    right: 0;
+    margin: 0px 20px 0px 0px;
+    z-index: 1;
+}
+
+.certifiedCard__retangle--2 {
+    position: absolute;
+    height: 120%;
+    width: 60px;
+    background: #FFE4C8;
+    rotate: 25deg;
+    right: 0;
+    margin: 0px 100px 0px 0px;
+    z-index: 1;
+}

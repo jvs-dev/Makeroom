@@ -245,6 +245,7 @@ function ChallengeWindowData(obj, id, url) {
                             let uploadsCompleteds = 0
                             activeLoading(uploadsCompleteds)
                             await setDoc(doc(db, "challenges", `${id}`, "resolves", `${userData.email}`), {
+                                resolved: false,
                                 senderEmail: `${userData.email}`,
                                 senderName: `${userData.name}`,
                                 senderClass: `${userData.class}`,
