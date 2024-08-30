@@ -39,35 +39,47 @@ onAuthStateChanged(auth, async (user) => {
         firstsDiv.innerHTML = ""
         rankOuthersDiv.innerHTML = ""
         for (let index = 0; index < 3; index++) {
-            let photoUrl = ""
-            let coverUrl = ""
+            let article = document.createElement("article")
+            firstsDiv.insertAdjacentElement("beforeend", article)
+            article.classList.add("rank__firstsArticle")
+            article.innerHTML = `
+                <img class="rank__firstsArticle__img" src="" alt="">
+                <p class="rank__firstsArticle__name">${rankedUsers[index].name}</p>
+                <p class="rank__firstsArticle__points">${rankedUsers[index].points} pontos</p>
+                <span class="rank__firstsArticle__position position${rankedUsers[index].rankPosition}">#${rankedUsers[index].rankPosition}</span>                
+            `
             if (rankedUsers[index].noPhoto == true) {
-                photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+            } else {
+                getDownloadURL(ref(storage, `users/${rankedUsers[index].email}/photo`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        article.children[0].src = `${url}`
+                    })
             }
-            if (rankedUsers[index].noCover == true) {
-                coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
-            }
-            firstsDiv.insertAdjacentHTML("beforeend", `
-                <article class="rank__firstsArticle">
-                    <img class="rank__firstsArticle__img"
-                        src="${photoUrl}"
-                        alt="">
-                    <p class="rank__firstsArticle__name">${rankedUsers[index].name}</p>
-                    <p class="rank__firstsArticle__points">${rankedUsers[index].points} pontos</p>
-                    <span class="rank__firstsArticle__position position${rankedUsers[index].rankPosition}">#${rankedUsers[index].rankPosition}</span>
-                </article>
-            `)
         }
         actualUserData().then(actualUser => {
-            let photoUrl = ""
-            let coverUrl = ""
             if (actualUser.noPhoto == true) {
-                photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                document.getElementById("rankCardYouPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+            } else {
+                getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        document.getElementById("rankCardYouPhoto").src = `${url}`
+                    })
             }
-            if (actualUser.noCover == true) {
-                coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
-            }
-            document.getElementById("rankCardYouPhoto").src = `${photoUrl}`
             document.getElementById("rankCardYouPoints").innerHTML = `${actualUser.points} Pontos`
             rankedUsers.forEach(element => {
                 if (element.email == actualUser.email) {
@@ -77,28 +89,33 @@ onAuthStateChanged(auth, async (user) => {
         })
         rankedUsers.forEach(element => {
             if (element.rankPosition > 3) {
-                let photoUrl = ""
-                let coverUrl = ""
+                let article = document.createElement("article")
+                article.classList.add("rankOuthersCard")
+                rankOuthersDiv.insertAdjacentElement("beforeend", article)
+                article.innerHTML = `                    
+                    <img class="rankOuthersCard__img" src="" alt="">
+                    <div class="rankOuthersCard__div">
+                        <p class="rankOuthersCard__name">${element.name}</p>
+                        <p class="rankOuthersCard__points">${element.points} pontos</p>
+                    </div>
+                    <span class="rankOuthersCard__position">#${element.rankPosition}</span>                    
+                `
                 if (element.noPhoto == true) {
-                    photoUrl = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                    article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+                } else {
+                    getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                        .then((url) => {
+                            let xhr = new XMLHttpRequest();
+                            xhr.responseType = 'blob';
+                            xhr.onload = (event) => {
+                                let blob = xhr.response;
+                            };
+                            xhr.open('GET', url);
+                            xhr.send();
+                            article.children[0].src = `${url}`
+                        })
                 }
-                if (element.noCover == true) {
-                    coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
-                }
-                rankOuthersDiv.insertAdjacentHTML("beforeend", `
-                    <article class="rankOuthersCard">
-                        <img class="rankOuthersCard__img"
-                            src="${photoUrl}"
-                            alt="">
-                        <div class="rankOuthersCard__div">
-                            <p class="rankOuthersCard__name">${element.name}</p>
-                            <p class="rankOuthersCard__points">${element.points} pontos</p>
-                        </div>
-                        <span class="rankOuthersCard__position">#${element.rankPosition}</span>
-                    </article>
-                `)
             }
         });
-        console.log(rankedUsers);
     }
 })

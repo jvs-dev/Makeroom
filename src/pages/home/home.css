@@ -77,6 +77,7 @@
     background: var(--light-gray);
     margin: 10px 0px 20px 0px;
     border-radius: 12px;
+    height: 53px;
 }
 
 .lessonWindow__divSelectView__btn {
@@ -93,6 +94,7 @@
     outline-width: 0px;
     font-size: 22px;
     transition: 0.2s;
+    height: 100%;
 }
 
 .lessonWindow__divSelectView__btn.active {
@@ -134,8 +136,7 @@
     overflow: hidden;
 }
 
-.lessonWindow.comentControls {    
-}
+/* .lessonWindow.comentControls {} */
 
 .section--lessonIntroduction {
     display: none;
