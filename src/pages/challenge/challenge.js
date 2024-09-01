@@ -226,9 +226,9 @@ function ChallengeWindowData(obj, id, url) {
                 challengeWindow.children[5].style.color = "#fff"
             }
             challengeWindow.children[2].textContent = `${obj.challengeTitle}`
-            challengeWindow.children[3].children[0].src = `${url}`
+            challengeWindow.children[3].children[1].src = `${url}`
             challengeWindow.children[4].textContent = `${obj.challengeDescription}`
-            challengeWindow.children[3].children[1].textContent = `+${obj.challengePoints} Pontos`
+            challengeWindow.children[3].children[2].textContent = `+${obj.challengePoints} Pontos`
             loadComents(challengeWindow.children[7].children[0], obj, id, url)
             challengeWindow.children[7].children[1].children[0].children[2].onclick = function () {
                 if (challengeWindow.children[7].children[1].children[0].children[1].value.replace(" ", "") != "") {

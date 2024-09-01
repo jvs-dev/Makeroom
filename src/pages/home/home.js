@@ -80,6 +80,7 @@ async function loadLessons() {
                     }
                     article.classList.add("projectCard")
                     article.innerHTML = `
+                        ${UserData.admin == true ? `<button class="projectCard__deleteLesson" type="button"><ion-icon name="trash-outline"></ion-icon></button>` : ``}
                         <img src="${url}" alt="cover" class="projectCard__cover">
                         <div class="projectCard__imgMask">                            
                             <p class="projectCard__title">${doc.data().lessonTitle}</p>
@@ -88,6 +89,11 @@ async function loadLessons() {
                     `
                     article.onclick = () => {
                         loadLessonIntro(doc.data(), doc.id, url)
+                    }
+                    if (UserData.admin == true) {
+                        article.children[0].onclick = (evt) => {
+                            evt.stopPropagation()
+                        }
                     }
                 })
                 .catch((error) => {

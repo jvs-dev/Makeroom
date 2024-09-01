@@ -48,6 +48,7 @@
   <link rel="stylesheet" href="src/pages/buyeds/buyeds.css">
   <link rel="stylesheet" href="src/components/notify/notify.css">
   <link rel="stylesheet" href="src/components/cards/certifiedCard.css">
+  <link rel="stylesheet" href="src/components/cards/manageUsersCard.css">
 </head>
 
 <body>
@@ -314,6 +315,8 @@
       </header>
       <h1 class="challengeWindow__h1"></h1>
       <div class="challengeWindow__resetMaskImg">
+        <button type="button" class="challengeWindow__deleteChallange"><ion-icon
+            name="trash-outline"></ion-icon></button>
         <img class="challengeWindow__mask" src="" alt="">
         <span class="challengeWindow__points"></span>
       </div>
@@ -446,6 +449,31 @@
     </section>
 
     <section class="main__section section--createAccount" id="createAccountSection">
+      <div class="manageUsersData" id="manageUsersDataDiv">
+        <div class="manageUsersData__div">
+          <h1 class="manageUsersData__h1">Alterar Dados</h1>
+          <div class="manageUsersData__div--2">
+            <img class="manageUsersData__photo" src="" alt="" id="manageUsersDataPhoto">
+            <div class="manageUsersData__div--3">
+              <div class="manageUsersData__div--4">
+                <label class="manageUsersData__label"><span class="manageUsersData__span">Turma: </span><input
+                    type="text" name="manageUsersDataClass" id="manageUsersDataClass"></label>
+                <label class="manageUsersData__label"><span class="manageUsersData__span">Sala: </span><input
+                    type="text" name="manageUsersDataRoom" id="manageUsersDataRoom"></label>
+              </div>
+              <label class="manageUsersData__label"><span class="manageUsersData__span">Pontos: </span><input
+                  type="number" name="manageUsersDataPoints" id="manageUsersDataPoints"></label>
+            </div>
+          </div>
+          <div class="manageUsersData__div--5"><span class="manageUsersData__span">Plano: </span><button type="button"
+              id="manageUsersDataSignature">Basic</button></div>
+          <input class="manageUsersData__input" type="text" placeholder="Email" id="manageUsersDataEmail">
+          <input class="manageUsersData__input" type="text" placeholder="Nome" id="manageUsersDataName">
+          <input class="manageUsersData__input" type="text" placeholder="Senha" id="manageUsersDataPassword">
+          <button class="manageUsersData__alterData">Alterar</button>
+          <button class="manageUsersData__delete">Apagar conta</button>
+        </div>
+      </div>
       <header class="page__header">
         <img src="assets/logo.svg" alt="logo" class="header__logo">
         <button type="button" class="header__menuToggle">
@@ -503,6 +531,23 @@
 
         <button class="createAccount loginSection__btn" type="button" id="createAccountBtn">Criar</button>
       </form>
+      <div class="createAccount__manageUsersDiv" id="manageUsersDiv">
+        <article class="manageUsersCard">
+          <img class="manageUsersCard__img" src="" alt="">
+          <div class="manageUsersCard__div">
+            <p class="manageUsersCard__name">João Vitor Santana da Silva</p>
+            <p class="manageUsersCard__email">joaosilva@maker.com</p>
+          </div>
+        </article>
+
+        <article class="manageUsersCard">
+          <img class="manageUsersCard__img" src="" alt="">
+          <div class="manageUsersCard__div">
+            <p class="manageUsersCard__name">João Vitor Santana da Silva</p>
+            <p class="manageUsersCard__email">joaosilva@maker.com</p>
+          </div>
+        </article>
+      </div>
       <div class="createAccount loginSquare--2"></div>
       <div class="createAccount loginSquare--3"></div>
       <div class="createAccount loginSquare--4"></div>

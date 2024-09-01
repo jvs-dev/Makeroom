@@ -3,6 +3,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { actualUserData } from "../../scripts/returnUserInfos";
 const firebaseConfig = {
   apiKey: `${import.meta.env.VITE_API_KEY}`,
   authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -18,6 +19,8 @@ const storage = getStorage(app);
 
 let createAccountBtn = document.getElementById("createAccountBtn")
 let body = document.querySelector("body")
+let manageUsersDiv = document.getElementById("manageUsersDiv")
+let manageUsersDataDiv = document.getElementById("manageUsersDataDiv")
 
 createAccountBtn.onclick = function () {
   let createAccountClass = document.getElementById("createAccountClass").value
@@ -53,3 +56,69 @@ async function registerAccount(createAccountClass, createAccountPassword, create
   alertThis("Conta criada", "sucess")
   createAccountBtn.disabled = false
 }
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    const uid = user.uid;
+    manageUsersDiv.innerHTML = ""
+    actualUserData().then(async (userData) => {
+      if (userData.admin == true) {
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+          let article = document.createElement("article")
+          manageUsersDiv.insertAdjacentElement("beforeend", article)
+          article.classList.add("manageUsersCard")
+          article.innerHTML = `
+            <img class="manageUsersCard__img" src="" alt="">
+            <div class="manageUsersCard__div">
+              <p class="manageUsersCard__name">${doc.data().name}</p>
+              <p class="manageUsersCard__email">${doc.data().email}</p>
+            </div>`
+          if (doc.data().noPhoto == true) {
+            article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+          } else {
+            getDownloadURL(ref(storage, `users/${doc.data().email}/photo`))
+              .then((url) => {
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = 'blob';
+                xhr.onload = (event) => {
+                  let blob = xhr.response;
+                };
+                xhr.open('GET', url);
+                xhr.send();
+                article.children[0].src = `${url}`
+              })
+          }
+          article.onclick = () => {
+            manageUsersDataDiv.style.display = "flex"
+            setTimeout(() => {
+              manageUsersDataDiv.style.opacity = "1"
+            }, 1);
+            document.getElementById("manageUsersDataClass").value = `${doc.data().class}`
+            document.getElementById("manageUsersDataRoom").value = `${doc.data().room}`
+            document.getElementById("manageUsersDataPoints").value = `${doc.data().points}`
+            document.getElementById("manageUsersDataEmail").value = `${doc.data().email}`
+            document.getElementById("manageUsersDataName").value = `${doc.data().name}`
+            document.getElementById("manageUsersDataSignature").textContent = `${doc.data().signature}`            
+            document.getElementById("manageUsersDataPassword").value = `********`            
+            if (doc.data().noPhoto == true) {
+              document.getElementById("manageUsersDataPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+            } else {
+              getDownloadURL(ref(storage, `users/${doc.data().email}/photo`))
+                .then((url) => {
+                  let xhr = new XMLHttpRequest();
+                  xhr.responseType = 'blob';
+                  xhr.onload = (event) => {
+                    let blob = xhr.response;
+                  };
+                  xhr.open('GET', url);
+                  xhr.send();
+                  document.getElementById("manageUsersDataPhoto").src = `${url}`
+                })
+            }            
+          }
+        });
+      }
+    })
+  }
+})

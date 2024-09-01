@@ -103,7 +103,7 @@ onAuthStateChanged(auth, async (user) => {
                 if (element.noPhoto == true) {
                     article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
                 } else {
-                    getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                    getDownloadURL(ref(storage, `users/${element.email}/photo`))
                         .then((url) => {
                             let xhr = new XMLHttpRequest();
                             xhr.responseType = 'blob';
