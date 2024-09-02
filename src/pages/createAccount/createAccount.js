@@ -24,6 +24,7 @@ let manageUsersDiv = document.getElementById("manageUsersDiv")
 let manageUsersDataDiv = document.getElementById("manageUsersDataDiv")
 let closeManageUsersData = document.getElementById("closeManageUsersData")
 let manageUsersAlterData = document.getElementById("manageUsersAlterData")
+let manageUsersDeleteData = document.getElementById("manageUsersDeleteData")
 let manageUsersDataPhotoInput = document.getElementById("manageUsersDataPhotoInput")
 
 
@@ -45,6 +46,19 @@ closeManageUsersData.onclick = () => {
   }, 500);
 }
 
+async function verifyUserEmailExists(newEmail) {
+  return new Promise(async (resolve) => {
+    let userExists = false
+    const querySnapshot = await getDocs(collection(db, "users"));
+    querySnapshot.forEach((usersData) => {
+      if (usersData.data().email == newEmail) {
+        userExists = true
+      }
+    })
+    resolve(userExists)
+  })
+}
+
 createAccountBtn.onclick = function () {
   let createAccountClass = document.getElementById("createAccountClass").value
   let createAccountPassword = document.getElementById("createAccountPassword").value
@@ -53,7 +67,14 @@ createAccountBtn.onclick = function () {
   let createAccountRoom = document.getElementById("createAccountRoom").value
   createAccountBtn.disabled = true
   if (createAccountClass != "" && createAccountPassword != "" && createAccountEmail != "" && createAccountName != "" && createAccountRoom != "") {
-    registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom)
+    verifyUserEmailExists(createAccountEmail).then(userExists => {
+      if (userExists = false) {
+        registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom)
+      } else {
+        createAccountBtn.disabled = false
+        alertThis("Este email já existe", "error")
+      }
+    })
   } else {
     createAccountBtn.disabled = false
     alertThis("Preencha todos os campos", "error")
@@ -138,6 +159,44 @@ onAuthStateChanged(auth, async (user) => {
                   xhr.send();
                   document.getElementById("manageUsersDataPhoto").src = `${url}`
                 })
+            }
+            manageUsersDeleteData.onclick = async () => {
+              let uploadsCompleteds = 0
+              activeLoading(uploadsCompleteds)
+              if (usersData.data().noPhoto == false) {
+                const desertRef = ref(storage, `users/${usersData.data().email}/photo`);
+                deleteObject(desertRef).then(() => {
+                  uploadsCompleteds = uploadsCompleteds + 50
+                  activeLoading(uploadsCompleteds)
+                  if (uploadsCompleteds == 100) {
+                    alertThis("Conta apagada com sucesso", "sucess")
+                    manageUsersDataDiv.style.opacity = "0"
+                    setTimeout(() => {
+                      manageUsersDataDiv.style.display = "none"
+                    }, 500);
+                  }
+                })
+              } else {
+                uploadsCompleteds = uploadsCompleteds + 50
+                activeLoading(uploadsCompleteds)
+                if (uploadsCompleteds == 100) {
+                  alertThis("Conta apagada com sucesso", "sucess")
+                  manageUsersDataDiv.style.opacity = "0"
+                  setTimeout(() => {
+                    manageUsersDataDiv.style.display = "none"
+                  }, 500);
+                }
+              }
+              await deleteDoc(doc(db, "users", `${usersData.data().email}`));
+              uploadsCompleteds = uploadsCompleteds + 50
+              activeLoading(uploadsCompleteds)
+              if (uploadsCompleteds == 100) {
+                alertThis("Conta apagada com sucesso", "sucess")
+                manageUsersDataDiv.style.opacity = "0"
+                setTimeout(() => {
+                  manageUsersDataDiv.style.display = "none"
+                }, 500);
+              }
             }
             manageUsersAlterData.onclick = async () => {
               let noPhotoExists = true
