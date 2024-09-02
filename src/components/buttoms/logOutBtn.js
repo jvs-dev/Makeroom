@@ -4,6 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { activeConfirmSection } from "../confirmSection/confirmSection";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -21,16 +22,20 @@ let menuSection = document.getElementById("menuSection")
 let body = document.querySelector("body")
 
 document.getElementById("logOutBtn").onclick = function () {
-    signOut(auth).then(() => {
-        menuToggle.forEach(menuBtn => {
-            if (menuBtn.classList.contains("active")) {
-                menuBtn.classList.remove("active")
-                menuSection.style.transform = "translateX(100vw)"
-                body.style.overflowY = "auto"
-            }
-        });
-        logoAlternateAnimation(document.getElementById("loginSection"))
-    }).catch((error) => {
-        alertThis("Erro 201", "")
-    });
+    activeConfirmSection("Deseja realmente sair?", "Você será desconectado de sua conta", "#f00", "sad").then(res => {
+        if (res == "confirmed") {
+            signOut(auth).then(() => {
+                menuToggle.forEach(menuBtn => {
+                    if (menuBtn.classList.contains("active")) {
+                        menuBtn.classList.remove("active")
+                        menuSection.style.transform = "translateX(100vw)"
+                        body.style.overflowY = "auto"
+                    }
+                });
+                logoAlternateAnimation(document.getElementById("loginSection"))
+            }).catch((error) => {
+                alertThis("Erro 201", "")
+            });
+        }
+    })
 }

@@ -4,6 +4,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { deleteThis } from "../../scripts/deleteThis";
+import { alertThis } from "../../components/alerts/alert";
+import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -93,6 +96,13 @@ async function loadLessons() {
                     if (UserData.admin == true) {
                         article.children[0].onclick = (evt) => {
                             evt.stopPropagation()
+                            activeConfirmSection("Deseja excluir esta aula?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+                                if (res == "confirmed") {
+                                    deleteThis("lessons", `${doc.id}`).then(res => {
+                                        alertThis("Aula deletada com sucesso", "sucess")
+                                    })
+                                }
+                            })
                         }
                     }
                 })
