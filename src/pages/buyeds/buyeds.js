@@ -25,21 +25,23 @@ onAuthStateChanged(auth, async (user) => {
             if (userData.admin == true) {
                 const querySnapshot = await getDocs(collection(db, "payments"));
                 querySnapshot.forEach((doc) => {
-                    let article = document.createElement("article")                    
-                    buyedsSectionDiv.insertAdjacentElement("beforeend", article)
-                    article.classList.add("buyedsCard")
-                    article.innerHTML = `
-                    <div class="buyedsCard__div--1">
-                        <div class="buyedsCard__div--2">
-                            <p class="buyedsCard__name">${doc.data().payerName}</p>
-                            <p class="buyedsCard__price">R$ ${doc.data().totalAmount}</p>
+                    if (doc.data().delivered == false && doc.data().paymentStatus == "approved") {
+                        let article = document.createElement("article")
+                        buyedsSectionDiv.insertAdjacentElement("beforeend", article)
+                        article.classList.add("buyedsCard")
+                        article.innerHTML = `
+                        <div class="buyedsCard__div--1">
+                            <div class="buyedsCard__div--2">
+                                <p class="buyedsCard__name">${doc.data().payerName}</p>
+                                <p class="buyedsCard__price">R$ ${doc.data().totalAmount.toFixed(2)}</p>
+                            </div>
+                            <p class="buyedsCard__date">${doc.data().payDate}</p>
                         </div>
-                        <p class="buyedsCard__date">${doc.data().payDate}</p>
-                    </div>
-                    <ul class="buyedsCard__ul">
-                    ${doc.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
-                    </ul>
-                    <button class="buyedsCard__Btn">Entregue</button>`
+                        <ul class="buyedsCard__ul">
+                        ${doc.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
+                        </ul>
+                        <button class="buyedsCard__Btn">Entregue</button>`
+                    }
                 })
             }
         })

@@ -67,7 +67,15 @@
     font-size: 30px;
 }
 
+.menuSection__adminBtn ion-icon {
+    font-size: 34px;
+    color: #2e2e2e;
+}
+
 .menuSection__adminBtn.active {
+    color: var(--primary-color);
+}
+.menuSection__adminBtn.active ion-icon {
     color: var(--primary-color);
 }
 

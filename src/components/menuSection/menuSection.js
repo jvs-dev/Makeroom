@@ -161,10 +161,7 @@ document.getElementById("goToBuyeds").onclick = function () {
             menuBtn.classList.remove("active")
             menuSection.style.transform = "translateX(100vw)"
             body.style.overflowY = "auto"
-            unColorAll()
-            setTimeout(() => {
-                AdminAdds.style.transform = "translateX(100vw)"
-            }, 200);
+            unColor(document.getElementById("goToBuyeds"))
         }
     });
 }

@@ -116,8 +116,8 @@
               class="bi bi-plus-circle"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToFolders" style="display: none;"><i
               class="bi bi-folder"></i></button></li>
-        <li><button class="menuSection__adminBtn" id="goToBuyeds" style="display: none;"><i
-              class="bi bi-suitcase-lg"></i></button></li>
+        <li><button class="menuSection__adminBtn" id="goToBuyeds" style="display: none;"><ion-icon
+              name="cart-outline"></ion-icon></i></button></li>
       </ul>
       <ul class="menuSection__ul">
         <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome">Home</button></li>
@@ -451,10 +451,13 @@
     <section class="main__section section--createAccount" id="createAccountSection">
       <div class="manageUsersData" id="manageUsersDataDiv">
         <div class="manageUsersData__div">
-          <button class="manageUsersData__close" id="closeManageUsersData"><ion-icon name="close-outline"></ion-icon></button>
+          <button class="manageUsersData__close" id="closeManageUsersData"><ion-icon
+              name="close-outline"></ion-icon></button>
           <h1 class="manageUsersData__h1">Alterar Dados</h1>
           <div class="manageUsersData__div--2">
-            <img class="manageUsersData__photo" src="" alt="" id="manageUsersDataPhoto">
+            <label class="manageUsersData__photoLabel" for="manageUsersDataPhotoInput">
+              <input type="file" accept="image/*" id="manageUsersDataPhotoInput" name="manageUsersDataPhotoInput">
+              <img class="manageUsersData__photo" src="" alt="" id="manageUsersDataPhoto"></label>
             <div class="manageUsersData__div--3">
               <div class="manageUsersData__div--4">
                 <label class="manageUsersData__label"><span class="manageUsersData__span">Turma: </span><input
@@ -471,7 +474,7 @@
           <input class="manageUsersData__input" type="text" placeholder="Email" id="manageUsersDataEmail">
           <input class="manageUsersData__input" type="text" placeholder="Nome" id="manageUsersDataName">
           <input class="manageUsersData__input" type="text" placeholder="Nova Senha" id="manageUsersDataPassword">
-          <button class="manageUsersData__alterData">Alterar</button>
+          <button class="manageUsersData__alterData" id="manageUsersAlterData">Alterar</button>
           <button class="manageUsersData__delete">Apagar conta</button>
         </div>
       </div>
@@ -483,7 +486,7 @@
       </header>
       <form class="createAccount loginSection__form">
         <h1 class="createAccount loginSection__h1">Criar conta</h1>
-        <p class="createAccount loginSection__p">Entre com suas informações de login</p>
+        <p class="createAccount loginSection__p">Preencha os campos para criar uma conta</p>
 
         <label for="createAccountName" class="createAccount loginSection__label">
           <div class="createAccount loginSection__div">

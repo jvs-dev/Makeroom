@@ -1,9 +1,10 @@
 import { alertThis } from "../../components/alerts/alert"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, updateDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { actualUserData } from "../../scripts/returnUserInfos";
+import { activeLoading } from "../../components/uploadingSection/uploadingSection";
 const firebaseConfig = {
   apiKey: `${import.meta.env.VITE_API_KEY}`,
   authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -22,10 +23,24 @@ let body = document.querySelector("body")
 let manageUsersDiv = document.getElementById("manageUsersDiv")
 let manageUsersDataDiv = document.getElementById("manageUsersDataDiv")
 let closeManageUsersData = document.getElementById("closeManageUsersData")
+let manageUsersAlterData = document.getElementById("manageUsersAlterData")
+let manageUsersDataPhotoInput = document.getElementById("manageUsersDataPhotoInput")
+
+
+manageUsersDataPhotoInput.onchange = function () {
+  if (manageUsersDataPhotoInput.files && manageUsersDataPhotoInput.files[0]) {
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      document.getElementById("manageUsersDataPhoto").src = e.target.result;
+    }
+    reader.readAsDataURL(manageUsersDataPhotoInput.files[0]);
+  }
+}
+
 
 closeManageUsersData.onclick = () => {
   manageUsersDataDiv.style.opacity = "0"
-  setTimeout(() => {    
+  setTimeout(() => {
     manageUsersDataDiv.style.display = "none"
   }, 500);
 }
@@ -72,20 +87,20 @@ onAuthStateChanged(auth, async (user) => {
     actualUserData().then(async (userData) => {
       if (userData.admin == true) {
         const querySnapshot = await getDocs(collection(db, "users"));
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach((usersData) => {
           let article = document.createElement("article")
           manageUsersDiv.insertAdjacentElement("beforeend", article)
           article.classList.add("manageUsersCard")
           article.innerHTML = `
             <img class="manageUsersCard__img" src="" alt="">
             <div class="manageUsersCard__div">
-              <p class="manageUsersCard__name">${doc.data().name}</p>
-              <p class="manageUsersCard__email">${doc.data().email}</p>
+              <p class="manageUsersCard__name">${usersData.data().name}</p>
+              <p class="manageUsersCard__email">${usersData.data().email}</p>
             </div>`
-          if (doc.data().noPhoto == true) {
+          if (usersData.data().noPhoto == true) {
             article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
           } else {
-            getDownloadURL(ref(storage, `users/${doc.data().email}/photo`))
+            getDownloadURL(ref(storage, `users/${usersData.data().email}/photo`))
               .then((url) => {
                 let xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
@@ -102,17 +117,17 @@ onAuthStateChanged(auth, async (user) => {
             setTimeout(() => {
               manageUsersDataDiv.style.opacity = "1"
             }, 1);
-            document.getElementById("manageUsersDataClass").value = `${doc.data().class}`
-            document.getElementById("manageUsersDataRoom").value = `${doc.data().room}`
-            document.getElementById("manageUsersDataPoints").value = `${doc.data().points}`
-            document.getElementById("manageUsersDataEmail").value = `${doc.data().email}`
-            document.getElementById("manageUsersDataName").value = `${doc.data().name}`
-            document.getElementById("manageUsersDataSignature").textContent = `${doc.data().signature}`
+            document.getElementById("manageUsersDataClass").value = `${usersData.data().class}`
+            document.getElementById("manageUsersDataRoom").value = `${usersData.data().room}`
+            document.getElementById("manageUsersDataPoints").value = `${usersData.data().points}`
+            document.getElementById("manageUsersDataEmail").value = `${usersData.data().email}`
+            document.getElementById("manageUsersDataName").value = `${usersData.data().name}`
+            document.getElementById("manageUsersDataSignature").textContent = `${usersData.data().signature}`
             document.getElementById("manageUsersDataPassword").value = ``
-            if (doc.data().noPhoto == true) {
+            if (usersData.data().noPhoto == true) {
               document.getElementById("manageUsersDataPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
             } else {
-              getDownloadURL(ref(storage, `users/${doc.data().email}/photo`))
+              getDownloadURL(ref(storage, `users/${usersData.data().email}/photo`))
                 .then((url) => {
                   let xhr = new XMLHttpRequest();
                   xhr.responseType = 'blob';
@@ -123,6 +138,65 @@ onAuthStateChanged(auth, async (user) => {
                   xhr.send();
                   document.getElementById("manageUsersDataPhoto").src = `${url}`
                 })
+            }
+            manageUsersAlterData.onclick = async () => {
+              let noPhotoExists = true
+              let uploadsCompleteds = 0
+              activeLoading(uploadsCompleteds)
+              if (article.children[0].src == "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d") {
+                noPhotoExists = true
+                uploadsCompleteds = uploadsCompleteds + 50
+                if (uploadsCompleteds == 100) {
+                  alertThis("Dados alterados com sucesso", "sucess")
+                }
+              } else {
+                noPhotoExists = false
+              }
+              const washingtonRef = doc(db, "users", `${usersData.data().email}`);
+              await updateDoc(washingtonRef, {
+                class: `${document.getElementById("manageUsersDataClass").value.replace(/°/g, '')}°`,
+                email: `${document.getElementById("manageUsersDataEmail").value}`,
+                name: `${document.getElementById("manageUsersDataName").value}`,
+                noPhoto: noPhotoExists,
+                points: Number(document.getElementById("manageUsersDataPoints").value),
+                room: `${document.getElementById("manageUsersDataRoom").value}`,
+                signature: `${document.getElementById("manageUsersDataSignature").textContent}`,
+              });
+              uploadsCompleteds = uploadsCompleteds + 50
+              if (uploadsCompleteds == 100) {
+                alertThis("Dados alterados com sucesso", "sucess")
+                manageUsersDataDiv.style.opacity = "0"
+                setTimeout(() => {
+                  manageUsersDataDiv.style.display = "none"
+                }, 500);
+              }
+              activeLoading(uploadsCompleteds)
+              if (noPhotoExists == false) {
+                if (`${document.getElementById("manageUsersDataPhoto").src}`.includes("https://firebasestorage") == false) {
+                  let storageRef = ref(storage, `users/${usersData.data().email}/photo`);
+                  uploadString(storageRef, `${document.getElementById("manageUsersDataPhoto").src}`, 'data_url').then(async (snapshot) => {
+                    uploadsCompleteds = uploadsCompleteds + 50
+                    if (uploadsCompleteds == 100) {
+                      alertThis("Dados alterados com sucesso", "sucess")
+                      manageUsersDataDiv.style.opacity = "0"
+                      setTimeout(() => {
+                        manageUsersDataDiv.style.display = "none"
+                      }, 500);
+                    }
+                    activeLoading(uploadsCompleteds)
+                  });
+                } else {
+                  uploadsCompleteds = uploadsCompleteds + 50
+                  if (uploadsCompleteds == 100) {
+                    alertThis("Dados alterados com sucesso", "sucess")
+                    manageUsersDataDiv.style.opacity = "0"
+                    setTimeout(() => {
+                      manageUsersDataDiv.style.display = "none"
+                    }, 500);
+                  }
+                  activeLoading(uploadsCompleteds)
+                }
+              }
             }
           }
         });

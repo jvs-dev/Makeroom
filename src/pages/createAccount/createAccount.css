@@ -195,3 +195,15 @@
     outline-width: 0px;
     background: transparent;
 }
+
+.manageUsersData__photoLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.manageUsersData__photoLabel input {
+    display: none;
+    visibility: hidden;
+}
