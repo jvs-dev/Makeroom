@@ -38,6 +38,7 @@
     font-weight: 600;
     margin: 0px;
     text-transform: capitalize;
+    line-height: 100%;
 }
 
 .buyedsCard__price {

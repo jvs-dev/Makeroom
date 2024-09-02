@@ -21,6 +21,14 @@ let createAccountBtn = document.getElementById("createAccountBtn")
 let body = document.querySelector("body")
 let manageUsersDiv = document.getElementById("manageUsersDiv")
 let manageUsersDataDiv = document.getElementById("manageUsersDataDiv")
+let closeManageUsersData = document.getElementById("closeManageUsersData")
+
+closeManageUsersData.onclick = () => {
+  manageUsersDataDiv.style.opacity = "0"
+  setTimeout(() => {    
+    manageUsersDataDiv.style.display = "none"
+  }, 500);
+}
 
 createAccountBtn.onclick = function () {
   let createAccountClass = document.getElementById("createAccountClass").value
@@ -99,8 +107,8 @@ onAuthStateChanged(auth, async (user) => {
             document.getElementById("manageUsersDataPoints").value = `${doc.data().points}`
             document.getElementById("manageUsersDataEmail").value = `${doc.data().email}`
             document.getElementById("manageUsersDataName").value = `${doc.data().name}`
-            document.getElementById("manageUsersDataSignature").textContent = `${doc.data().signature}`            
-            document.getElementById("manageUsersDataPassword").value = `********`            
+            document.getElementById("manageUsersDataSignature").textContent = `${doc.data().signature}`
+            document.getElementById("manageUsersDataPassword").value = ``
             if (doc.data().noPhoto == true) {
               document.getElementById("manageUsersDataPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
             } else {
@@ -115,7 +123,7 @@ onAuthStateChanged(auth, async (user) => {
                   xhr.send();
                   document.getElementById("manageUsersDataPhoto").src = `${url}`
                 })
-            }            
+            }
           }
         });
       }
