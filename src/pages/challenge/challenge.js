@@ -6,6 +6,8 @@ import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { activeLoading } from "../../components/uploadingSection/uploadingSection";
 import { alertThis } from "../../components/alerts/alert";
+import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
+import { deleteAllFiles, deleteAllsubDocs, deleteFiles, deleteThis } from "../../scripts/deleteThis";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -22,6 +24,7 @@ let challengeWindow = document.getElementById("challengeWindow")
 let closeChallengeWindow = document.getElementById("closeChallengeWindow")
 let challengeSection = document.getElementById("challengeSection")
 let sendChallengeFile = document.getElementById("sendChallengeFile")
+let deleteChallange = document.getElementById("deleteChallange")
 
 closeChallengeWindow.onclick = () => {
     challengeSection.style.display = "flex"
@@ -211,6 +214,56 @@ async function loadChallenges() {
 }
 
 function ChallengeWindowData(obj, id, url) {
+    actualUserData().then(userData => {
+        if (userData.admin == true) {
+            deleteChallange.style.display = ""
+            deleteChallange.onclick = () => {
+                activeConfirmSection("Deseja excluir este desafio?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+                    if (res == "confirmed") {
+                        let uploadsCompleteds = 0
+                        activeLoading(uploadsCompleteds)
+                        deleteThis("challenges", `${id}`).then(res => {
+                            uploadsCompleteds = uploadsCompleteds + 20
+                            activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                alertThis("Desafio deletado com sucesso", "sucess")
+                            }
+                        })
+                        deleteAllsubDocs("challenges", `${id}`, "coments").then(res => {
+                            uploadsCompleteds = uploadsCompleteds + 20
+                            activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                alertThis("Desafio deletado com sucesso", "sucess")
+                            }
+                        })
+                        deleteAllsubDocs("challenges", `${id}`, "resolves").then(res => {
+                            uploadsCompleteds = uploadsCompleteds + 20
+                            activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                alertThis("Desafio deletado com sucesso", "sucess")
+                            }
+                        })
+                        deleteFiles(`challenges/${id}/mask`).then(() => {
+                            uploadsCompleteds = uploadsCompleteds + 20
+                            activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                alertThis("Desafio deletado com sucesso", "sucess")
+                            }
+                        })
+                        deleteAllFiles(`challengesResolveds/${id}`).then(() => {
+                            uploadsCompleteds = uploadsCompleteds + 20
+                            activeLoading(uploadsCompleteds)
+                            if (uploadsCompleteds == 100) {
+                                alertThis("Desafio deletado com sucesso", "sucess")
+                            }
+                        })
+                    }
+                })
+            }
+        } else {
+            deleteChallange.style.display = "none"
+        }
+    })
     actualUserEmail().then(actualUser => {
         verifySend(id, actualUser).then(async (isSended) => {
             challengeWindow.children[5].innerHTML = `Enviar
