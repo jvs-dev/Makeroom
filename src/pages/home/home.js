@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-import { deleteThis } from "../../scripts/deleteThis";
+import { deleteAllsubDocs, deleteThis } from "../../scripts/deleteThis";
 import { alertThis } from "../../components/alerts/alert";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 const firebaseConfig = {
@@ -98,8 +98,10 @@ async function loadLessons() {
                             evt.stopPropagation()
                             activeConfirmSection("Deseja excluir esta aula?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
                                 if (res == "confirmed") {
-                                    deleteThis("lessons", `${doc.id}`).then(res => {
-                                        alertThis("Aula deletada com sucesso", "sucess")
+                                    deleteAllsubDocs("lessons", `${doc.id}`, "coments").then(res => {
+                                        deleteThis("lessons", `${doc.id}`).then(res => {
+                                            alertThis("Aula deletada com sucesso", "sucess")
+                                        })
                                     })
                                 }
                             })
