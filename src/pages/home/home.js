@@ -7,6 +7,7 @@ import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getD
 import { deleteAllsubDocs, deleteThis } from "../../scripts/deleteThis";
 import { alertThis } from "../../components/alerts/alert";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
+import { monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -23,6 +24,7 @@ const storage = getStorage(app);
 let lessonWindow = document.getElementById("lessonWindow")
 let homeSection = document.getElementById("homeSection")
 let closeLessonWindow = document.getElementById("closeLessonWindow")
+/* let actualArray = [] */
 
 closeLessonWindow.onclick = () => {
     homeSection.style.display = "flex"
@@ -323,37 +325,44 @@ function unrefreshLoadComents(section, obj, id, postId, url) {
 }
 
 
+function initHome() {
+    actualUserData().then(actualUser => {
+        let coverUrl = ""
+        if (actualUser.noPhoto == true) {
+            document.getElementById("homeUserImg").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+        } else {
+            getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                .then((url) => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = (event) => {
+                        let blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                    document.getElementById("homeUserImg").src = `${url}`
+                })
+        }
+        if (actualUser.noCover == true) {
+            coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
+        }
+        document.getElementById("homeUserName").innerHTML = `${actualUser.name}`
+        document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
+        document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
+        document.getElementById("homeViewPerfil").onclick = function () {
+            homeSection.style.display = "none"
+            document.getElementById("perfilSection").style.display = "flex"
+        }
+    })
+    monitorCollectionUpdates("lessons", (updatedData) => {
+        loadLessons()        
+    });
+}
+
+
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
-        actualUserData().then(actualUser => {
-            let coverUrl = ""
-            if (actualUser.noPhoto == true) {
-                document.getElementById("homeUserImg").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
-            } else {
-                getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
-                    .then((url) => {
-                        let xhr = new XMLHttpRequest();
-                        xhr.responseType = 'blob';
-                        xhr.onload = (event) => {
-                            let blob = xhr.response;
-                        };
-                        xhr.open('GET', url);
-                        xhr.send();
-                        document.getElementById("homeUserImg").src = `${url}`
-                    })
-            }
-            if (actualUser.noCover == true) {
-                coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
-            }
-            document.getElementById("homeUserName").innerHTML = `${actualUser.name}`
-            document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
-            document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
-            document.getElementById("homeViewPerfil").onclick = function () {
-                homeSection.style.display = "none"
-                document.getElementById("perfilSection").style.display = "flex"
-            }
-        })
-        loadLessons()
+        initHome()
     }
 });
