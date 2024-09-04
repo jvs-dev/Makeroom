@@ -41,6 +41,22 @@ export function monitorCollectionUpdates(collectionPath, callback) {
     });
 }
 
+export function realtimeCollectionUpdates(collectionPath, callback) {
+    const collectionRef = collection(db, collectionPath);
+    onSnapshot(collectionRef, (snapshot) => {
+        snapshot.docChanges().forEach((change) => {
+            if (change.type === "added") {
+                callback(snapshot.docChanges());
+            }
+            if (change.type === "modified") {
+                callback(snapshot.docChanges());
+            }
+            if (change.type === "removed") {
+                callback(snapshot.docChanges());
+            }
+        });
+    });
+}
 export function monitorDocumentUpdates(docPath, callback) {
     const docRef = doc(db, docPath);
     onSnapshot(docRef, (docSnapshot) => {
