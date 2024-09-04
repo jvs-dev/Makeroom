@@ -8,6 +8,7 @@ import { activeLoading } from "../../components/uploadingSection/uploadingSectio
 import { alertThis } from "../../components/alerts/alert";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 import { deleteAllFiles, deleteAllsubDocs, deleteFiles, deleteThis } from "../../scripts/deleteThis";
+import { monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -455,6 +456,8 @@ function unrefreshLoadComents(section, obj, id, postId, url) {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
-        loadChallenges()
+        monitorCollectionUpdates("challenges", (updatedData) => {
+            loadChallenges()
+        });
     }
 });

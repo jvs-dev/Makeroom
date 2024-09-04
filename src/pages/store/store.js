@@ -37,6 +37,7 @@ async function loadStore() {
                 xhr.open('GET', url);
                 xhr.send();
                 let article = document.createElement("article")
+                let body = document.querySelector("body")
                 let count = 1
                 storeDiv.insertAdjacentElement("beforeend", article)
                 article.classList.add("store-card")
@@ -67,14 +68,22 @@ async function loadStore() {
                 removeCartIcon.onclick = () => {
                     addCartInput.value = Number(addCartInput.value) - 1
                 }
-                addCartBtn.onclick = () => {
+                addCartBtn.onclick = (evt) => {
+                    evt.stopPropagation()
                     addCartBtn.style.display = "none"
                     article.children[1].children[1].style.display = "none"
                     checkBtn.style.display = ""
                     article.children[1].children[0].style.display = ""
                     addCartInput.value = 1
+                    body.onclick = () => {
+                        addCartBtn.style.display = ""
+                        article.children[1].children[1].style.display = ""
+                        checkBtn.style.display = "none"
+                        article.children[1].children[0].style.display = "none"
+                    }
                 }
-                checkBtn.onclick = () => {
+                checkBtn.onclick = (evt) => {
+                    evt.stopPropagation()
                     addCartBtn.style.display = ""
                     article.children[1].children[1].style.display = ""
                     checkBtn.style.display = "none"

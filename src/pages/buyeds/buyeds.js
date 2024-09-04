@@ -1,10 +1,11 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, updateDoc , serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, updateDoc, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { actualUserData } from "../../scripts/returnUserInfos";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 import { alertThis } from "../../components/alerts/alert";
+import { monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -19,19 +20,17 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 let buyedsSectionDiv = document.getElementById("buyedsSectionDiv")
 
-onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const uid = user.uid;
-        buyedsSectionDiv.innerHTML = ""
-        actualUserData().then(async (userData) => {
-            if (userData.admin == true) {
-                const querySnapshot = await getDocs(collection(db, "payments"));
-                querySnapshot.forEach((payData) => {
-                    if (payData.data().delivered == false && payData.data().paymentStatus == "approved") {
-                        let article = document.createElement("article")
-                        buyedsSectionDiv.insertAdjacentElement("beforeend", article)
-                        article.classList.add("buyedsCard")
-                        article.innerHTML = `
+async function loadBuyeds(user) {
+    buyedsSectionDiv.innerHTML = ""
+    actualUserData().then(async (userData) => {
+        if (userData.admin == true) {
+            const querySnapshot = await getDocs(collection(db, "payments"));
+            querySnapshot.forEach((payData) => {
+                if (payData.data().delivered == false && payData.data().paymentStatus == "approved") {
+                    let article = document.createElement("article")
+                    buyedsSectionDiv.insertAdjacentElement("beforeend", article)
+                    article.classList.add("buyedsCard")
+                    article.innerHTML = `
                         <div class="buyedsCard__div--1">
                             <div class="buyedsCard__div--2">
                                 <p class="buyedsCard__name">${payData.data().payerName}</p>
@@ -43,21 +42,29 @@ onAuthStateChanged(auth, async (user) => {
                             ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
                         </ul>
                         <button class="buyedsCard__Btn">Entregue</button>`
-                        article.children[2].onclick = () => {
-                            activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
-                                if (res == "confirmed") {
-                                    const cartItemRef = doc(db, "payments", `${payData.id}`);
-                                    await updateDoc(cartItemRef, {
-                                        delivered: true
-                                    });
-                                    alertThis("Entrega registrada com sucesso", "sucess")
-                                    article.style.display = "none"
-                                }
-                            })
-                        }
+                    article.children[2].onclick = () => {
+                        activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
+                            if (res == "confirmed") {
+                                const cartItemRef = doc(db, "payments", `${payData.id}`);
+                                await updateDoc(cartItemRef, {
+                                    delivered: true
+                                });
+                                alertThis("Entrega registrada com sucesso", "sucess")
+                                article.style.display = "none"
+                            }
+                        })
                     }
-                })
-            }
-        })
+                }
+            })
+        }
+    })
+}
+
+onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        const uid = user.uid;
+        monitorCollectionUpdates("payments", (updatedData) => {
+            loadBuyeds(user)
+        });
     }
 })
