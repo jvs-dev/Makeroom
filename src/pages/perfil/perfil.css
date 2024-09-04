@@ -166,7 +166,7 @@
 }
 
 .perfilSection__dataBtn.active {
-    color: var(--black);
+    color: var(--primary-color);
 }
 
 .perfilSection__div--7 {
