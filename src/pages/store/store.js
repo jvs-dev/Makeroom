@@ -62,10 +62,18 @@ async function loadStore() {
                 let removeCartIcon = article.children[1].children[0].children[0]
                 let checkBtn = article.children[1].children[3]
                 let addCartBtn = article.children[1].children[2]
-                addCartIcon.onclick = () => {
+                article.children[1].children[0].onclick = (evt) => {
+                    evt.stopPropagation()
+                }
+                article.children[1].children[1].onclick = (evt) => {
+                    evt.stopPropagation()
+                }
+                addCartIcon.onclick = (evt) => {
+                    evt.stopPropagation()
                     addCartInput.value = Number(addCartInput.value) + 1
                 }
-                removeCartIcon.onclick = () => {
+                removeCartIcon.onclick = (evt) => {
+                    evt.stopPropagation()
                     addCartInput.value = Number(addCartInput.value) - 1
                 }
                 addCartBtn.onclick = (evt) => {

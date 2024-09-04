@@ -355,7 +355,7 @@ function initHome() {
         }
     })
     monitorCollectionUpdates("lessons", (updatedData) => {
-        loadLessons()        
+        loadLessons()
     });
 }
 

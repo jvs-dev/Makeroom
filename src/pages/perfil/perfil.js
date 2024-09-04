@@ -52,7 +52,7 @@ onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
         actualUserData().then(actualUser => {
-            loadCertifies(actualUser.email)
+            loadCertifies(user.email)
             let coverUrl = ""
             if (actualUser.noPhoto == true) {
                 perfilSection.children[0].children[3].children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
@@ -107,34 +107,36 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-async function loadCertifies(email) {    
+async function loadCertifies(email) {
     perfilCertifiesDiv.innerHTML = ""
     const q = query(collection(db, "challenges"), where("challengeCertifiedTitle", "!=", ""));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        returnResolversEmail(doc.id).then(resolverData => {
-            if (resolverData.resolved == true && resolverData.senderEmail == email) {                
-                let article = document.createElement("article")
-                article.classList.add("certifiedCard")
-                perfilCertifiesDiv.insertAdjacentElement("beforeend", article)
-                article.innerHTML= `
-                    <img class="certifiedCard__logo" src="assets/logo.svg" alt="">
-                    <img class="certifiedCard__flag" src="assets/flag.svg" alt="">
-                    <div class="certifiedCard__div--1">
-                        <p class="certifiedCard__p--1">Certificamos que</p>
-                        <p class="certifiedCard__p--2">${resolverData.senderName}</p>
-                        <p class="certifiedCard__p--1">Em 15/08/24 concluiu na plataforma makeroom o curso</p>
-                        <p class="certifiedCard__p--2">${doc.data().challengeCertifiedTitle}</p>
-                        <span class="certifiedCard__span--1">Certification Program</span>
-                    </div>
-                    <div class="certifiedCard__div--2">
-                        <span class="certifiedCard__signature">Gilsimar</span>
-                        <p class="certifiedCard__chefName">Gil Andrade</p>
-                        <p class="certifiedCard__chefPosisie">Chef Officer- Makeroom</p>
-                    </div>
-                    <div class="certifiedCard__retangle--1"></div>
-                    <div class="certifiedCard__retangle--2"></div>`                
-            }
+        returnResolversEmail(doc.id).then(resolverItems => {
+            resolverItems.forEach(resolverData => {
+                if (resolverData.resolved == true && resolverData.senderEmail == email) {
+                    let article = document.createElement("article")
+                    article.classList.add("certifiedCard")
+                    perfilCertifiesDiv.insertAdjacentElement("beforeend", article)
+                    article.innerHTML = `
+                        <img class="certifiedCard__logo" src="assets/logo.svg" alt="">
+                        <img class="certifiedCard__flag" src="assets/flag.svg" alt="">
+                        <div class="certifiedCard__div--1">
+                            <p class="certifiedCard__p--1">Certificamos que</p>
+                            <p class="certifiedCard__p--2">${resolverData.senderName}</p>
+                            <p class="certifiedCard__p--1">Em 15/08/24 concluiu na plataforma makeroom o curso</p>
+                            <p class="certifiedCard__p--2">${doc.data().challengeCertifiedTitle}</p>
+                            <span class="certifiedCard__span--1">Certification Program</span>
+                        </div>
+                        <div class="certifiedCard__div--2">
+                            <span class="certifiedCard__signature">Gilsimar</span>
+                            <p class="certifiedCard__chefName">Gil Andrade</p>
+                            <p class="certifiedCard__chefPosisie">Chef Officer- Makeroom</p>
+                        </div>
+                        <div class="certifiedCard__retangle--1"></div>
+                        <div class="certifiedCard__retangle--2"></div>`
+                }
+            });
         })
 
     });
@@ -142,9 +144,11 @@ async function loadCertifies(email) {
 
 function returnResolversEmail(id) {
     return new Promise(async (resolve) => {
+        let resolversEmail = []
         const querySnapshot = await getDocs(collection(db, "challenges", `${id}`, "resolves"));
         querySnapshot.forEach((doc) => {
-            resolve(doc.data())
+            resolversEmail.push(doc.data())
         });
+        resolve(resolversEmail)
     })
 }
