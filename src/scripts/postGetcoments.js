@@ -2,7 +2,6 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, getDoc, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-import { monitorCollectionUpdates, realtimeCollectionUpdates } from "./returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -56,13 +55,6 @@ export async function postComment(databaseName, id, email, text) {
     })
 }
 
-export async function getComments(databaseName, id) {
-    return new Promise(async resolve => {        
-        realtimeCollectionUpdates(`${databaseName}/${id}/coments`, async (updatedData) => {
-            resolve(updatedData)
-        });
-    })
-}
 
 export async function getThisComment(databaseName, id, comentId) {
     return new Promise(async resolve => {

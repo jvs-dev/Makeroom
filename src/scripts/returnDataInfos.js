@@ -41,7 +41,7 @@ export function monitorCollectionUpdates(collectionPath, callback) {
     });
 }
 
-export function realtimeCollectionUpdates(collectionPath, callback) {
+export function monitorAllCollectionUpdates(collectionPath, callback) {
     const collectionRef = collection(db, collectionPath);
     onSnapshot(collectionRef, (snapshot) => {
         snapshot.docChanges().forEach((change) => {
@@ -57,6 +57,7 @@ export function realtimeCollectionUpdates(collectionPath, callback) {
         });
     });
 }
+
 export function monitorDocumentUpdates(docPath, callback) {
     const docRef = doc(db, docPath);
     onSnapshot(docRef, (docSnapshot) => {

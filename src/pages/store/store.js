@@ -6,6 +6,7 @@ import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getD
 import { alertThis } from "../../components/alerts/alert";
 import { alternatePage } from "../../scripts/alternatePages";
 import { initCart } from "../cart/cart";
+import { monitorAllCollectionUpdates, monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -123,14 +124,12 @@ async function addCartFct(itemId, quanty) {
                 await updateDoc(cartItemRef, {
                     quanty: increment(Number(quanty))
                 });
-                updateCartQuanty()
                 resolve("added")
             } else {
                 await setDoc(doc(db, "users", `${email}`, "cart", `${itemId}`), {
                     itemId: `${itemId}`,
                     quanty: Number(quanty)
                 });
-                updateCartQuanty()
                 resolve("added")
             }
         })
@@ -149,13 +148,18 @@ export function refreshCartQuanty() {
 }
 
 function updateCartQuanty() {
-    cartCount = 0
     actualUserEmail().then(async (email) => {
-        const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
-        querySnapshot.forEach((doc) => {
-            cartCount = cartCount + Number(doc.data().quanty)
-            storeCartBtn.children[1].textContent = `${cartCount}`
-        });
+        monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
+            cartCount = 0
+            console.log(cartCount);
+            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+            querySnapshot.forEach((doc) => {
+                storeCartBtn.children[1].textContent = ``
+                cartCount = cartCount + Number(doc.data().quanty)
+                console.log("add:" + Number(doc.data().quanty));
+                storeCartBtn.children[1].textContent = `${cartCount}`
+            });
+        })
     })
 }
 

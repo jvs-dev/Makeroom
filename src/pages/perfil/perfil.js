@@ -120,7 +120,7 @@ async function loadCertifies(email) {
                     perfilCertifiesDiv.insertAdjacentElement("beforeend", article)
                     article.innerHTML = `
                         <img class="certifiedCard__logo" src="assets/logo.svg" alt="">
-                        <img class="certifiedCard__flag" src="assets/flag.svg" alt="">
+                        <img class="certifiedCard__flag" src="/flag.svg" alt="">
                         <div class="certifiedCard__div--1">
                             <p class="certifiedCard__p--1">Certificamos que</p>
                             <p class="certifiedCard__p--2">${resolverData.senderName}</p>

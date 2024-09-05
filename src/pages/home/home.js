@@ -1,4 +1,4 @@
-import { getComments, postComment, getThisComment } from "../../scripts/postGetcoments"
+import { postComment, getThisComment } from "../../scripts/postGetcoments"
 import { actualUserData, thisUserData, actualUserEmail } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -7,7 +7,7 @@ import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getD
 import { deleteAllsubDocs, deleteThis } from "../../scripts/deleteThis";
 import { alertThis } from "../../components/alerts/alert";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
-import { monitorCollectionUpdates, realtimeCollectionUpdates } from "../../scripts/returnDataInfos";
+import { monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
