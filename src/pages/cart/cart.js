@@ -6,7 +6,7 @@ import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, updat
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { alertThis } from "../../components/alerts/alert";
 import { alternatePage } from "../../scripts/alternatePages";
-import { refreshCartQuanty } from "../store/store";
+import { monitorCollectionUpdates } from '../../scripts/returnDataInfos';
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -19,14 +19,19 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
+let cartTotalSpan = document.getElementById("cartTotalSpan")
 
 document.getElementById("closeCartSection").onclick = function () {
     alternatePage(document.getElementById("storeSection"))
 }
 
+setInterval(() => {
+    if (cartItemsDiv.innerHTML == "") {
+        cartItemsDiv.classList.add("empity")
+    }
+}, 1000);
+
 export function initCart() {
-    let totalCount = 0
-    let cartTotalSpan = document.getElementById("cartTotalSpan")
     let cartItemsDiv = document.getElementById("cartItemsDiv")
     let cartBuyDiv = document.getElementById("cartBuyDiv")
     let buyCartItens = document.getElementById("buyCartItens")
@@ -34,7 +39,6 @@ export function initCart() {
     cartBuyDiv.style.display = "none"
     cartItemsDiv.innerHTML = ""
     cartItemsDiv.classList.add("empity")
-    cartTotalSpan.textContent = `$${totalCount.toFixed(2)}`
     actualUserEmail().then(async (email) => {
         const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
         querySnapshot.forEach(async (cartDoc) => {
@@ -53,8 +57,6 @@ export function initCart() {
                         items.push(` '${docSnap.data().name}: ${cartDoc.data().quanty}' `)
                         cartBuyDiv.style.display = ""
                         cartItemsDiv.classList.remove("empity")
-                        totalCount = totalCount + (docSnap.data().price * cartDoc.data().quanty)
-                        cartTotalSpan.textContent = `$${totalCount.toFixed(2)}`
                         let article = document.createElement("article")
                         cartItemsDiv.insertAdjacentElement("beforeend", article)
                         article.classList.add("cartItemCard")
@@ -73,6 +75,7 @@ export function initCart() {
                         `
                         article.children[0].children[0].onclick = function () {
                             article.children[0].children[1].value = Number(article.children[0].children[1].value) + 1
+                            alterCartQuanty(cartDoc.id, article.children[0].children[1].value)
                         }
                         article.children[0].children[1].oninput = async function () {
                             if (Number(article.children[0].children[1].value) < 1) {
@@ -86,18 +89,19 @@ export function initCart() {
                         article.children[0].children[2].onclick = async function () {
                             if (Number(article.children[0].children[1].value) > 1) {
                                 article.children[0].children[1].value = Number(article.children[0].children[1].value) - 1
+                                alterCartQuanty(cartDoc.id, article.children[0].children[1].value)
                             }
                         }
                         article.children[3].onclick = async function () {
                             await deleteDoc(doc(db, "users", `${email}`, "cart", `${cartDoc.id}`));
-                            refreshCartQuanty()
-                            initCart()
+                            article.style.display = "none"
+                            article.parentNode.removeChild(article);
                         }
                     })
             }
         })
         buyCartItens.onclick = function () {
-            buyThisItems(email, Number(totalCount), items).then(payRes => {
+            buyThisItems(email, items).then(payRes => {
                 let cartPaymentDiv = document.getElementById("cartPaymentDiv")
                 cartPaymentDiv.style.display = "flex"
                 generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
@@ -137,14 +141,34 @@ async function alterCartQuanty(itemId, quanty) {
             await updateDoc(cartItemRef, {
                 quanty: Number(quanty)
             });
-            refreshCartQuanty()
         } else {
             await setDoc(doc(db, "users", `${email}`, "cart", `${itemId}`), {
                 itemId: `${itemId}`,
                 quanty: Number(quanty)
             });
-            refreshCartQuanty()
         }
+    })
+}
+
+function calcTotalValue() {
+    cartTotalSpan.textContent = `$0.00`
+    actualUserEmail().then(async (email) => {
+        monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
+            let cartCount = 0
+            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));            
+            querySnapshot.forEach(async (item) => {
+                const docRef = doc(db, "store", `${item.data().itemId}`);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    cartCount = cartCount + (Number(item.data().quanty) * Number(docSnap.data().price))
+                    cartTotalSpan.textContent = `$${cartCount.toFixed(2)}`
+                }
+            });                        
+            if (querySnapshot.size == 0) {
+                cartTotalSpan.textContent = `$0.00`     
+                initCart()           
+            }
+        })
     })
 }
 
@@ -186,28 +210,50 @@ async function generateQRCode(text) {
     })
 }
 
-async function buyThisItems(email, value, items) {
+function returnCartTotal() {
+    return new Promise(resolve => {
+        let value = 0;
+        actualUserEmail().then(async (email) => {
+            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+            const promises = querySnapshot.docs.map(async (item) => {
+                const docRef = doc(db, "store", `${item.data().itemId}`);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    value += Number(item.data().quanty) * Number(docSnap.data().price);
+                }
+            });
+            await Promise.all(promises);
+            resolve(value);
+        });
+    });
+}
+
+async function buyThisItems(email, items) {
     return new Promise(resolve => {
         actualUserData().then(async (userData) => {
-            const today = new Date();
-            const day = String(today.getDate()).padStart(2, '0');
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const year = String(today.getFullYear()).slice(-2);
-            const formattedDate = `${day}/${month}/${year}`;
-            createPay(email, value, items).then(async (payRes) => {
-                let docRef = await addDoc(collection(db, "payments"), {
-                    payerEmail: `${email}`,
-                    paymentStatus: "pending",
-                    totalAmount: Number(value),
-                    items: items,
-                    paymentId: payRes.result.id,
-                    delivered: false,
-                    noticed: false,
-                    payDate: formattedDate,
-                    payerName: userData.name
-                });
-                resolve(payRes.result)
+            returnCartTotal().then(value => {
+                const today = new Date();
+                const day = String(today.getDate()).padStart(2, '0');
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const year = String(today.getFullYear()).slice(-2);
+                const formattedDate = `${day}/${month}/${year}`;
+                createPay(email, value, items).then(async (payRes) => {
+                    let docRef = await addDoc(collection(db, "payments"), {
+                        payerEmail: `${email}`,
+                        paymentStatus: "pending",
+                        totalAmount: Number(value),
+                        items: items,
+                        paymentId: payRes.result.id,
+                        delivered: false,
+                        noticed: false,
+                        payDate: formattedDate,
+                        payerName: userData.name
+                    });
+                    resolve(payRes.result)
+                })
             })
         })
     })
 }
+
+calcTotalValue()

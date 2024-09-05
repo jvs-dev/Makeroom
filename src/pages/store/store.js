@@ -136,16 +136,6 @@ async function addCartFct(itemId, quanty) {
     })
 }
 
-export function refreshCartQuanty() {
-    cartCount = 0
-    actualUserEmail().then(async (email) => {
-        const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
-        querySnapshot.forEach((doc) => {
-            cartCount = cartCount + Number(doc.data().quanty)
-            storeCartBtn.children[1].textContent = `${cartCount}`
-        });
-    })
-}
 
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
@@ -157,6 +147,9 @@ function updateCartQuanty() {
                 cartCount = cartCount + Number(doc.data().quanty)                
                 storeCartBtn.children[1].textContent = `${cartCount}`
             });
+            if (querySnapshot.size == 0) {
+                storeCartBtn.children[1].textContent = `0`
+            }
         })
     })
 }
