@@ -150,13 +150,11 @@ export function refreshCartQuanty() {
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
         monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
-            cartCount = 0
-            console.log(cartCount);
+            cartCount = 0            
             const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
             querySnapshot.forEach((doc) => {
                 storeCartBtn.children[1].textContent = ``
-                cartCount = cartCount + Number(doc.data().quanty)
-                console.log("add:" + Number(doc.data().quanty));
+                cartCount = cartCount + Number(doc.data().quanty)                
                 storeCartBtn.children[1].textContent = `${cartCount}`
             });
         })

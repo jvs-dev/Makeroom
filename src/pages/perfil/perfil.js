@@ -119,7 +119,7 @@ async function loadCertifies(email) {
                     article.classList.add("certifiedCard")
                     perfilCertifiesDiv.insertAdjacentElement("beforeend", article)
                     article.innerHTML = `
-                        <img class="certifiedCard__logo" src="assets/logo.svg" alt="">
+                        <img class="certifiedCard__logo" src="/logo.svg" alt="">
                         <img class="certifiedCard__flag" src="/flag.svg" alt="">
                         <div class="certifiedCard__div--1">
                             <p class="certifiedCard__p--1">Certificamos que</p>

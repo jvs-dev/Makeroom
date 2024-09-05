@@ -8,9 +8,9 @@ export function activeConfirmSection(title, text, color, sadHappy) {
         confirmSection.children[0].children[2].style.color = `${color}`
         confirmSection.children[0].children[4].style.background = `${color}`
         if (sadHappy == "sad") {
-            confirmSection.children[0].children[3].src = `assets/Pequeno gil triste.gif`
+            confirmSection.children[0].children[3].src = `/Pequeno gil triste.gif`
         } else {
-            confirmSection.children[0].children[3].src = `assets/Pequeno gil_2.gif`
+            confirmSection.children[0].children[3].src = `/Pequeno gil_2.gif`
         }
         setTimeout(() => {
             confirmSection.style.opacity = "1"
