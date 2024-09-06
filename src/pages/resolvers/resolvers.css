@@ -1,0 +1,152 @@
+.section--resolversSection {
+    display: none;
+    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.resolvers__div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 20px 20px 60px 20px;
+    gap: 20px;
+}
+
+.resolverCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: -1px 2px 8px 1px rgba(00, 00, 00, 0.25);
+    border-radius: 12px;
+    padding: 10px;
+    width: 100%;
+    height: 110px;
+    gap: 10px;
+}
+
+.resolverCard__div--1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.resolverCard__img {
+    border-radius: 10px;
+    object-fit: cover;
+    width: 90px;
+    height: 90px;
+}
+
+.resolverCard__div--2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.resolverCard__activieName {
+    font-family: 'Teko', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin: 0px;
+    color: var(--black);
+    line-height: 100%;
+}
+
+.resolverCard__activiepoints {
+    font-family: 'Teko', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px;
+    color: var(--black);
+}
+
+.resolverCard__div--3 {
+    background: #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.resolverCard__div--4 {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.resolverCard__div--5 {
+    width: calc(100% - 50px);
+}
+
+.resolverCard__resolverName {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--black);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0px;
+}
+
+.resolverCard__date {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--black);
+    margin: 0px;
+}
+
+.resolverCard__resolvedBtn {
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    border: 0px;
+    outline-width: 0px;
+    color: var(--white);
+    border-radius: 10px;
+    background: #20E3BB;
+    padding: 6px 0px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.resolverCard__download {
+    background: #FED3A8;
+    border: none;
+    outline-width: 0px;
+    color: #FD9327;
+    font-size: 22px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.resolverCard__arrow {
+    background: transparent;
+    border: none;
+    outline-width: 0px;
+    color: var(--black);
+    font-size: 22px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}

@@ -50,6 +50,7 @@
   <link rel="stylesheet" href="src/components/cards/certifiedCard.css">
   <link rel="stylesheet" href="src/components/cards/manageUsersCard.css">
   <link rel="stylesheet" href="src/components/confirmSection/confirmSection.css">
+  <link rel="stylesheet" href="src/pages/resolvers/resolvers.css">
 </head>
 
 <body>
@@ -128,6 +129,8 @@
               class="bi bi-folder"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToBuyeds" style="display: none;"><ion-icon
               name="cart-outline"></ion-icon></i></button></li>
+        <li><button class="menuSection__adminBtn" id="goToResolvers" style="display: none;"><i
+              class="bi bi-journal-check"></i></button></li>
       </ul>
       <ul class="menuSection__ul">
         <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome">Home</button></li>
@@ -325,8 +328,8 @@
       </header>
       <h1 class="challengeWindow__h1"></h1>
       <div class="challengeWindow__resetMaskImg">
-        <button type="button" class="challengeWindow__deleteChallange" id="deleteChallange" style="display: none;"><ion-icon
-            name="trash-outline"></ion-icon></button>
+        <button type="button" class="challengeWindow__deleteChallange" id="deleteChallange"
+          style="display: none;"><ion-icon name="trash-outline"></ion-icon></button>
         <img class="challengeWindow__mask" src="" alt="">
         <span class="challengeWindow__points"></span>
       </div>
@@ -455,6 +458,38 @@
           </ul>
           <button class="buyedsCard__Btn">Entregue</button>
         </article>
+      </div>
+    </section>
+
+    <section class="main__section section--resolversSection" id="resolversSection">
+      <header class="page__header">
+        <img src="/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="store__h1">Atividades Enviadas</h1>
+      <div class="resolvers__div" id="resolversSectionDiv">
+        <!-- <article class="resolverCard">
+          <div class="resolverCard__div--1">
+            <img src="" alt="" class="resolverCard__img">
+            <div class="resolverCard__div--2">
+              <p class="resolverCard__activieName">Primeiro robô</p>
+              <p class="resolverCard__activiepoints">+190 pontos</p>
+            </div>
+            <button class="resolverCard__arrow"><ion-icon name="chevron-down-outline"></ion-icon></button>
+          </div>
+          <div class="resolverCard__div--3">
+            <div class="resolverCard__div--4">
+              <div class="resolverCard__div--5">
+                <p class="resolverCard__resolverName">João Vitor Santana Da Silva</p>
+                <p class="resolverCard__date">12/08/24</p>
+              </div>
+              <button class="resolverCard__download"><i class="bi bi-file-earmark-arrow-down"></i></button>
+            </div>
+            <button class="resolverCard__resolvedBtn">Atividade Correta</button>
+          </div>
+        </article> -->
       </div>
     </section>
 
@@ -810,6 +845,7 @@
   <script type="module" src="src/pages/cart/cart.js"></script>
   <script type="module" src="src/pages/buyeds/buyeds.js"></script>
   <script type="module" src="src/scripts/verifyPays.js"></script>
+  <script type="module" src="src/pages/resolvers/resolvers.js"></script>
 </body>
 
 </html>

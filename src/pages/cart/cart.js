@@ -155,7 +155,7 @@ function calcTotalValue() {
     actualUserEmail().then(async (email) => {
         monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
             let cartCount = 0
-            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));            
+            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
             querySnapshot.forEach(async (item) => {
                 const docRef = doc(db, "store", `${item.data().itemId}`);
                 const docSnap = await getDoc(docRef);
@@ -165,8 +165,8 @@ function calcTotalValue() {
                 }
             });                        
             if (querySnapshot.size == 0) {
-                cartTotalSpan.textContent = `$0.00`     
-                initCart()           
+                cartTotalSpan.textContent = `$0.00`
+                initCart()
             }
         })
     })

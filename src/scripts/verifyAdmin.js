@@ -21,6 +21,7 @@ let goToCreateAccount = document.getElementById("goToCreateAccount")
 let goToStock = document.getElementById("goToStock")
 let goToFolders = document.getElementById("goToFolders")
 let goToBuyeds = document.getElementById("goToBuyeds")
+let goToResolvers = document.getElementById("goToResolvers")
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -33,7 +34,8 @@ onAuthStateChanged(auth, (user) => {
         goToAddContent.style.display = ""
         goToFolders.style.display = ""
         goToBuyeds.style.display = ""
-        if (logins > 1) {          
+        goToResolvers.style.display = ""
+        if (logins > 1) {
           window.location.reload()
         }
       } else {
@@ -42,11 +44,13 @@ onAuthStateChanged(auth, (user) => {
         goToAddContent.style.display = "none"
         goToFolders.style.display = "none"
         goToBuyeds.style.display = "none"
+        goToResolvers.style.display = "none"
         goToStock.parentNode.removeChild(goToStock);
         goToCreateAccount.parentNode.removeChild(goToCreateAccount);
         goToAddContent.parentNode.removeChild(goToAddContent);
         goToFolders.parentNode.removeChild(goToFolders);
         goToBuyeds.parentNode.removeChild(goToBuyeds);
+        goToResolvers.parentNode.removeChild(goToBuyeds);
       }
     })
   }

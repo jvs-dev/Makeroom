@@ -287,7 +287,7 @@ function ChallengeWindowData(obj, id, url) {
             challengeWindow.children[7].children[1].children[0].children[2].onclick = function () {
                 if (challengeWindow.children[7].children[1].children[0].children[1].value.replace(" ", "") != "") {
                     postComment("challenges", id, actualUser, challengeWindow.children[7].children[1].children[0].children[1].value).then(posted => {
-                        challengeWindow.children[7].children[1].children[0].children[1].value = ""                        
+                        challengeWindow.children[7].children[1].children[0].children[1].value = ""
                     })
                 }
             }
@@ -297,13 +297,19 @@ function ChallengeWindowData(obj, id, url) {
                         if (isSended == false) {
                             let uploadsCompleteds = 0
                             activeLoading(uploadsCompleteds)
+                            const today = new Date();
+                            const day = String(today.getDate()).padStart(2, '0');
+                            const month = String(today.getMonth() + 1).padStart(2, '0');
+                            const year = String(today.getFullYear()).slice(-2);
+                            const formattedDate = `${day}/${month}/${year}`;
                             await setDoc(doc(db, "challenges", `${id}`, "resolves", `${userData.email}`), {
                                 resolved: false,
                                 senderEmail: `${userData.email}`,
                                 senderName: `${userData.name}`,
                                 senderClass: `${userData.class}`,
                                 senderRoom: `${userData.room}`,
-                                senderNoPhoto: `${userData.noPhoto}`
+                                senderNoPhoto: `${userData.noPhoto}`,
+                                sendDate: `${formattedDate}`
                             });
                             uploadsCompleteds = uploadsCompleteds + 50
                             activeLoading(uploadsCompleteds)

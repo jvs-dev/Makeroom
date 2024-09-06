@@ -166,6 +166,18 @@ document.getElementById("goToBuyeds").onclick = function () {
     });
 }
 
+document.getElementById("goToResolvers").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active")) {
+            alternatePage(document.getElementById("resolversSection"))
+            menuBtn.classList.remove("active")
+            menuSection.style.transform = "translateX(100vw)"
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToResolvers"))
+        }
+    });
+}
+
 document.getElementById("goToChallenge").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active")) {
