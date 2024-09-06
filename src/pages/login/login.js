@@ -16,6 +16,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
+let loginViewPassword = document.getElementById("loginViewPassword")
+
+loginViewPassword.onclick = () => {
+    let password = document.getElementById("loginPassword")
+    if (password.type == "text") {
+        password.type = "password"
+        loginViewPassword.name = "eye-outline"
+    } else {
+        password.type = "text"
+        loginViewPassword.name = "eye-off-outline"
+    }
+}
 
 let loginBtn = document.getElementById("loginBtn")
 
