@@ -122,6 +122,21 @@
     text-transform: uppercase;
 }
 
+.resolverCard__resolvedBtn--2 {
+    margin: 10px 0px 0px 0px;
+    width: 100%;
+    border: 0px;
+    outline-width: 0px;
+    color: var(--white);
+    border-radius: 10px;
+    background: #f00;
+    padding: 6px 0px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
 .resolverCard__download {
     background: #FED3A8;
     border: none;

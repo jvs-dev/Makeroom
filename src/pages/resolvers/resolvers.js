@@ -72,7 +72,8 @@ async function loadResolves() {
                                 </div>
                                 <button class="resolverCard__download"><i class="bi bi-file-earmark-arrow-down"></i></button>
                             </div>
-                            <button class="resolverCard__resolvedBtn">Atividade Correta</button>`
+                            <button class="resolverCard__resolvedBtn">Atividade Correta</button>
+                            <button class="resolverCard__resolvedBtn--2">Atividade Errada</button>`
                         div.children[0].children[1].onclick = () => {
                             getDownloadURL(ref(storage, `challengesResolveds/${challenge.id}/${resolve.data().senderEmail}`))
                                 .then(async (file) => {
@@ -95,7 +96,18 @@ async function loadResolves() {
                                 article.style.display = "none"
                                 article.parentNode.removeChild(article);
                             }
-
+                        }
+                        div.children[2].onclick = async () => {
+                            const washingtonRef = doc(db, "challenges", `${challenge.id}`, "resolves", `${resolve.data().senderEmail}`);
+                            await updateDoc(washingtonRef, {
+                                resolved: "incorrect"
+                            });
+                            div.style.display = "none"
+                            div.parentNode.removeChild(div);
+                            if (article.children[1] == undefined) {
+                                article.style.display = "none"
+                                article.parentNode.removeChild(article);
+                            }
                         }
                     }
                 })
