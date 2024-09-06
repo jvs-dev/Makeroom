@@ -21,28 +21,121 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 const storeCartBtn = document.getElementById("storeCartBtn")
+let searchInput = document.getElementById("searchInput")
 let cartCount = 0
+
+searchInput.onchange = () => {    
+    loadStore()
+}
 
 async function loadStore() {
     let storeDiv = document.getElementById("storeDiv")
     storeDiv.innerHTML = ""
     const querySnapshot = await getDocs(collection(db, "store"));
     querySnapshot.forEach((doc) => {
-        getDownloadURL(ref(storage, `store/${doc.id}/image`))
-            .then((url) => {
-                let xhr = new XMLHttpRequest();
-                xhr.responseType = 'blob';
-                xhr.onload = (event) => {
-                    let blob = xhr.response;
-                };
-                xhr.open('GET', url);
-                xhr.send();
-                let article = document.createElement("article")
-                let body = document.querySelector("body")
-                let count = 1
-                storeDiv.insertAdjacentElement("beforeend", article)
-                article.classList.add("store-card")
-                article.innerHTML = `
+        if (searchInput.value != "") {
+            console.log("po");
+            if (doc.data().name.toLowerCase().includes(`${searchInput.value.toLowerCase()}`) == true) {
+                getDownloadURL(ref(storage, `store/${doc.id}/image`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        let article = document.createElement("article")
+                        let body = document.querySelector("body")
+                        let count = 1
+                        storeDiv.insertAdjacentElement("beforeend", article)
+                        article.classList.add("store-card")
+                        article.innerHTML = `
+                        <img class="storeCard__img" src="${url}">
+                        <div class="storeCard__div--1">
+                            <div class="storeCard__divInput" style="display: none;">
+                                <button type="button" class="storeCard__inputIcon"><i class="bi bi-dash"></i></button>
+                                <input type="number" class="storeCard__input">
+                                <button type="button" class="storeCard__inputIcon"><i class="bi bi-plus"></i></i></button>
+                            </div>
+                            <div class="storeCard__div--2">
+                                <p class="storeCard__name">${doc.data().name}</p>
+                                <p class="storeCard__price">$${doc.data().price.toFixed(2)}</p>
+                            </div>
+                            <button type="button" class="storeCard__addCart"><i class="bi bi-cart-plus"></i></button>
+                            <button type="button" class="storeCard__addCart" style="display: none;"><i class="bi bi-check2" style="font-size: 24px;"></i></button>
+                        </div>
+                    `
+                        let addCartInput = article.children[1].children[0].children[1]
+                        let addCartIcon = article.children[1].children[0].children[2]
+                        let removeCartIcon = article.children[1].children[0].children[0]
+                        let checkBtn = article.children[1].children[3]
+                        let addCartBtn = article.children[1].children[2]
+                        article.children[1].children[0].onclick = (evt) => {
+                            evt.stopPropagation()
+                        }
+                        article.children[1].children[1].onclick = (evt) => {
+                            evt.stopPropagation()
+                        }
+                        addCartIcon.onclick = (evt) => {
+                            evt.stopPropagation()
+                            addCartInput.value = Number(addCartInput.value) + 1
+                        }
+                        removeCartIcon.onclick = (evt) => {
+                            evt.stopPropagation()
+                            addCartInput.value = Number(addCartInput.value) - 1
+                        }
+                        addCartBtn.onclick = (evt) => {
+                            evt.stopPropagation()
+                            addCartBtn.style.display = "none"
+                            article.children[1].children[1].style.display = "none"
+                            checkBtn.style.display = ""
+                            article.children[1].children[0].style.display = ""
+                            addCartInput.value = 1
+                            body.onclick = () => {
+                                addCartBtn.style.display = ""
+                                article.children[1].children[1].style.display = ""
+                                checkBtn.style.display = "none"
+                                article.children[1].children[0].style.display = "none"
+                            }
+                        }
+                        checkBtn.onclick = (evt) => {
+                            evt.stopPropagation()
+                            addCartBtn.style.display = ""
+                            article.children[1].children[1].style.display = ""
+                            checkBtn.style.display = "none"
+                            article.children[1].children[0].style.display = "none"
+                            actualUserEmail().then(conected => {
+                                if (conected != "no user conected") {
+                                    addCartFct(doc.id, Number(addCartInput.value)).then(res => {
+                                        alertThis("Adicionado com sucesso", "sucess")
+                                    })
+                                } else {
+                                    alertThis("Faça login para continuar", "")
+                                }
+                            })
+                        }
+                    })
+                    .catch((error) => {
+                        // Handle any errors
+                    });
+            }
+        } else {
+            getDownloadURL(ref(storage, `store/${doc.id}/image`))
+                .then((url) => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = (event) => {
+                        let blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                    let article = document.createElement("article")
+                    let body = document.querySelector("body")
+                    let count = 1
+                    storeDiv.insertAdjacentElement("beforeend", article)
+                    article.classList.add("store-card")
+                    article.innerHTML = `
                     <img class="storeCard__img" src="${url}">
                     <div class="storeCard__div--1">
                         <div class="storeCard__divInput" style="display: none;">
@@ -58,59 +151,60 @@ async function loadStore() {
                         <button type="button" class="storeCard__addCart" style="display: none;"><i class="bi bi-check2" style="font-size: 24px;"></i></button>
                     </div>
                 `
-                let addCartInput = article.children[1].children[0].children[1]
-                let addCartIcon = article.children[1].children[0].children[2]
-                let removeCartIcon = article.children[1].children[0].children[0]
-                let checkBtn = article.children[1].children[3]
-                let addCartBtn = article.children[1].children[2]
-                article.children[1].children[0].onclick = (evt) => {
-                    evt.stopPropagation()
-                }
-                article.children[1].children[1].onclick = (evt) => {
-                    evt.stopPropagation()
-                }
-                addCartIcon.onclick = (evt) => {
-                    evt.stopPropagation()
-                    addCartInput.value = Number(addCartInput.value) + 1
-                }
-                removeCartIcon.onclick = (evt) => {
-                    evt.stopPropagation()
-                    addCartInput.value = Number(addCartInput.value) - 1
-                }
-                addCartBtn.onclick = (evt) => {
-                    evt.stopPropagation()
-                    addCartBtn.style.display = "none"
-                    article.children[1].children[1].style.display = "none"
-                    checkBtn.style.display = ""
-                    article.children[1].children[0].style.display = ""
-                    addCartInput.value = 1
-                    body.onclick = () => {
+                    let addCartInput = article.children[1].children[0].children[1]
+                    let addCartIcon = article.children[1].children[0].children[2]
+                    let removeCartIcon = article.children[1].children[0].children[0]
+                    let checkBtn = article.children[1].children[3]
+                    let addCartBtn = article.children[1].children[2]
+                    article.children[1].children[0].onclick = (evt) => {
+                        evt.stopPropagation()
+                    }
+                    article.children[1].children[1].onclick = (evt) => {
+                        evt.stopPropagation()
+                    }
+                    addCartIcon.onclick = (evt) => {
+                        evt.stopPropagation()
+                        addCartInput.value = Number(addCartInput.value) + 1
+                    }
+                    removeCartIcon.onclick = (evt) => {
+                        evt.stopPropagation()
+                        addCartInput.value = Number(addCartInput.value) - 1
+                    }
+                    addCartBtn.onclick = (evt) => {
+                        evt.stopPropagation()
+                        addCartBtn.style.display = "none"
+                        article.children[1].children[1].style.display = "none"
+                        checkBtn.style.display = ""
+                        article.children[1].children[0].style.display = ""
+                        addCartInput.value = 1
+                        body.onclick = () => {
+                            addCartBtn.style.display = ""
+                            article.children[1].children[1].style.display = ""
+                            checkBtn.style.display = "none"
+                            article.children[1].children[0].style.display = "none"
+                        }
+                    }
+                    checkBtn.onclick = (evt) => {
+                        evt.stopPropagation()
                         addCartBtn.style.display = ""
                         article.children[1].children[1].style.display = ""
                         checkBtn.style.display = "none"
                         article.children[1].children[0].style.display = "none"
+                        actualUserEmail().then(conected => {
+                            if (conected != "no user conected") {
+                                addCartFct(doc.id, Number(addCartInput.value)).then(res => {
+                                    alertThis("Adicionado com sucesso", "sucess")
+                                })
+                            } else {
+                                alertThis("Faça login para continuar", "")
+                            }
+                        })
                     }
-                }
-                checkBtn.onclick = (evt) => {
-                    evt.stopPropagation()
-                    addCartBtn.style.display = ""
-                    article.children[1].children[1].style.display = ""
-                    checkBtn.style.display = "none"
-                    article.children[1].children[0].style.display = "none"
-                    actualUserEmail().then(conected => {
-                        if (conected != "no user conected") {
-                            addCartFct(doc.id, Number(addCartInput.value)).then(res => {
-                                alertThis("Adicionado com sucesso", "sucess")
-                            })
-                        } else {
-                            alertThis("Faça login para continuar", "")
-                        }
-                    })
-                }
-            })
-            .catch((error) => {
-                // Handle any errors
-            });
+                })
+                .catch((error) => {
+                    // Handle any errors
+                });
+        }
     });
 }
 
@@ -140,11 +234,11 @@ async function addCartFct(itemId, quanty) {
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
         monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
-            cartCount = 0            
+            cartCount = 0
             const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
             querySnapshot.forEach((doc) => {
                 storeCartBtn.children[1].textContent = ``
-                cartCount = cartCount + Number(doc.data().quanty)                
+                cartCount = cartCount + Number(doc.data().quanty)
                 storeCartBtn.children[1].textContent = `${cartCount}`
             });
             if (querySnapshot.size == 0) {
