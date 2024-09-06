@@ -3,6 +3,7 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getFirestore, doc, updateDoc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { actualUserData } from "../../scripts/returnUserInfos";
+import { alertThis } from "../../components/alerts/alert";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -78,6 +79,7 @@ onAuthStateChanged(auth, (user) => {
             perfilSection.children[0].children[2].src = `${coverUrl}`
             perfilEmail.value = `${actualUser.email}`
             perfilViewPassword.onclick = function () {
+                alertThis("Ação indisponivel", "error")
             }
             perfilPhotoInput.onchange = function () {
                 if (perfilPhotoInput.files && perfilPhotoInput.files[0]) {
