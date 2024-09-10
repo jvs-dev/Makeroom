@@ -186,7 +186,7 @@ async function createPay(email, value, items) {
             },
             body: JSON.stringify(requestBody)
         };
-        fetch('http://localhost:3000/api/createpay', requestOptions)
+        fetch('https://makeroom-payment.vercel.app/api/createpay', requestOptions)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro ao enviar requisição: ' + response.status);
