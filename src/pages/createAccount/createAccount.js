@@ -68,7 +68,7 @@ createAccountBtn.onclick = function () {
   createAccountBtn.disabled = true
   if (createAccountClass != "" && createAccountPassword != "" && createAccountEmail != "" && createAccountName != "" && createAccountRoom != "") {
     verifyUserEmailExists(createAccountEmail).then(userExists => {
-      if (userExists = false) {
+      if (userExists == false) {
         registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom)
       } else {
         createAccountBtn.disabled = false
