@@ -111,6 +111,7 @@
     border-radius: 10px;
     margin: 24px 0px 0px 0px;
     width: calc(100% - 60px);
+    position: relative;
 }
 
 .youCard__div--1 {
@@ -153,6 +154,15 @@
     margin: 0px;
     font-size: 14px;
     font-weight: 400;
+}
+
+.youCard__star {
+    color: var(--white);
+    font-size: 25px;
+    position: absolute;
+    right: 0;
+    margin: 0px 22px 0px 0px;
+    display: none;
 }
 
 .rank__outhersDiv {

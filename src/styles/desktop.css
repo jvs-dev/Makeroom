@@ -37,20 +37,81 @@
         font-size: 22px;
         cursor: pointer;
     }
+
     .accountCard__userCover {
         height: 40%;
     }
+
     .accountCard__resetUserPhoto {
         height: 100px;
         width: 100px;
     }
+
     .accountCard__signature {
         font-size: 16px;
     }
+
     .projectCard {
         max-width: 370px;
     }
+
     .projectCard {
-        cursor: pointer; 
+        cursor: pointer;
+    }
+
+    .projectCard__deleteLesson {
+        cursor: pointer;
+    }
+
+    .challengeSection__divCards .challengeCard {
+        scroll-snap-align: center;
+        flex: 0 0 260px;
+    }
+
+    #firstsDiv> :nth-child(2) {
+        order: -1;
+    }
+
+    .rank__firstsArticle__position {
+        width: 150px;
+    }
+
+    .rank__div--1 {
+        gap: 30px;
+    }
+
+    .rank__youCard {
+        max-width: 400px;
+    }
+
+    .youCard__star {
+        display: unset;
+    }
+
+    .youCard__img {
+        height: 52px;
+        width: 52px;
+    }
+
+    .rankOuthersCard {
+        background: #fff;
+        width: 320px;
+    }
+
+    .rank__outhersDiv {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px 40px 40px 40px;
+    }
+
+    .rank__h1 {
+        margin-bottom: 30px;
+    }
+
+    .rank__firstsArticle__name {
+        max-width: 150px;
     }
 }
