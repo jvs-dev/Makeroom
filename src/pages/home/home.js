@@ -239,7 +239,7 @@ function loadComents(section, obj, id, url) {
     section.innerHTML = ""
     actualUserEmail().then(actualUser => {
         section.innerHTML = ""
-        monitorCollectionUpdates(`lessons/${id}/coments`, async (coment) => {            
+        monitorCollectionUpdates(`lessons/${id}/coments`, async (coment) => {
             coment.forEach(element => {
                 if (element.timestamp != null) {
                     thisUserData(element.email).then(UserData => {
@@ -308,7 +308,7 @@ function initHome() {
         }
         document.getElementById("homeUserName").innerHTML = `${actualUser.name}`
         document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
-        document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
+        document.getElementById("homeUserCover").style.backgroundImage = `url(${coverUrl})`
         document.getElementById("homeViewPerfil").onclick = function () {
             homeSection.style.display = "none"
             document.getElementById("perfilSection").style.display = "flex"

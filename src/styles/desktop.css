@@ -1,0 +1,56 @@
+@media (min-width: 600px) {
+    .introduction__p {
+        font-size: 7vw;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .introduction__logo {
+        width: 30%;
+    }
+
+    .accountCard {
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 60px;
+        min-width: 0px;
+        width: calc(100% - 40px);
+        max-width: 700px;
+        background: #eee;
+        border-radius: 12px;
+    }
+
+    .accountCard__div {
+        align-items: center;
+        gap: 0px;
+    }
+
+    .accountCard__name {
+        font-size: 34px;
+        font-family: 'Teko', sans-serif;
+        line-height: 100%;
+        margin: 2px 0px 0px 0px;
+    }
+
+    .accountCard__btn {
+        font-family: 'Teko', sans-serif;
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .accountCard__userCover {
+        height: 40%;
+    }
+    .accountCard__resetUserPhoto {
+        height: 100px;
+        width: 100px;
+    }
+    .accountCard__signature {
+        font-size: 16px;
+    }
+    .projectCard {
+        max-width: 370px;
+    }
+    .projectCard {
+        cursor: pointer; 
+    }
+}
