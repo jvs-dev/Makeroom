@@ -163,7 +163,7 @@ function calcTotalValue() {
                     cartCount = cartCount + (Number(item.data().quanty) * Number(docSnap.data().price))
                     cartTotalSpan.textContent = `$${cartCount.toFixed(2)}`
                 }
-            });                        
+            });
             if (querySnapshot.size == 0) {
                 cartTotalSpan.textContent = `$0.00`
                 initCart()
