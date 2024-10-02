@@ -24,7 +24,7 @@ const storeCartBtn = document.getElementById("storeCartBtn")
 let searchInput = document.getElementById("searchInput")
 let cartCount = 0
 
-searchInput.onchange = () => {    
+searchInput.onchange = () => {
     loadStore()
 }
 
@@ -34,7 +34,6 @@ async function loadStore() {
     const querySnapshot = await getDocs(collection(db, "store"));
     querySnapshot.forEach((doc) => {
         if (searchInput.value != "") {
-            console.log("po");
             if (doc.data().name.toLowerCase().includes(`${searchInput.value.toLowerCase()}`) == true) {
                 getDownloadURL(ref(storage, `store/${doc.id}/image`))
                     .then((url) => {
@@ -249,8 +248,13 @@ function updateCartQuanty() {
 }
 
 document.getElementById("storeCartBtn").onclick = function () {
-    alternatePage(document.getElementById("cartSection"))
-    initCart()
+    if (window.innerWidth > 600) {
+        document.getElementById("cartSection").style.display = "flex"
+        initCart()
+    } else {
+        alternatePage(document.getElementById("cartSection"))
+        initCart()
+    }
 }
 
 onAuthStateChanged(auth, (user) => {

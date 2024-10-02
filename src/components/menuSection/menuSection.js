@@ -49,10 +49,12 @@ document.querySelectorAll(".header__logo").forEach(element => {
 
 document.getElementById("goToHome").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("homeSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToHome"))
         }
@@ -61,10 +63,12 @@ document.getElementById("goToHome").onclick = function () {
 
 document.getElementById("goToRanking").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("rankingSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToRanking"))
         }
@@ -73,10 +77,12 @@ document.getElementById("goToRanking").onclick = function () {
 
 document.getElementById("goToStore").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("storeSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToStore"))
         }
@@ -85,10 +91,12 @@ document.getElementById("goToStore").onclick = function () {
 
 document.getElementById("goToStock").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("stockSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToStock"))
         }
@@ -97,10 +105,12 @@ document.getElementById("goToStock").onclick = function () {
 
 document.getElementById("goToCreateAccount").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("createAccountSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColorAll()
             setTimeout(() => {
@@ -112,10 +122,12 @@ document.getElementById("goToCreateAccount").onclick = function () {
 
 document.getElementById("goTocreateLesson").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("createLessonSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColorAll()
             setTimeout(() => {
@@ -126,10 +138,12 @@ document.getElementById("goTocreateLesson").onclick = function () {
 }
 document.getElementById("goToCreateStockItem").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("createStockItem"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColorAll()
             setTimeout(() => {
@@ -141,10 +155,12 @@ document.getElementById("goToCreateStockItem").onclick = function () {
 
 document.getElementById("goToCreateStoreItem").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("createStoreItem"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColorAll()
             setTimeout(() => {
@@ -156,10 +172,12 @@ document.getElementById("goToCreateStoreItem").onclick = function () {
 
 document.getElementById("goToBuyeds").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("buyedsSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToBuyeds"))
         }
@@ -168,10 +186,12 @@ document.getElementById("goToBuyeds").onclick = function () {
 
 document.getElementById("goToResolvers").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("resolversSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToResolvers"))
         }
@@ -180,10 +200,12 @@ document.getElementById("goToResolvers").onclick = function () {
 
 document.getElementById("goToChallenge").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("challengeSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColor(document.getElementById("goToChallenge"))
         }
@@ -192,10 +214,12 @@ document.getElementById("goToChallenge").onclick = function () {
 
 document.getElementById("goToCreateChallenge").onclick = function () {
     menuToggle.forEach(menuBtn => {
-        if (menuBtn.classList.contains("active")) {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
             alternatePage(document.getElementById("createChallenge"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
             body.style.overflowY = "auto"
             unColorAll()
             setTimeout(() => {

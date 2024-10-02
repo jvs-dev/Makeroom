@@ -137,34 +137,32 @@ function getLessonVideo(id) {
 }
 
 function loadLessonIntro(obj, id, url) {
-    let pressTime;
-    let backgroundAnimation;
-    let i = 0
     let lessonIntroduction = document.getElementById("lessonIntroduction")
-    lessonIntroduction.children[0].textContent = `${obj.lessonIntro}`
-    lessonIntroduction.children[1].ontouchstart = function () {
-        pressTime = setTimeout(() => {
-            lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
-            i = 0
-            lessonIntroduction.style.opacity = "0"
-            lessonIntroduction.style.display = "none"
-            clearTimeout(pressTime);
-            clearInterval(backgroundAnimation)
-            lessonWindowData(obj, id, url)
-            lessonIntroduction.children[1].ontouchstart = function () { }
-            lessonIntroduction.children[1].ontouchend = function () { }
-        }, 3000);
-        backgroundAnimation = setInterval(() => {
-            i = i + 1.5
-            lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) ${i}%)`
-        }, 20);
-    }
-    lessonIntroduction.children[1].ontouchend = function () {
-        clearTimeout(pressTime);
-        clearInterval(backgroundAnimation)
-        lessonIntroduction.children[1].style.background = `linear-gradient(0deg, var(--primary-color), var(--white) 0%)`
-        i = 0
-    }
+    lessonIntroduction.children[0].textContent = `${obj.lessonTitle}`
+    lessonIntroduction.children[1].textContent = `${obj.lessonIntro}`
+    let startY = 0;
+    let hasMovedUp = false;
+    lessonIntroduction.addEventListener('touchstart', (e) => {
+        startY = e.touches[0].clientY; // Captura a posição Y inicial do toque
+    });
+    lessonIntroduction.addEventListener('touchmove', (e) => {
+        const currentY = e.touches[0].clientY;
+        const deltaY = startY - currentY;
+        if (deltaY > 50) {
+            lessonIntroduction.classList.add('hidden');
+        }
+    });
+    lessonIntroduction.addEventListener('touchend', () => {
+        if (!hasMovedUp && lessonIntroduction.classList.contains('hidden')) {
+            hasMovedUp = true;
+            setTimeout(() => {
+                lessonIntroduction.style.opacity = '0';
+                lessonIntroduction.style.display = 'none';
+                lessonWindowData(obj, id, url)
+                lessonIntroduction.classList.remove('hidden');
+            }, 500);
+        }
+    });    
     lessonIntroduction.style.opacity = "1"
     setTimeout(() => {
         lessonIntroduction.style.display = "flex"

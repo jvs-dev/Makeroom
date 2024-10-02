@@ -6,12 +6,16 @@ menuToggle.forEach(menuBtn => {
     menuBtn.onclick = function () {
         if (menuBtn.classList.contains("active")) {
             menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
-            body.style.overflowY = "auto"
+            if (window.innerWidth < 600) {
+                menuSection.style.transform = "translateX(100vw)"
+                body.style.overflowY = "auto"
+            }
         } else {
             menuBtn.classList.add("active")
-            menuSection.style.transform = "translateX(0vw)"
-            body.style.overflowY = "hidden"
+            if (window.innerWidth < 600) {
+                menuSection.style.transform = "translateX(0vw)"
+                body.style.overflowY = "hidden"
+            }
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'

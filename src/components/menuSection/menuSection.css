@@ -25,6 +25,10 @@
 }
 
 .menuSection__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
     font-family: 'Teko', sans-serif;
     font-weight: 400;
     font-size: 28px;
@@ -32,10 +36,49 @@
     background: transparent;
     border: 0px;
     outline-width: 0px;
+    border: solid 2px var(--black);
+    width: 190px;
+    border-radius: 8px;
+    padding: 2px 0px;
+}
+
+.menuSection__btn div {
+    height: 22px;
+    width: 22px;
+    background-image: url("/targetIcon.svg");
+    background-size: 100%;
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+}
+
+.menuSection__btn ion-icon {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    font-size: 22px;
+}
+
+.menuSection__btn i {
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
+    font-size: 22px;
 }
 
 .menuSection__btn.active {
     color: var(--primary-color);
+    border: solid 2px var(--primary-color);
+}
+
+.menuSection__btn.active div {
+    height: 22px;
+    width: 22px;
+    background-image: url("/targetIcon2.svg");
+    background-size: 100%;
+    position: absolute;
+    left: 0;
+    margin-left: 10px;
 }
 
 .menuSection__perfilBtn {
@@ -75,6 +118,7 @@
 .menuSection__adminBtn.active {
     color: var(--primary-color);
 }
+
 .menuSection__adminBtn.active ion-icon {
     color: var(--primary-color);
 }
@@ -90,6 +134,7 @@
     gap: 10px;
     padding: 0px;
 }
+
 .menuSection__adminAdds {
     position: fixed;
     display: flex;
@@ -108,6 +153,7 @@
     transform: translateX(100vw);
     transition: 0.2s;
 }
+
 .adminAdds__btn {
     background: radial-gradient(100.06% 141.42% at 0% 100%, #FD9327 100%, #1E1E1E 100%);
     width: calc(100vw - 80px);
@@ -126,6 +172,7 @@
     gap: 10px;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
+
 .menuSection__adminAdds__back {
     width: calc(100vw - 80px);
     max-width: 300px;

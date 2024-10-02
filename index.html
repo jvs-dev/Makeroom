@@ -134,10 +134,15 @@
               class="bi bi-journal-check"></i></button></li>
       </ul>
       <ul class="menuSection__ul">
-        <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome">Home</button></li>
-        <li class="menuSection__li"><button class="menuSection__btn" id="goToChallenge">Desafios</button></li>
-        <li class="menuSection__li"><button class="menuSection__btn" id="goToStore">Loja maker</button></li>
-        <li class="menuSection__li"><button class="menuSection__btn" id="goToRanking">Ranking</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn active" id="goToHome"><ion-icon
+              name="home-outline"></ion-icon>Home</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToChallenge">
+            <div></div>Desafios
+          </button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToStore"><ion-icon
+              name="cart-outline"></ion-icon>Loja maker</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToRanking"><ion-icon
+              name="trophy-outline"></ion-icon>Ranking</button></li>
       </ul>
     </section>
     <section class="main__section section--home" id="homeSection">
@@ -187,8 +192,9 @@
 
     <section class="main__section section--lessonIntroduction" id="lessonIntroduction">
       <h1 class="lessonIntroduction__h1"></h1>
-      <button class="lessonIntroduction__button"><ion-icon name="arrow-forward-outline"></ion-icon></button>
-      <span class="lessonIntroduction__span">Pressione para continuar</span>
+      <p class="lessonIntroduction__p"></p>
+      <button class="lessonIntroduction__button"><i class="bi bi-chevron-double-up"></i></button>
+      <span class="lessonIntroduction__span">Arraste a tela para cima</span>
     </section>
 
     <section class="main__section section--lessonWindow" id="lessonWindow">

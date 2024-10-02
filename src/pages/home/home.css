@@ -148,6 +148,12 @@
     transition: 0.5s;
 }
 
+.section--lessonIntroduction.hidden {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
 .lessonIntroduction__button {
     background: linear-gradient(0deg, var(--primary-color), var(--white) 0%);
     color: var(--primary-color);
@@ -157,7 +163,7 @@
     text-align: center;
     position: absolute;
     bottom: 0;
-    margin-bottom: 60px;
+    margin-bottom: 100px;
     padding: 0px;
     font-size: 30px;
     border: 0px;
@@ -166,6 +172,7 @@
     width: 54px;
     border-radius: 100%;
     transition: 3s;
+    animation: upDownArrow 3s infinite;
 }
 
 .lessonIntroduction__button ion-icon {
@@ -175,19 +182,53 @@
     padding: 10px;
 }
 
+.lessonIntroduction__button i {
+    background: var(--white);
+    position: absolute;
+    border-radius: 100%;
+    padding: 10px;
+}
+
 .lessonIntroduction__span {
     color: var(--primary-color);
     font-family: 'Teko', sans-serif;
-    margin: 0px 0px 10px 0px;
-    font-size: 20px;
+    margin: 0px 0px 40px 0px;
+    font-size: 24px;
 }
 
 .lessonIntroduction__h1 {
-    font-family: 'Kanit', sans-serif;
+    font-family: 'Teko', sans-serif;
     font-weight: 500;
     margin: 0px;
-    padding: 20px;
+    padding: 40px 20px 0px 20px;
     color: var(--black);
-    font-size: 22px;
+    font-size: 28px;
     width: 100%;
+    text-align: center;
+    font-weight: 400;
+}
+
+.lessonIntroduction__p {
+    color: var(--black);
+    font-size: 20px;
+    padding: 0px 20px;
+    text-align: left;
+    font-weight: 500;
+    position: absolute;
+    top: 0;
+    margin: 110px 0px 0px 0px;
+}
+
+@keyframes upDownArrow {
+    0% {
+        transform: translateY(20px);
+    }
+
+    50% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(20px);
+    }
 }
