@@ -140,29 +140,38 @@ function loadLessonIntro(obj, id, url) {
     let lessonIntroduction = document.getElementById("lessonIntroduction")
     lessonIntroduction.children[0].textContent = `${obj.lessonTitle}`
     lessonIntroduction.children[1].textContent = `${obj.lessonIntro}`
-    let startY = 0;
-    let hasMovedUp = false;
-    lessonIntroduction.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY; // Captura a posição Y inicial do toque
-    });
-    lessonIntroduction.addEventListener('touchmove', (e) => {
-        const currentY = e.touches[0].clientY;
-        const deltaY = startY - currentY;
-        if (deltaY > 50) {
-            lessonIntroduction.classList.add('hidden');
+    if (window.innerWidth < 600) {
+        let startY = 0;
+        let hasMovedUp = false;
+        lessonIntroduction.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY; // Captura a posição Y inicial do toque
+        });
+        lessonIntroduction.addEventListener('touchmove', (e) => {
+            const currentY = e.touches[0].clientY;
+            const deltaY = startY - currentY;
+            if (deltaY > 50) {
+                lessonIntroduction.classList.add('hidden');
+            }
+        });
+        lessonIntroduction.addEventListener('touchend', () => {
+            if (!hasMovedUp && lessonIntroduction.classList.contains('hidden')) {
+                hasMovedUp = true;
+                setTimeout(() => {
+                    lessonIntroduction.style.opacity = '0';
+                    lessonIntroduction.style.display = 'none';
+                    lessonWindowData(obj, id, url)
+                    lessonIntroduction.classList.remove('hidden');
+                }, 500);
+            }
+        });
+    } else {
+        lessonIntroduction.children[3].textContent = "Clique para continuar"
+        lessonIntroduction.children[2].onclick = function () {
+            lessonIntroduction.style.opacity = '0';
+            lessonIntroduction.style.display = 'none';
+            lessonWindowData(obj, id, url)
         }
-    });
-    lessonIntroduction.addEventListener('touchend', () => {
-        if (!hasMovedUp && lessonIntroduction.classList.contains('hidden')) {
-            hasMovedUp = true;
-            setTimeout(() => {
-                lessonIntroduction.style.opacity = '0';
-                lessonIntroduction.style.display = 'none';
-                lessonWindowData(obj, id, url)
-                lessonIntroduction.classList.remove('hidden');
-            }, 500);
-        }
-    });    
+    }
     lessonIntroduction.style.opacity = "1"
     setTimeout(() => {
         lessonIntroduction.style.display = "flex"
@@ -192,39 +201,39 @@ function getLessonExtraFile(id) {
 
 function lessonWindowData(obj, id, url) {
     actualUserEmail().then(actualUser => {
-        lessonWindow.children[1].textContent = `${obj.lessonTitle}`
+        lessonWindow.children[1].children[0].textContent = `${obj.lessonTitle}`
         if (obj.existsExtraFile == false) {
-            lessonWindow.children[4].innerHTML = `<p class="lessonWindow__notExtraFile">Sem anexos</p>`
+            lessonWindow.children[1].children[3].innerHTML = `<p class="lessonWindow__notExtraFile">Sem anexos</p>`
         } else {
-            lessonWindow.children[4].innerHTML = `<button class="lessonWindow__extraFileDownload">Baixar Arquivo</button>`
-            lessonWindow.children[4].children[0].onclick = function () {
+            lessonWindow.children[1].children[3].innerHTML = `<button class="lessonWindow__extraFileDownload">Baixar Arquivo</button>`
+            lessonWindow.children[1].children[3].children[0].onclick = function () {
                 getLessonExtraFile(id).then(fileUrl => {
                     window.location.href = fileUrl
                 })
             }
         }
         getLessonVideo(id).then(videoUrl => {
-            lessonWindow.children[2].src = `${videoUrl}`
-            lessonWindow.children[2].autoplay = true
+            lessonWindow.children[1].children[1].src = `${videoUrl}`
+            lessonWindow.children[1].children[1].autoplay = true
         })
-        lessonWindow.children[3].children[0].onclick = function () {
-            lessonWindow.children[3].children[0].classList.add("active")
-            lessonWindow.children[3].children[1].classList.remove("active")
-            lessonWindow.children[4].style.display = "none"
-            lessonWindow.children[5].style.display = ""
+        lessonWindow.children[1].children[2].children[0].onclick = function () {
+            lessonWindow.children[1].children[2].children[0].classList.add("active")
+            lessonWindow.children[1].children[2].children[1].classList.remove("active")
+            lessonWindow.children[1].children[3].style.display = "none"
+            lessonWindow.children[2].style.display = ""
         }
-        lessonWindow.children[3].children[1].onclick = function () {
-            lessonWindow.children[3].children[1].classList.add("active")
-            lessonWindow.children[3].children[0].classList.remove("active")
-            lessonWindow.children[4].style.display = "flex"
-            lessonWindow.children[5].style.display = "none"
+        lessonWindow.children[1].children[2].children[1].onclick = function () {
+            lessonWindow.children[1].children[2].children[1].classList.add("active")
+            lessonWindow.children[1].children[2].children[0].classList.remove("active")
+            lessonWindow.children[1].children[3].style.display = "flex"
+            lessonWindow.children[2].style.display = "none"
         }
-        lessonWindow.children[5].children[1].children[0].innerHTML = ""
-        loadComents(lessonWindow.children[5].children[1].children[0], obj, id, url)
-        lessonWindow.children[5].children[1].children[1].children[0].children[2].onclick = function () {
-            if (lessonWindow.children[5].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                postComment("lessons", id, actualUser, lessonWindow.children[5].children[1].children[1].children[0].children[1].value).then(posted => {
-                    lessonWindow.children[5].children[1].children[1].children[0].children[1].value = ""
+        lessonWindow.children[2].children[1].children[0].innerHTML = ""
+        loadComents(lessonWindow.children[2].children[1].children[0], obj, id, url)
+        lessonWindow.children[2].children[1].children[1].children[0].children[2].onclick = function () {
+            if (lessonWindow.children[2].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
+                postComment("lessons", id, actualUser, lessonWindow.children[2].children[1].children[1].children[0].children[1].value).then(posted => {
+                    lessonWindow.children[2].children[1].children[1].children[0].children[1].value = ""
                 })
             }
         }

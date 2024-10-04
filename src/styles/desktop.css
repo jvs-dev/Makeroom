@@ -301,4 +301,113 @@
     .buyedsCard {
         max-width: 500px;
     }
+
+    .lessonIntroduction__button {
+        rotate: 90deg;
+        animation: none;
+        cursor: pointer;
+    }
+
+    .lessonWindow__divSelectView__btn {
+        cursor: pointer;
+    }
+
+    .main__section.section--lessonWindow {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 80px 0px 0px 120px;
+        height: 100vh;
+    }
+
+    .section--lessonWindow .page__header {
+        position: fixed;
+        justify-content: flex-end;
+        top: 0;
+        left: 0;
+        padding: 0px 25px 0px 0px;
+        margin: 0px;
+        background: #fff;
+    }
+
+    .lessonWindow__video {
+        width: 100%;
+    }
+
+    .lessonWindow__divSelectView {
+        display: none;
+    }
+
+    .lessonWindow__extraFileDiv {
+        display: flex;
+        order: 2;
+    }
+
+    .lessonWindow__extraFileDownload {
+        border: 0px;
+        color: var(--white);
+        box-shadow: 0px 2px 4px rgba(00, 00, 00, 0.25);
+        cursor: pointer;
+    }
+
+    .lessonWindow__title {
+        order: 1;
+        font-size: 24px;
+        text-align: left;
+        padding: 15px 0px 15px 5px;
+        margin: 0px;
+        border-bottom: solid 2px #1e1e1e62;
+    }
+
+    .challenge__h1 {
+        color: #1e1e1e !important;
+        margin: 0px 0px 10px 0px;
+    }
+
+    .allComentsDiv {
+        overflow-y: scroll;
+        height: calc(100% - 100px);
+    }
+
+    .allComentsDiv::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .allComentsDiv::-webkit-scrollbar-track {
+        background: #fff;
+        border-right: solid 2px #ddd;
+        padding: 0px 2px 0px 0px;
+    }
+
+    .allComentsDiv::-webkit-scrollbar-thumb {
+        background-color: var(--primary-color);
+        border-radius: 20px;        
+    }
+
+    .challengeWindow__SectionComent {
+        height: 100%;
+    }
+
+    .lessonWindow.comentControls {
+        padding: 5px 0px;
+    }
+
+    .comentControls__div {
+        justify-content: space-between;
+    }
+
+    .comentControls__input {
+        width: 100%;
+    }
+
+    .comentControls__send {
+        cursor: pointer;
+        min-width: 20px;
+    }
+
+    .comentControls__label {
+        cursor: pointer;
+    }
+    .challengeWindow__closeWindow {
+        cursor: pointer;
+    }
 }
