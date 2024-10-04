@@ -186,3 +186,38 @@
     font-weight: 400;
     font-size: 23px;
 }
+
+.menuSection__desktopUl {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px 0px 20px 0px;
+    width: 100%;
+    height: auto;
+    margin: 0px;
+    gap: 20px;
+}
+
+.menuSection__desktopUl__li {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menuSection__desktopUl__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    margin: 0px;
+    background: transparent;
+    color: var(--white);
+    border: 0px;
+    outline-width: 0px;
+    font-size: 28px;
+    cursor: pointer;
+    transition: 0.2s;
+}

@@ -4,6 +4,28 @@ let menuSection = document.getElementById("menuSection")
 let body = document.querySelector("body")
 let AdminAdds = document.getElementById("AdminAdds")
 
+if (window.innerWidth > 600) {
+    let menuSideUlToggle = document.getElementById("menuSideUlToggle")
+    let menuSideUl = document.getElementById("menuSideUl")
+    menuSideUlToggle.onclick = function () {
+        if (menuSideUl.style.display == "flex") {
+            menuSideUl.style.transform = "translateX(-50px)"
+            menuSideUl.style.opacity = "0"
+            menuSideUlToggle.style.rotate = "0deg"
+            setTimeout(() => {
+                menuSideUl.style.display = "none"
+            }, 200);
+        } else {
+            menuSideUlToggle.style.rotate = "180deg"
+            menuSideUl.style.display = "flex"
+            setTimeout(() => {
+                menuSideUl.style.transform = "translateX(195px)"
+                menuSideUl.style.opacity = "1"
+            }, 1);
+        }
+    }
+}
+
 function unColor(btn) {
     let adminBtn = document.querySelectorAll(".menuSection__adminBtn")
     let allBtns = document.querySelectorAll(".menuSection__btn")

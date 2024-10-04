@@ -40,6 +40,7 @@
 
     .accountCard__userCover {
         height: 40%;
+        border-radius: 0px;
     }
 
     .accountCard__resetUserPhoto {
@@ -167,6 +168,7 @@
 
     .main__menuSection {
         position: fixed;
+        justify-content: space-between;
         background: #1e1e1e;
         width: 80px;
         left: 0;
@@ -195,7 +197,7 @@
     }
 
     .menuSection__sideUl {
-        display: flex;
+        display: none;
         width: 185px;
         justify-content: space-between;
         position: absolute;
@@ -204,8 +206,9 @@
         margin: 0px 0px 0px 110px;
         right: 0;
         left: auto;
-        transform: translateX(195px);
-        background: #1e1e1ebf;
+        transform: translateX(-50px);
+        opacity: 0;
+        background: #1e1e1ed7;
         border-radius: 10px;
         flex-direction: row;
         flex-wrap: wrap;
@@ -213,6 +216,7 @@
         padding: 10px 12px;
         color: #fff;
         backdrop-filter: blur(2px);
+        transition: 0.2s;
     }
 
     .menuSection__adminBtn {
@@ -315,7 +319,7 @@
     .main__section.section--lessonWindow {
         flex-direction: row;
         align-items: flex-start;
-        padding: 80px 0px 0px 120px;
+        padding: 90px 0px 0px 120px;
         height: 100vh;
     }
 
@@ -380,7 +384,7 @@
 
     .allComentsDiv::-webkit-scrollbar-thumb {
         background-color: var(--primary-color);
-        border-radius: 20px;        
+        border-radius: 20px;
     }
 
     .challengeWindow__SectionComent {
@@ -407,7 +411,12 @@
     .comentControls__label {
         cursor: pointer;
     }
+
     .challengeWindow__closeWindow {
         cursor: pointer;
+    }
+
+    .menuSection__desktopUl {
+        display: flex;
     }
 }
