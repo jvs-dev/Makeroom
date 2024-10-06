@@ -1,4 +1,8 @@
 @media (min-width: 600px) {
+    bottom {
+        cursor: pointer;
+    }
+
     .introduction__p {
         font-size: 7vw;
         padding-left: 20px;
@@ -130,10 +134,15 @@
         right: 0;
         z-index: 30;
         box-shadow: 1px 1px 10px rgba(00, 00, 00, 0.25);
+        padding: 0px;
     }
 
     .cartItemCard__div--2 {
         padding: 0px 26px 0px 0px;
+    }
+
+    .section--store {
+        background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, #5DB9E6 100%);
     }
 
     .cart__div--3 {
@@ -418,5 +427,32 @@
 
     .menuSection__desktopUl {
         display: flex;
+    }
+
+    .menuSection__adminAdds {
+        padding: 0px;
+        margin: -90px 0px 0px 0px;
+    }
+
+    .menuSection__adminAdds__back {
+        cursor: pointer;
+    }
+
+    .adminAdds__btn {
+        cursor: pointer;
+    }
+
+    .main__section.section--login {
+        background: var(--white);
+        z-index: 200;
+        position: relative;
+    }
+
+    #loginViewPassword {
+        cursor: pointer;
+    }
+
+    .loginSection__btn {
+        cursor: pointer;
     }
 }

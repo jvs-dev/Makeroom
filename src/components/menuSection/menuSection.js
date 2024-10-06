@@ -59,13 +59,15 @@ document.getElementById("closeAddContent").onclick = function () {
 
 document.querySelectorAll(".header__logo").forEach(element => {
     element.onclick = function () {
-        menuToggle.forEach(menuBtn => {
-            alternatePage(document.getElementById("homeSection"))
-            menuBtn.classList.remove("active")
-            menuSection.style.transform = "translateX(100vw)"
-            body.style.overflowY = "auto"
-            unColor(document.getElementById("goToHome"))
-        });
+        if (window.innerWidth < 600) {
+            menuToggle.forEach(menuBtn => {
+                alternatePage(document.getElementById("homeSection"))
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+                body.style.overflowY = "auto"
+                unColor(document.getElementById("goToHome"))
+            });
+        }
     }
 });
 
