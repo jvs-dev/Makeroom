@@ -317,8 +317,13 @@ function initHome() {
         document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
         document.getElementById("homeUserCover").style.backgroundImage = `url(${coverUrl})`
         document.getElementById("homeViewPerfil").onclick = function () {
-            homeSection.style.display = "none"
-            document.getElementById("perfilSection").style.display = "flex"
+            if (window.innerWidth < 600) {
+                homeSection.style.display = "none"
+                document.getElementById("perfilSection").style.display = "flex"
+            } else {
+                homeSection.style.display = "none"
+                document.getElementById("perfilSectionDesktop").style.display = "flex"
+            }
         }
     })
     monitorCollectionUpdates("lessons", (updatedData) => {

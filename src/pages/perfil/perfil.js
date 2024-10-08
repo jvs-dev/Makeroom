@@ -19,6 +19,7 @@ const storage = getStorage(app);
 let homeSection = document.getElementById("homeSection")
 let closePerfil = document.getElementById("closePerfil")
 let perfilSection = document.getElementById("perfilSection")
+let perfilSectionDesktop = document.getElementById("perfilSectionDesktop")
 let perfilViewPassword = document.getElementById("perfilViewPassword")
 let perfilPassword = document.getElementById("perfilPassword")
 let perfilEmail = document.getElementById("perfilEmail")
@@ -47,11 +48,28 @@ closePerfil.onclick = function () {
     homeSection.style.display = "flex"
     document.getElementById("perfilSection").style.display = "none"
 }
+document.getElementById("desktopClosePerfil").onclick = function () {
+    homeSection.style.display = "flex"
+    document.getElementById("perfilSection").style.display = "none"
+}
 
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
+        let usersArray = []
+        const querySnapshot = await getDocs(collection(db, "users"));
+        querySnapshot.forEach((doc) => {
+            usersArray.push(doc.data())
+        });
+        const sortedUsers = usersArray.sort((a, b) => b.points - a.points);
+        const rankedUsers = sortedUsers.map((user, index) => ({
+            rankPosition: index + 1,
+            email: user.email,
+            name: user.name,
+            noPhoto: user.noPhoto,
+            points: user.points
+        }));
         actualUserData().then(actualUser => {
             loadCertifies(user.email)
             let coverUrl = ""
@@ -68,15 +86,26 @@ onAuthStateChanged(auth, (user) => {
                         xhr.open('GET', url);
                         xhr.send();
                         perfilSection.children[0].children[3].children[0].children[0].children[0].src = `${url}`
+                        perfilSectionDesktop.children[1].children[2].children[0].children[0].src = `${url}`
                     })
             }
             if (actualUser.noCover == true) {
                 coverUrl = "https://images.pexels.com/photos/7869091/pexels-photo-7869091.jpeg?auto=compress&cs=tinysrgb&w=600"
             }
             perfilSection.children[1].innerHTML = `${actualUser.name}`
+            perfilSectionDesktop.children[1].children[2].children[1].children[0].innerHTML = `${actualUser.name}`
+            perfilSectionDesktop.children[1].children[2].children[1].children[1].innerHTML = `${actualUser.email}`
+            perfilSectionDesktop.children[2].children[1].children[1].innerHTML = `${actualUser.points} pontos`
+            perfilSectionDesktop.children[2].children[0].children[0].innerHTML = `Assinatura: ${actualUser.signature}`
+            rankedUsers.forEach(element => {
+                if (element.email == actualUser.email) {
+                    perfilSectionDesktop.children[2].children[1].children[0].innerHTML = `${element.rankPosition}° Lugar`
+                }
+            });
             perfilSection.children[2].children[0].innerHTML = `${actualUser.signature}`
             perfilSection.children[2].children[1].innerHTML = `${actualUser.points} Pontos`
             perfilSection.children[0].children[2].src = `${coverUrl}`
+            perfilSectionDesktop.children[1].children[0].src = `${coverUrl}`
             perfilEmail.value = `${actualUser.email}`
             perfilViewPassword.onclick = function () {
                 alertThis("Ação indisponivel", "error")
@@ -110,6 +139,8 @@ onAuthStateChanged(auth, (user) => {
 });
 
 async function loadCertifies(email) {
+    let certifiesIndex = 0
+    let challengesIndex = 0
     perfilCertifiesDiv.innerHTML = ""
     const q = query(collection(db, "challenges"), where("challengeCertifiedTitle", "!=", ""));
     const querySnapshot = await getDocs(q);
@@ -117,9 +148,12 @@ async function loadCertifies(email) {
         returnResolversEmail(doc.id).then(resolverItems => {
             resolverItems.forEach(resolverData => {
                 if (resolverData.resolved == true && resolverData.senderEmail == email) {
+                    certifiesIndex++
+                    perfilSectionDesktop.children[2].children[0].children[2].innerHTML = `Certificados: ${certifiesIndex}`
                     let article = document.createElement("article")
                     article.classList.add("certifiedCard")
                     perfilCertifiesDiv.insertAdjacentElement("beforeend", article)
+                    perfilSectionDesktop.children[3].children[0].children[1].insertAdjacentElement("beforeend", article)
                     article.innerHTML = `
                         <img class="certifiedCard__logo" src="/logo.svg" alt="">
                         <img class="certifiedCard__flag" src="/flag.svg" alt="">
@@ -137,6 +171,20 @@ async function loadCertifies(email) {
                         </div>
                         <div class="certifiedCard__retangle--1"></div>
                         <div class="certifiedCard__retangle--2"></div>`
+                }
+            });
+        })
+
+    });
+
+    const q2 = query(collection(db, "challenges"), where("challengeTitle", "!=", null));
+    const querySnapshot2 = await getDocs(q2);
+    querySnapshot2.forEach((doc) => {
+        returnResolversEmail(doc.id).then(resolverItems => {
+            resolverItems.forEach(resolverData => {
+                if (resolverData.resolved == true && resolverData.senderEmail == email) {
+                    challengesIndex++
+                    perfilSectionDesktop.children[2].children[0].children[1].innerHTML = `Desafios: ${challengesIndex}`
                 }
             });
         })

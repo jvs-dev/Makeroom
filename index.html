@@ -51,6 +51,7 @@
   <link rel="stylesheet" href="src/components/cards/manageUsersCard.css">
   <link rel="stylesheet" href="src/components/confirmSection/confirmSection.css">
   <link rel="stylesheet" href="src/pages/resolvers/resolvers.css">
+  <link rel="stylesheet" href="src/pages/perfil/perfilDesktop.css">
   <link rel="stylesheet" href="src/styles/desktop.css">
 </head>
 
@@ -145,8 +146,8 @@
               name="trophy-outline"></ion-icon>Ranking</button></li>
       </ul>
       <ul class="menuSection__desktopUl">
-        <li class="menuSection__desktopUl__li"><button class="menuSection__desktopUl__btn" id="menuSideUlToggle"><ion-icon
-              name="chevron-forward-outline"></ion-icon></button></li>
+        <li class="menuSection__desktopUl__li"><button class="menuSection__desktopUl__btn"
+            id="menuSideUlToggle"><ion-icon name="chevron-forward-outline"></ion-icon></button></li>
         <li class="menuSection__desktopUl__li"><button class="menuSection__desktopUl__btn"><i
               class="bi bi-box-arrow-right"></i></button></li>
       </ul>
@@ -284,6 +285,63 @@
           </div>
         </div>
         <div class="perfilSection__div--8" id="perfilCertifiesDiv">
+        </div>
+      </div>
+    </section>
+
+    <section class="main__section section--desktopPerfil" id="perfilSectionDesktop">
+      <header class="page__header">
+        <img src="/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="desktopPerfil__closeBtn" id="desktopClosePerfil">Voltar<ion-icon
+            name="arrow-redo-outline"></ion-icon></button>
+      </header>
+      <div class="desktopPerfil__div--1">
+        <img src="https://images.pexels.com/photos/9242852/pexels-photo-9242852.jpeg?auto=compress&cs=tinysrgb&w=600"
+          alt="" class="desktopPerfil__backImage">
+        <div class="desktopPerfil__cover"></div>
+        <div class="desktopPerfil__div--2">
+          <div class="desktopPerfil__div--3">
+            <img
+              src="https://images.pexels.com/photos/28812535/pexels-photo-28812535/free-photo-of-desenho-de-menina-jovem-em-sala-de-aula.jpeg?auto=compress&cs=tinysrgb&w=600"
+              alt="" class="desktopPerfil__perfilImage">
+            <label for="perfilPhotoInput" class="desktopPerfil__togglePerfilImg"><ion-icon
+                name="camera-outline"></ion-icon></label>
+          </div>
+          <div class="desktopPerfil__div--4">
+            <p class="desktopPerfil__name"></p>
+            <p class="desktopPerfil__email"></p>
+          </div>
+        </div>
+      </div>
+      <div class="desktopPerfil__div--5">
+        <div class="desktopPerfil__div--6">
+          <p class="desktopPerfil__signature"></p>
+          <p class="desktopPerfil__challenges"></p>
+          <p class="desktopPerfil__certifies"></p>
+        </div>
+        <div class="desktopPerfil__div--7">
+          <p class="desktopPerfil__position"></p>
+          <p class="desktopPerfil__points"></p>
+        </div>
+      </div>
+      <!-- <div class="desktopPerfil__div--8">
+        <button class="desktopPerfil__dataBtn active" type="button"><ion-icon name="person"></ion-icon></button>
+        <button class="desktopPerfil__dataBtn" type="button"><ion-icon name="ribbon"></ion-icon></button>
+      </div> -->
+      <div class="desktopPerfil__div--9">
+        <!--         <div class="desktopPerfil__dataDiv active">
+          <p class="perfilSection__dataText">Email:</p>
+          <div class="perfilSection__inputDiv"><input type="text" disabled value="" id="perfilEmailDesktop">
+          </div>
+          <p class="perfilSection__dataText">Senha:</p>
+          <div class="perfilSection__inputDiv"><input type="password" disabled value="*********"
+              id="perfilPasswordDesktop"><ion-icon name="eye-outline" id="perfilViewPasswordDesktop"></ion-icon></div>
+        </div> -->
+        <div class="desktopPerfil__certifiesDiv active">
+          <h1 class="desktopPerfil__certifiesDiv__h1">Meus certificados</h1>
+          <div class="desktopPerfil__certifiesDiv__div">
+
+          </div>
         </div>
       </div>
     </section>
@@ -459,7 +517,7 @@
       </header>
       <h1 class="store__h1">Compras</h1>
       <div class="buyedsSection__div" id="buyedsSectionDiv">
-        <article class="buyedsCard">
+        <!-- <article class="buyedsCard">
           <div class="buyedsCard__div--1">
             <div class="buyedsCard__div--2">
               <p class="buyedsCard__name">Rebeca Andrade</p>
@@ -473,7 +531,7 @@
             <li class="buyedsCard__li">Pilhas AA(2): 2</li>
           </ul>
           <button class="buyedsCard__Btn">Entregue</button>
-        </article>
+        </article> -->
       </div>
     </section>
 

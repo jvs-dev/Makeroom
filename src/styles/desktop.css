@@ -455,4 +455,40 @@
     .loginSection__btn {
         cursor: pointer;
     }
+
+    .cartPaymentDiv__div--1 {
+        max-width: 400px;
+    }
+
+    .cartPaymentDiv__btn {
+        cursor: pointer;
+    }
+
+    .cartPaymentDiv__copy {
+        cursor: pointer;
+    }
+
+    .cartPaymentDiv__img {
+        min-width: 255px;
+    }
+
+    .cartPaymentDiv__div--2 {
+        margin: 0px 0px 10px 0px;
+    }
+
+    .notifyCard {
+        max-width: 500px;
+    }
+
+    .notifyCard__btn {
+        cursor: pointer;
+    }
+
+    .desktopPerfil__dataDiv {
+        align-items: flex-start;
+    }
+
+    .perfilSection__inputDiv ion-icon {
+        cursor: pointer;
+    }
 }
