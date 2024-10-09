@@ -50,7 +50,7 @@ closePerfil.onclick = function () {
 }
 document.getElementById("desktopClosePerfil").onclick = function () {
     homeSection.style.display = "flex"
-    document.getElementById("perfilSection").style.display = "none"
+    perfilSectionDesktop.style.display = "none"
 }
 
 
