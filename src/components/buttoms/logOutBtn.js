@@ -20,15 +20,25 @@ const storage = getStorage(app);
 let menuToggle = document.querySelectorAll(".header__menuToggle")
 let menuSection = document.getElementById("menuSection")
 let body = document.querySelector("body")
+let logOutBtnDesktop = document.getElementById("logOutBtnDesktop")
+let logOutBtn = document.getElementById("logOutBtn")
 
-document.getElementById("logOutBtn").onclick = function () {
+logOutBtnDesktop.onclick = function () {
+    logout()
+
+}
+logOutBtn.onclick = function () { logout() }
+
+function logout() {
     activeConfirmSection("Deseja realmente sair?", "Você será desconectado de sua conta", "#f00", "sad").then(res => {
         if (res == "confirmed") {
             signOut(auth).then(() => {
                 menuToggle.forEach(menuBtn => {
                     if (menuBtn.classList.contains("active")) {
-                        menuBtn.classList.remove("active")
-                        menuSection.style.transform = "translateX(100vw)"
+                        if (window.innerWidth < 600) {
+                            menuBtn.classList.remove("active")
+                            menuSection.style.transform = "translateX(100vw)"
+                        }
                         body.style.overflowY = "auto"
                     }
                 });

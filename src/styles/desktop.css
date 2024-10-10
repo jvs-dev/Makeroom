@@ -491,4 +491,49 @@
     .perfilSection__inputDiv ion-icon {
         cursor: pointer;
     }
+
+    .confirmSection {
+        z-index: 200;
+    }
+
+    .createLessonSection__label--file {
+        max-width: 200px;
+        max-height: 200px;
+        cursor: pointer;
+    }
+
+    .createLessonSection__div-row {
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .createLessonSection__selectClassRoom.extra {
+        max-width: 250px;
+    }
+
+    .createChallengeSection__selectClassRoom.extra {
+        max-width: 250px;
+    }
+
+    .createLessonSection__extraFileLabel {
+        display: flex;
+        justify-content: center;
+    }
+
+    .createAccount.loginSection__btn {
+        margin: 0px;
+    }
+
+    .createAccount.loginSection__div {
+        border-radius: 0px;
+    }
+
+    .createChallengeSection__selectClassRoom {
+        cursor: pointer;
+    }
+
+    .manageUsersCard {
+        max-width: 500px;
+        cursor: pointer;
+    }
 }
