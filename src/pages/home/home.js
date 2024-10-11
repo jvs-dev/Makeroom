@@ -29,6 +29,7 @@ let closeLessonWindow = document.getElementById("closeLessonWindow")
 closeLessonWindow.onclick = () => {
     homeSection.style.display = "flex"
     lessonWindow.style.display = "none"
+    lessonWindow.children[1].children[1].pause()
     lessonWindow.children[2].src = ``
     lessonWindow.children[5].children[1].children[0].innerHTML = ""
 }
@@ -214,7 +215,7 @@ function lessonWindowData(obj, id, url) {
         }
         getLessonVideo(id).then(videoUrl => {
             lessonWindow.children[1].children[1].src = `${videoUrl}`
-            lessonWindow.children[1].children[1].autoplay = true
+            lessonWindow.children[1].children[1].autoplay = false
         })
         lessonWindow.children[1].children[2].children[0].onclick = function () {
             lessonWindow.children[1].children[2].children[0].classList.add("active")
