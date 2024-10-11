@@ -26,6 +26,12 @@ let homeSection = document.getElementById("homeSection")
 let closeLessonWindow = document.getElementById("closeLessonWindow")
 /* let actualArray = [] */
 
+setInterval(() => {
+    if (lessonWindow.style.display == "none") {
+        lessonWindow.children[1].children[1].pause()
+    }
+}, 200);
+
 closeLessonWindow.onclick = () => {
     homeSection.style.display = "flex"
     lessonWindow.style.display = "none"
