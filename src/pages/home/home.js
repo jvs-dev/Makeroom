@@ -322,7 +322,12 @@ function initHome() {
         }
         document.getElementById("homeUserName").innerHTML = `${actualUser.name}`
         document.getElementById("homeUserSignature").innerHTML = `Assinatura: ${actualUser.signature}`
-        document.getElementById("homeUserCover").style.backgroundImage = `url(${coverUrl})`
+        if (window.innerWidth < 600) {
+            document.getElementById("homeUserCover").style.backgroundImage = `linear-gradient(0deg, rgba(250, 250, 250, 0.88), rgba(250, 250, 250, 0.88)), url(${coverUrl})`
+        } else {
+            document.getElementById("homeUserCover").style.backgroundImage = `url(${coverUrl})`
+
+        }
         document.getElementById("homeViewPerfil").onclick = function () {
             if (window.innerWidth < 600) {
                 homeSection.style.display = "none"
