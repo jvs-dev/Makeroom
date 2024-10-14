@@ -123,6 +123,8 @@
       </ul>
       <ul class="menuSection__sideUl" id="menuSideUl">
         <li><button class="menuSection__adminBtn" id="logOutBtn"><i class="bi bi-box-arrow-right"></i></button></li>
+        <li style="display: none;"><button class="menuSection__adminBtn" id="switchSchool"><i
+              class="bi bi-building-gear"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToStock" style="display: none;"><i
               class="bi bi-box-seam"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToAddContent" style="display: none;"><i
@@ -399,34 +401,38 @@
         <div class="challengeWindow__closeWindow" id="closeChallengeWindow">Voltar<ion-icon
             name="arrow-forward-outline"></ion-icon></div>
       </header>
-      <h1 class="challengeWindow__h1"></h1>
-      <div class="challengeWindow__resetMaskImg">
-        <button type="button" class="challengeWindow__deleteChallange" id="deleteChallange"
-          style="display: none;"><ion-icon name="trash-outline"></ion-icon></button>
-        <img class="challengeWindow__mask" src="" alt="">
-        <span class="challengeWindow__points"></span>
-      </div>
-      <p class="challengeWindow__description"></p>
-      <label for="sendChallengeFile" class="challengeWindow__sendChallengeLabel">
-        Enviar
-        <input type="file" name="sendChallengeFile" class="challengeWindow__fileInput" id="sendChallengeFile">
-      </label>
-      <h1 class="challenge__h1 comentTitle" style="color: var(--primary-color);">Comentarios</h1>
-      <div class="challengeWindow__SectionComent">
-        <div class="allComentsDiv">
-
+      <div class="challengeWindow__responseDiv">
+        <h1 class="challengeWindow__h1"></h1>
+        <div class="challengeWindow__resetMaskImg">
+          <button type="button" class="challengeWindow__deleteChallange" id="deleteChallange"
+            style="display: none;"><ion-icon name="trash-outline"></ion-icon></button>
+          <img class="challengeWindow__mask" src="" alt="">
+          <span class="challengeWindow__points"></span>
         </div>
-        <div class="comentControls">
-          <div class="comentControls__div">
-            <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
-            <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
-            <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
+        <p class="challengeWindow__description"></p>
+        <label for="sendChallengeFile" class="challengeWindow__sendChallengeLabel">
+          Enviar
+          <input type="file" name="sendChallengeFile" class="challengeWindow__fileInput" id="sendChallengeFile">
+        </label>
+      </div>
+      <div class="challengeWindow__responseDiv--2">
+        <h1 class="challenge__h1 comentTitle" style="color: var(--primary-color);">Comentarios</h1>
+        <div class="challengeWindow__SectionComent">
+          <div class="allComentsDiv">
+
           </div>
-          <label for="inputImgComent-challengeWindow" class="comentControls__label">
-            <ion-icon name="attach-outline" class="comentControls__fileImg"></ion-icon>
-            <input type="file" name="inputImgComent-challengeWindow" id="inputImgComent-challengeWindow"
-              class="comentControls__inputFile">
-          </label>
+          <div class="comentControls">
+            <div class="comentControls__div">
+              <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
+              <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
+              <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
+            </div>
+            <label for="inputImgComent-challengeWindow" class="comentControls__label">
+              <ion-icon name="attach-outline" class="comentControls__fileImg"></ion-icon>
+              <input type="file" name="inputImgComent-challengeWindow" id="inputImgComent-challengeWindow"
+                class="comentControls__inputFile">
+            </label>
+          </div>
         </div>
       </div>
     </section>

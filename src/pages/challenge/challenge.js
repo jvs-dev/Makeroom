@@ -267,27 +267,27 @@ function ChallengeWindowData(obj, id, url) {
     })
     actualUserEmail().then(actualUser => {
         verifySend(id, actualUser).then(async (isSended) => {
-            challengeWindow.children[5].innerHTML = `Enviar
+            challengeWindow.children[2].children[3].innerHTML = `Enviar
                 <input type="file" name="sendChallengeFile" class="challengeWindow__fileInput" id="sendChallengeFile">`
             sendChallengeFile = document.getElementById("sendChallengeFile")
-            challengeWindow.children[5].style.background = ""
-            challengeWindow.children[5].style.boxShadow = ""
-            challengeWindow.children[5].style.color = ""
+            challengeWindow.children[2].children[3].style.background = ""
+            challengeWindow.children[2].children[3].style.boxShadow = ""
+            challengeWindow.children[2].children[3].style.color = ""
             if (isSended == true) {
-                challengeWindow.children[5].textContent = "Enviado"
-                challengeWindow.children[5].style.background = "#20E3BB"
-                challengeWindow.children[5].style.boxShadow = "0px 0px 6px #20E3BB"
-                challengeWindow.children[5].style.color = "#fff"
+                challengeWindow.children[2].children[3].textContent = "Enviado"
+                challengeWindow.children[2].children[3].style.background = "#20E3BB"
+                challengeWindow.children[2].children[3].style.boxShadow = "0px 0px 6px #20E3BB"
+                challengeWindow.children[2].children[3].style.color = "#fff"
             }
-            challengeWindow.children[2].textContent = `${obj.challengeTitle}`
-            challengeWindow.children[3].children[1].src = `${url}`
-            challengeWindow.children[4].textContent = `${obj.challengeDescription}`
-            challengeWindow.children[3].children[2].textContent = `+${obj.challengePoints} Pontos`
-            loadComents(challengeWindow.children[7].children[0], obj, id, url)
-            challengeWindow.children[7].children[1].children[0].children[2].onclick = function () {
-                if (challengeWindow.children[7].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                    postComment("challenges", id, actualUser, challengeWindow.children[7].children[1].children[0].children[1].value).then(posted => {
-                        challengeWindow.children[7].children[1].children[0].children[1].value = ""
+            challengeWindow.children[2].children[0].textContent = `${obj.challengeTitle}`
+            challengeWindow.children[2].children[1].children[1].src = `${url}`
+            challengeWindow.children[2].children[2].textContent = `${obj.challengeDescription}`
+            challengeWindow.children[2].children[1].children[2].textContent = `+${obj.challengePoints} Pontos`
+            loadComents(challengeWindow.children[3].children[1].children[0], obj, id, url)
+            challengeWindow.children[3].children[1].children[1].children[0].children[2].onclick = function () {
+                if (challengeWindow.children[3].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
+                    postComment("challenges", id, actualUser, challengeWindow.children[3].children[1].children[1].children[0].children[1].value).then(posted => {
+                        challengeWindow.children[3].children[1].children[1].children[0].children[1].value = ""
                     })
                 }
             }

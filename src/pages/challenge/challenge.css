@@ -250,3 +250,17 @@
     font-weight: 500;
     margin: 15px 0px 0px 0px;
 }
+
+.challengeWindow__responseDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.challengeWindow__responseDiv--2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}

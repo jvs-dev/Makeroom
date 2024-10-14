@@ -1,31 +1,65 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+const firebaseConfig = {
+    apiKey: `${import.meta.env.VITE_API_KEY}`,
+    authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
+    projectId: `${import.meta.env.VITE_PROJECT_ID}`,
+    storageBucket: `${import.meta.env.VITE_STORAGE_BUCKET}`,
+    messagingSenderId: `${import.meta.env.VITE_MESSAGING_SENDER_ID}`,
+    appId: `${import.meta.env.VITE_APP_ID}`,
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore(app);
+const storage = getStorage(app);
+
 import { alternatePage } from "../../scripts/alternatePages"
+import { actualUserData } from "../../scripts/returnUserInfos"
 let menuToggle = document.querySelectorAll(".header__menuToggle")
 let menuSection = document.getElementById("menuSection")
 let body = document.querySelector("body")
 let AdminAdds = document.getElementById("AdminAdds")
+let switchSchool = document.getElementById("switchSchool")
+let logOutBtn = document.getElementById("logOutBtn")
 
-if (window.innerWidth > 600) {
-    let menuSideUlToggle = document.getElementById("menuSideUlToggle")
-    let menuSideUl = document.getElementById("menuSideUl")
-    menuSideUlToggle.onclick = function () {
-        if (menuSideUl.style.display == "flex") {
-            menuSideUl.style.transform = "translateX(-50px)"
-            menuSideUl.style.opacity = "0"
-            menuSideUlToggle.style.rotate = "0deg"
-            setTimeout(() => {
-                menuSideUl.style.display = "none"
-            }, 200);
-        } else {
-            menuSideUlToggle.style.rotate = "180deg"
-            menuSideUl.style.display = "flex"
-            setTimeout(() => {
-                menuSideUl.style.transform = "translateX(195px)"
-                menuSideUl.style.opacity = "1"
-            }, 1);
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const uid = user.uid;
+        if (window.innerWidth > 600) {
+            let menuSideUlToggle = document.getElementById("menuSideUlToggle")
+            let menuSideUl = document.getElementById("menuSideUl")
+            switchSchool.parentElement.style.display = ""
+            logOutBtn.parentElement.style.display = "none"
+            actualUserData().then(userData => {
+                if (userData.admin == true) {
+                    menuSideUlToggle.style.display = "flex"
+                    menuSideUlToggle.onclick = function () {
+                        if (menuSideUl.style.display == "flex") {
+                            menuSideUl.style.transform = "translateX(-50px)"
+                            menuSideUl.style.opacity = "0"
+                            menuSideUlToggle.style.rotate = "0deg"
+                            setTimeout(() => {
+                                menuSideUl.style.display = "none"
+                            }, 200);
+                        } else {
+                            menuSideUlToggle.style.rotate = "180deg"
+                            menuSideUl.style.display = "flex"
+                            setTimeout(() => {
+                                menuSideUl.style.transform = "translateX(195px)"
+                                menuSideUl.style.opacity = "1"
+                            }, 1);
+                        }
+                    }
+                } else {
+                    menuSideUlToggle.style.display = "none"
+                    menuSideUlToggle.onclick = function () { }
+                }
+            })
         }
     }
-}
-
+})
 function unColor(btn) {
     let adminBtn = document.querySelectorAll(".menuSection__adminBtn")
     let allBtns = document.querySelectorAll(".menuSection__btn")

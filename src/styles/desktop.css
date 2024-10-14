@@ -536,4 +536,77 @@
         max-width: 500px;
         cursor: pointer;
     }
+
+    .manageUsersData__div {
+        max-width: 500px;
+    }
+
+    .manageUsersData__close {
+        cursor: pointer;
+    }
+
+    .manageUsersData__alterData {
+        cursor: pointer;
+    }
+
+    .manageUsersData__delete {
+        cursor: pointer;
+    }
+
+    .challengeWindow__responseDiv {
+        width: 100%;
+        background: #eee;
+        border-radius: 10px;
+    }
+
+    .challengeWindow__resetMaskImg {
+        width: calc(100% - 20px);
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
+    .main__section.section--challengeWindow {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 90px 0px 0px 120px;
+        height: 100vh;
+    }
+
+    .main__section.section--challengeWindow .page__header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        justify-content: flex-end;
+        padding: 0px 20px;
+    }
+
+    .challenge__h1.comentTitle {
+        color: var(--primary-color) !important;
+        text-align: center;
+        margin: 0px 0px 10px 0px;
+    }
+
+    .challengeWindow__responseDiv--2 {
+        height: 100%;
+        width: 100%;
+        padding: 0px 0px 10px 0px;
+        overflow: hidden;
+    }
+
+    .challengeWindow__h1 {
+        order: 1;
+    }
+
+    .challengeWindow__sendChallengeLabel {
+        order: 3;
+    }
+
+    .challengeWindow__description {
+        order: 3;
+        border-top: solid 1px var(--black);
+        margin: 5px 0px 0px 0px;
+        padding: 5px 20px 10px 20px;
+        width: 100%;
+        text-align: left;
+    }
 }

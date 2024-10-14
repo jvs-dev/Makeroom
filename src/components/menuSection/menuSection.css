@@ -198,6 +198,10 @@
     gap: 20px;
 }
 
+#menuSideUlToggle {
+    display: none;
+}
+
 .menuSection__desktopUl__li {
     width: 100%;
     padding: 0px;
