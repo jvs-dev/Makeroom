@@ -186,12 +186,26 @@ async function loadFolders() {
                 }
                 article.innerHTML = `
                 <ion-icon class="noteFolder__icon" name="folder-open-outline"></ion-icon>
-                <p class="noteFolder__text">${noteDoc.data().folderName}</p>
+                <input type="text" disabled="" class="noteFolder__text" value="${noteDoc.data().folderName}">
                 <div class="noteFolder__div">
                     <ion-icon name="create-outline"></ion-icon>
                     <ion-icon name="trash-outline"></ion-icon>
                 </div>
               `
+                article.children[2].children[0].onclick = (evt) => {
+                    evt.stopPropagation()
+                    article.children[1].disabled = false
+                    article.children[1].focus()
+                    article.children[1].oninput = async () => {
+                        const washingtonRef = doc(db, `notes`, `${noteDoc.id}`);
+                        await updateDoc(washingtonRef, {
+                            folderName: article.children[1].value
+                        });
+                    }
+                    article.children[1].onchange = () => {
+                        article.children[1].disabled = true
+                    }
+                }
                 article.children[2].children[1].onclick = (evt) => {
                     evt.stopPropagation()
                     activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(async (res) => {
@@ -229,30 +243,44 @@ async function loadSubFolders(folderId) {
     notesSubFolders.innerHTML = ""
     const q = query(collection(db, "notes"), where("parent", "==", `${folderId}`));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach((foldDoc) => {
         let article = document.createElement("article")
         notesSubFolders.insertAdjacentElement("beforeend", article)
         article.classList.add("noteFolder")
         article.innerHTML = `
                 <ion-icon class="noteFolder__icon" name="folder-open-outline"></ion-icon>
-                <p class="noteFolder__text">${doc.data().folderName}</p>
+                <input type="text" disabled="" class="noteFolder__text" value="${foldDoc.data().folderName}">
                 <div class="noteFolder__div">
                     <ion-icon name="create-outline"></ion-icon>
                     <ion-icon name="trash-outline"></ion-icon>
                 </div>
               `
+        article.children[2].children[0].onclick = (evt) => {
+            evt.stopPropagation()
+            article.children[1].disabled = false
+            article.children[1].focus()
+            article.children[1].oninput = async () => {
+                const washingtonRef = doc(db, `notes`, `${foldDoc.id}`);
+                await updateDoc(washingtonRef, {
+                    folderName: article.children[1].value
+                });
+            }
+            article.children[1].onchange = () => {
+                article.children[1].disabled = true
+            }
+        }
         article.children[2].children[1].onclick = (evt) => {
             evt.stopPropagation()
             activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(async (res) => {
                 if (res == "confirmed") {
                     let uploadsCompleteds = 0
-                    const q = query(collection(db, "notes"), where("parent", "==", `${doc.id}`));
+                    const q = query(collection(db, "notes"), where("parent", "==", `${foldDoc.id}`));
                     const querySnapshot = await getDocs(q);
                     querySnapshot.forEach((subDocs) => {
                         deleteThis("notes", `${subDocs.id}`)
                     })
                     activeLoading(uploadsCompleteds)
-                    deleteThis("notes", `${doc.id}`).then(res => {
+                    deleteThis("notes", `${foldDoc.id}`).then(res => {
                         uploadsCompleteds = uploadsCompleteds + 100
                         activeLoading(uploadsCompleteds)
                         if (uploadsCompleteds == 100) {
@@ -267,7 +295,7 @@ async function loadSubFolders(folderId) {
             })
         }
         article.onclick = () => {
-            loadNotes(doc.id)
+            loadNotes(foldDoc.id)
         }
     })
 }
