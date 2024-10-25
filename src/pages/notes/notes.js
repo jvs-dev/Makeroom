@@ -99,6 +99,9 @@ async function loadNotes(folderId) {
             textarea.rows = "3"
             textarea.classList.add("noteCard__p")
             textarea.value = `${element.text}`
+            if (element.status == true) {
+                textarea.classList.add("resolved")
+            }
             checkBox.type = "checkbox"
             checkBox.classList.add("noteCard__check")
             let actualStatus = element.status
@@ -191,9 +194,14 @@ async function loadFolders() {
               `
                 article.children[2].children[1].onclick = (evt) => {
                     evt.stopPropagation()
-                    activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+                    activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(async (res) => {
                         if (res == "confirmed") {
                             let uploadsCompleteds = 0
+                            const q = query(collection(db, "notes"), where("parent", "==", `${noteDoc.id}`));
+                            const querySnapshot = await getDocs(q);
+                            querySnapshot.forEach((subDocs) => {
+                                deleteThis("notes", `${subDocs.id}`)
+                            })
                             activeLoading(uploadsCompleteds)
                             deleteThis("notes", `${noteDoc.id}`).then(res => {
                                 uploadsCompleteds = uploadsCompleteds + 100
@@ -201,6 +209,9 @@ async function loadFolders() {
                                 if (uploadsCompleteds == 100) {
                                     alertThis("Pasta deletada com sucesso", "sucess")
                                     loadFolders()
+                                    if (thisFolder != null) {
+                                        loadSubFolders(thisFolder)
+                                    }
                                 }
                             })
                         }
@@ -232,9 +243,14 @@ async function loadSubFolders(folderId) {
               `
         article.children[2].children[1].onclick = (evt) => {
             evt.stopPropagation()
-            activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+            activeConfirmSection("Deseja realmente apagar?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(async (res) => {
                 if (res == "confirmed") {
                     let uploadsCompleteds = 0
+                    const q = query(collection(db, "notes"), where("parent", "==", `${doc.id}`));
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach((subDocs) => {
+                        deleteThis("notes", `${subDocs.id}`)
+                    })
                     activeLoading(uploadsCompleteds)
                     deleteThis("notes", `${doc.id}`).then(res => {
                         uploadsCompleteds = uploadsCompleteds + 100
@@ -242,6 +258,9 @@ async function loadSubFolders(folderId) {
                         if (uploadsCompleteds == 100) {
                             alertThis("Pasta deletada com sucesso", "sucess")
                             loadFolders()
+                            if (thisFolder != null) {
+                                loadSubFolders(thisFolder)
+                            }
                         }
                     })
                 }
