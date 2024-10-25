@@ -1,0 +1,28 @@
+/* From Uiverse.io by SelfMadeSystem */
+.checkBox.container {
+    cursor: pointer;
+}
+
+.checkBox.container input {
+    display: none;
+}
+
+.checkBox.container svg {
+    overflow: visible;
+}
+
+.path {
+    fill: none;
+    stroke: #2c2c2c;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+}
+
+.checkBox.container input:checked~svg .path {
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+}

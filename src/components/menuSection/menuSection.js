@@ -242,6 +242,20 @@ document.getElementById("goToBuyeds").onclick = function () {
     });
 }
 
+document.getElementById("goToFolders").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
+            alternatePage(document.getElementById("notesSection"))
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToFolders"))
+        }
+    });
+}
+
 document.getElementById("goToResolvers").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active") || window.innerWidth > 600) {

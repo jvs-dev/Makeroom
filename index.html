@@ -51,6 +51,8 @@
   <link rel="stylesheet" href="src/components/cards/manageUsersCard.css">
   <link rel="stylesheet" href="src/components/confirmSection/confirmSection.css">
   <link rel="stylesheet" href="src/pages/resolvers/resolvers.css">
+  <link rel="stylesheet" href="src/pages/notes/notes.css">
+  <link rel="stylesheet" href="src/components/buttoms/checkBox.css">
   <link rel="stylesheet" href="src/pages/perfil/perfilDesktop.css">
   <link rel="stylesheet" href="src/styles/desktop.css">
 </head>
@@ -541,6 +543,39 @@
       </div>
     </section>
 
+    <section class="main__section section--notes" id="notesSection">
+      <header class="page__header">
+        <button class="notes__back" id="backNotesBtn"><ion-icon name="arrow-back-outline"></ion-icon>Voltar</button>
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="store__h1">Notas</h1>
+      <span class="notes__span" id="noteMap">Notas</span>
+      <div id="notesFirstDiv">
+        <div class="store__div--1">
+          <div class="store__div--2">
+            <input class="store__searchInput" type="text" placeholder="Pesquise ou crie notas" id="notesSearchInput">
+          </div>
+          <button class="store__cartBtn" type="button" id="notesAddBtn"><ion-icon
+              name="add-outline"></ion-icon></button>
+        </div>
+        <div class="store__divCards" id="notesDiv">
+
+        </div>
+      </div>
+      <div class="notes__div" id="notesSubDiv">
+        <div class="notes__div--2" id="notesSubFolders">
+
+        </div>
+        <button class="notes__btn" id="createFolder"><ion-icon name="add-outline"></ion-icon>Criar pasta</button>
+        <div class="notes__div--3" id="folderNotes">
+          
+        </div>
+        <button class="notes__btn" id="createNote"><ion-icon name="add-outline"></ion-icon>Criar nota</button>        
+      </div>
+    </section>
+
     <section class="main__section section--resolversSection" id="resolversSection">
       <header class="page__header">
         <img src="/logo.svg" alt="logo" class="header__logo">
@@ -926,6 +961,7 @@
   <script type="module" src="src/pages/buyeds/buyeds.js"></script>
   <script type="module" src="src/scripts/verifyPays.js"></script>
   <script type="module" src="src/pages/resolvers/resolvers.js"></script>
+  <script type="module" src="src/pages/notes/notes.js"></script>
 </body>
 
 </html>

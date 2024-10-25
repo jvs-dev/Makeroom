@@ -73,11 +73,15 @@ function verifyPay(data, id) {
     actualUserData().then((userData) => {
         if (data.payerEmail == userData.email) {
             getPayData(Number(data.paymentId)).then(response => {
-                if (response.result.status == "cancelled") {
+                if (response.result != undefined) {
+                    if (response.result.status == "cancelled") {
+                        deletePay(id)
+                    }
+                    if (response.result.status == "approved") {
+                        userPayed(userData, id, response, data)
+                    }
+                } else {
                     deletePay(id)
-                }
-                if (response.result.status == "approved") {
-                    userPayed(userData, id, response, data)
                 }
             })
         }
@@ -102,7 +106,7 @@ async function noticeApproveds() {
         })
     })
 }
-window.addEventListener("load", ()=> {
+window.addEventListener("load", () => {
     setTimeout(() => {
         noticeApproveds()
     }, 12000);

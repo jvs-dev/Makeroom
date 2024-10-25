@@ -1,0 +1,173 @@
+.section--notes {
+    display: none;
+    background: #fff;
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.notes__span {
+    width: 100%;
+    text-align: left;
+    padding: 0px 20px;
+}
+
+.noteFolder {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 20px);
+    padding: 10px 20px;
+    cursor: pointer;
+    gap: 10px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 5px 0px;
+}
+
+.noteFolder__text {
+    width: 100%;
+    color: var(--black);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px;
+}
+
+.noteFolder__icon {
+    font-size: 28px;
+}
+
+.noteFolder__div {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.noteFolder__div ion-icon {
+    font-size: 20px;
+}
+
+.noteFolder__div ion-icon:nth-child(2) {
+    color: red;
+}
+
+#notesFirstDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#notesSubDiv {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.noteCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: solid 1px var(--black);
+    padding: 20px;
+    width: 100%;
+}
+
+.noteCard__div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.notes__div--3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 15px 0px 0px 0px;
+    padding: 0px;
+}
+
+.notes__div--2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 15px 0px 0px 0px;
+    padding: 0px;
+}
+
+.noteCard__p {
+    margin: 0px;
+    font-size: 18px;
+    text-align: left;
+    line-height: 125%;
+    background: transparent;    
+    border: 0px;
+    outline-width: 0px;
+    width: 100%;
+}
+
+.noteCard__p.resolved {
+    text-decoration: line-through;
+}
+
+.noteCard__trash {
+    background: transparent;
+    border: 0px;
+    outline-width: 0px;
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 28px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.noteCard.index--0 {
+    background: #DBEEFF;
+}
+
+.noteCard.index--1 {
+    background: #fff;
+}
+
+.notes__btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    align-self: flex-start;
+    background: transparent;
+    color: var(--black);
+    gap: 10px;
+    border: 0px;
+    outline-width: 0px;
+    font-family: 'Teko', sans-serif;
+    font-weight: 300;
+    font-size: 27px;
+    line-height: 80%;    
+    text-align: left;    
+    margin: 20px 0px 10px 40px;
+    cursor: pointer;    
+}
+
+.notes__btn ion-icon {
+    font-size: 25px;
+}
+
+.notes__back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: var(--black);
+    background: transparent;
+    border: 0px;
+    outline-width: 0px;
+    font-size: 20px;
+    cursor: pointer;
+}

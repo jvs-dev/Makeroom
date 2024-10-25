@@ -73,7 +73,7 @@
 
 .cartItemCard__div--2 {
     height: 100%;
-    width: 100%;
+    width: calc(100% - 178px);
     display: flex;
     flex-direction: column;
     align-items: flex-start;

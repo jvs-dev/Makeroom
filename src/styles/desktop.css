@@ -319,6 +319,7 @@
         rotate: 90deg;
         animation: none;
         cursor: pointer;
+        margin-bottom: 80px;
     }
 
     .lessonWindow__divSelectView__btn {
@@ -608,5 +609,27 @@
         padding: 5px 20px 10px 20px;
         width: 100%;
         text-align: left;
+    }
+
+    .main__section.section--lessonIntroduction {
+        opacity: 1;
+        display: flex;
+        z-index: 200;
+        position: fixed;
+        width: 100%;
+        padding: 0px;
+    }
+
+    .lessonIntroduction__span {
+        font-size: 30px;
+    }
+
+    .lessonIntroduction__h1 {        
+        font-size: 35px;
+    }
+
+    .lessonIntroduction__p {        
+        padding: 0px 40px;        
+        margin: 110px 0px 0px 0px;
     }
 }
