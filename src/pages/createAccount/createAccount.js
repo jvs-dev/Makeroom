@@ -1,7 +1,7 @@
 import { alertThis } from "../../components/alerts/alert"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, updateDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { actualUserData } from "../../scripts/returnUserInfos";
 import { activeLoading } from "../../components/uploadingSection/uploadingSection";
@@ -26,7 +26,7 @@ let closeManageUsersData = document.getElementById("closeManageUsersData")
 let manageUsersAlterData = document.getElementById("manageUsersAlterData")
 let manageUsersDeleteData = document.getElementById("manageUsersDeleteData")
 let manageUsersDataPhotoInput = document.getElementById("manageUsersDataPhotoInput")
-
+let createAccountSchool = document.getElementById("createAccountSchool")
 
 manageUsersDataPhotoInput.onchange = function () {
   if (manageUsersDataPhotoInput.files && manageUsersDataPhotoInput.files[0]) {
@@ -49,7 +49,7 @@ closeManageUsersData.onclick = () => {
 async function verifyUserEmailExists(newEmail) {
   return new Promise(async (resolve) => {
     let userExists = false
-    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`));
+    const querySnapshot = await getDocs(collection(db, `${Number(createAccountSchool.value)}_users`));
     querySnapshot.forEach((usersData) => {
       if (usersData.data().email == newEmail) {
         userExists = true
@@ -66,7 +66,7 @@ createAccountBtn.onclick = function () {
   let createAccountName = document.getElementById("createAccountName").value
   let createAccountRoom = document.getElementById("createAccountRoom").value
   createAccountBtn.disabled = true
-  if (createAccountClass != "" && createAccountPassword != "" && createAccountEmail != "" && createAccountName != "" && createAccountRoom != "") {
+  if (createAccountClass != "" && createAccountPassword != "" && createAccountEmail != "" && createAccountName != "" && createAccountRoom != "" && createAccountSchool.value != "") {
     verifyUserEmailExists(createAccountEmail).then(userExists => {
       if (userExists == false) {
         registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom)
@@ -82,7 +82,7 @@ createAccountBtn.onclick = function () {
 }
 
 async function registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom) {
-  await setDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${createAccountEmail}`), {
+  await setDoc(doc(db, `${Number(createAccountSchool.value)}_users`, `${createAccountEmail}`), {
     name: `${createAccountName}`,
     class: `${createAccountClass}`,
     temporaryPassword: `${createAccountPassword}`,
@@ -92,7 +92,8 @@ async function registerAccount(createAccountClass, createAccountPassword, create
     email: `${createAccountEmail}`,
     firstUse: true,
     noPhoto: true,
-    noCover: true
+    noCover: true,
+    schoolIndex: Number(createAccountSchool)
   });
   document.getElementById("createAccountPassword").value = ""
   document.getElementById("createAccountEmail").value = ""
@@ -104,6 +105,14 @@ async function registerAccount(createAccountClass, createAccountPassword, create
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     const uid = user.uid;
+    createAccountSchool.innerHTML = ""
+    const docRef = doc(db, "schools", "all");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      docSnap.data().schools.forEach((element, index) => {
+        createAccountSchool.insertAdjacentHTML("beforeend", `<option value="${index}">${element}</option>`)
+      })
+    }
     manageUsersDiv.innerHTML = ""
     actualUserData().then(async (userData) => {
       if (userData.admin == true) {

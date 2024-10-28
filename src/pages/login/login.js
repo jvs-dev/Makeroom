@@ -17,6 +17,15 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
 let loginViewPassword = document.getElementById("loginViewPassword")
+let totalSchools = 0
+
+const docRef = doc(db, "schools", "all");
+const docSnap = await getDoc(docRef);
+if (docSnap.exists()) {
+    docSnap.data().schools.forEach((element, index) => {
+        totalSchools = totalSchools + 1
+    })
+}
 
 loginViewPassword.onclick = () => {
     let password = document.getElementById("loginPassword")
@@ -37,15 +46,23 @@ loginBtn.onclick = function () {
     let email = document.getElementById("loginEmail").value
     if (password != "" && email != "") {
         signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 const user = userCredential.user;
+                for (let index = 0; index < totalSchools; index++) {
+                    const docRef = doc(db, `${index}_users`, `${email}`);
+                    const docSnap = await getDoc(docRef);
+                    if (docSnap.exists()) {
+                        localStorage.setItem("schoolIndex", index)
+                        window.location.reload()
+                    }
+                }
                 logoAlternateAnimation(document.getElementById("homeSection"))
                 loginBtn.disabled = false
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                verifyUserAccount(email, password)
+                verifyUserAccount(email, password, 0)
             });
     } else {
         alertThis("Preencha todos os campos", "error")
@@ -53,12 +70,13 @@ loginBtn.onclick = function () {
     }
 }
 
-async function verifyUserAccount(email, password) {
-    const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
+async function verifyUserAccount(email, password, tryIndex) {
+    const docRef = doc(db, `${Number(tryIndex)}_users`, `${email}`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         if (docSnap.data().firstUse == true) {
             if (docSnap.data().temporaryPassword == `${password}`) {
+                localStorage.setItem("schoolIndex", tryIndex)
                 initAccount(email, password)
             } else {
                 alertThis("Senha incorreta", "error")
@@ -69,8 +87,12 @@ async function verifyUserAccount(email, password) {
             loginBtn.disabled = false
         }
     } else {
-        alertThis("Conta inexistente", "error")
-        loginBtn.disabled = false
+        if (tryIndex < totalSchools) {
+            verifyUserAccount(email, password, Number(tryIndex) + 1)
+        } else {
+            alertThis("Conta inexistente", "error")
+            loginBtn.disabled = false
+        }
     }
 }
 
@@ -83,6 +105,7 @@ async function initAccount(email, password) {
                 firstUse: deleteField(),
                 temporaryPassword: deleteField()
             });
+            window.location.reload()
             logoAlternateAnimation(document.getElementById("homeSection"))
             loginBtn.disabled = false
         })
