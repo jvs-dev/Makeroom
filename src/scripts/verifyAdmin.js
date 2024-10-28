@@ -50,7 +50,8 @@ onAuthStateChanged(auth, (user) => {
         goToAddContent.parentNode.removeChild(goToAddContent);
         goToFolders.parentNode.removeChild(goToFolders);
         goToBuyeds.parentNode.removeChild(goToBuyeds);
-        goToResolvers.parentNode.removeChild(goToBuyeds);
+        goToResolvers.parentNode.removeChild(goToResolvers);
+        switchSchool.parentNode.removeChild(switchSchool);
       }
     })
   }

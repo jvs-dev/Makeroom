@@ -57,7 +57,7 @@ createChallengeBtn.onclick = async function () {
     if (challengeTitleValue != "" && challengeDescriptionValue != "" && challengePointsValue > 0 && challengeMaskSrc != window.location.href && challengeSelected.length != 0) {
         uploadsCompleteds = 0
         activeLoading(uploadsCompleteds)
-        let docRef = await addDoc(collection(db, "challenges"), {
+        let docRef = await addDoc(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`), {
             challengeTitle: `${challengeTitleValue}`,
             challengeClass: challengeSelected,
             challengeDescription: `${challengeDescriptionValue}`,      
@@ -72,7 +72,7 @@ createChallengeBtn.onclick = async function () {
             clearInputs()
         }
 
-        let storageRef = ref(storage, `challenges/${docRef.id}/mask`);
+        let storageRef = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges/${docRef.id}/mask`);
         uploadString(storageRef, challengeMaskSrc, 'data_url').then((snapshot) => {
             uploadsCompleteds = uploadsCompleteds + 50
             activeLoading(uploadsCompleteds)

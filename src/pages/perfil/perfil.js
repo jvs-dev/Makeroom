@@ -58,7 +58,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
         let usersArray = []
-        const querySnapshot = await getDocs(collection(db, "users"));
+        const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`));
         querySnapshot.forEach((doc) => {
             usersArray.push(doc.data())
         });
@@ -76,7 +76,7 @@ onAuthStateChanged(auth, async (user) => {
             if (actualUser.noPhoto == true) {
                 perfilSection.children[0].children[3].children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
             } else {
-                getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+                getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${actualUser.email}/photo`))
                     .then((url) => {
                         let xhr = new XMLHttpRequest();
                         xhr.responseType = 'blob';
@@ -115,9 +115,9 @@ onAuthStateChanged(auth, async (user) => {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         perfilSection.children[0].children[3].children[0].children[0].children[0].src = e.target.result;
-                        let storageRef = ref(storage, `users/${actualUser.email}/photo`);
+                        let storageRef = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${actualUser.email}/photo`);
                         uploadString(storageRef, e.target.result, 'data_url').then(async (snapshot) => {
-                            const userPhotoDataRef = doc(db, "users", `${actualUser.email}`);
+                            const userPhotoDataRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${actualUser.email}`);
                             await updateDoc(userPhotoDataRef, {
                                 noPhoto: false
                             });
@@ -142,7 +142,7 @@ async function loadCertifies(email) {
     let certifiesIndex = 0
     let challengesIndex = 0
     perfilCertifiesDiv.innerHTML = ""
-    const q = query(collection(db, "challenges"), where("challengeCertifiedTitle", "!=", ""));
+    const q = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`), where("challengeCertifiedTitle", "!=", ""));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         returnResolversEmail(doc.id).then(resolverItems => {
@@ -177,7 +177,7 @@ async function loadCertifies(email) {
 
     });
 
-    const q2 = query(collection(db, "challenges"), where("challengeTitle", "!=", null));
+    const q2 = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`), where("challengeTitle", "!=", null));
     const querySnapshot2 = await getDocs(q2);
     querySnapshot2.forEach((doc) => {
         returnResolversEmail(doc.id).then(resolverItems => {
@@ -195,7 +195,7 @@ async function loadCertifies(email) {
 function returnResolversEmail(id) {
     return new Promise(async (resolve) => {
         let resolversEmail = []
-        const querySnapshot = await getDocs(collection(db, "challenges", `${id}`, "resolves"));
+        const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${id}`, "resolves"));
         querySnapshot.forEach((doc) => {
             resolversEmail.push(doc.data())
         });

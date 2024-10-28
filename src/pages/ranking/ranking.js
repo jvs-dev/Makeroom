@@ -22,7 +22,7 @@ let rankOuthersDiv = document.getElementById("rankOuthersDiv")
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
-        monitorCollectionUpdates("users", async (updatedData) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, async (updatedData) => {
             initRank(user)
         });
     }
@@ -30,7 +30,7 @@ onAuthStateChanged(auth, async (user) => {
 
 async function initRank(user) {
     let usersArray = []
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`));
     querySnapshot.forEach((doc) => {
         usersArray.push(doc.data())
     });
@@ -41,40 +41,42 @@ async function initRank(user) {
         name: user.name,
         noPhoto: user.noPhoto,
         points: user.points
-    }));    
+    }));
     firstsDiv.innerHTML = ""
     rankOuthersDiv.innerHTML = ""
     for (let index = 0; index < 3; index++) {
-        let article = document.createElement("article")
-        firstsDiv.insertAdjacentElement("beforeend", article)
-        article.classList.add("rank__firstsArticle")
-        article.innerHTML = `
+        if (rankedUsers[index] != undefined) {
+            let article = document.createElement("article")
+            firstsDiv.insertAdjacentElement("beforeend", article)
+            article.classList.add("rank__firstsArticle")
+            article.innerHTML = `
                 <img class="rank__firstsArticle__img" src="" alt="">
                 <p class="rank__firstsArticle__name">${rankedUsers[index].name}</p>
                 <p class="rank__firstsArticle__points">${rankedUsers[index].points} pontos</p>
                 <span class="rank__firstsArticle__position position${rankedUsers[index].rankPosition}">#${rankedUsers[index].rankPosition}</span>                
             `
-        if (rankedUsers[index].noPhoto == true) {
-            article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
-        } else {
-            getDownloadURL(ref(storage, `users/${rankedUsers[index].email}/photo`))
-                .then((url) => {
-                    let xhr = new XMLHttpRequest();
-                    xhr.responseType = 'blob';
-                    xhr.onload = (event) => {
-                        let blob = xhr.response;
-                    };
-                    xhr.open('GET', url);
-                    xhr.send();
-                    article.children[0].src = `${url}`
-                })
+            if (rankedUsers[index].noPhoto == true) {
+                article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+            } else {
+                getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${rankedUsers[index].email}/photo`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        article.children[0].src = `${url}`
+                    })
+            }
         }
     }
     actualUserData().then(actualUser => {
         if (actualUser.noPhoto == true) {
             document.getElementById("rankCardYouPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
         } else {
-            getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${actualUser.email}/photo`))
                 .then((url) => {
                     let xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
@@ -109,7 +111,7 @@ async function initRank(user) {
             if (element.noPhoto == true) {
                 article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
             } else {
-                getDownloadURL(ref(storage, `users/${element.email}/photo`))
+                getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${element.email}/photo`))
                     .then((url) => {
                         let xhr = new XMLHttpRequest();
                         xhr.responseType = 'blob';

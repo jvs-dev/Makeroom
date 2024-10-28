@@ -24,7 +24,7 @@ async function loadBuyeds(user) {
     buyedsSectionDiv.innerHTML = ""
     actualUserData().then(async (userData) => {
         if (userData.admin == true) {
-            const querySnapshot = await getDocs(collection(db, "payments"));
+            const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`));
             querySnapshot.forEach((payData) => {
                 if (payData.data().delivered == false && payData.data().paymentStatus == "approved") {
                     let article = document.createElement("article")
@@ -45,7 +45,7 @@ async function loadBuyeds(user) {
                     article.children[2].onclick = () => {
                         activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
                             if (res == "confirmed") {
-                                const cartItemRef = doc(db, "payments", `${payData.id}`);
+                                const cartItemRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, `${payData.id}`);
                                 await updateDoc(cartItemRef, {
                                     delivered: true
                                 });
@@ -63,7 +63,7 @@ async function loadBuyeds(user) {
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
-        monitorCollectionUpdates("payments", (updatedData) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, (updatedData) => {
             loadBuyeds(user)
         });
     }

@@ -48,7 +48,7 @@ async function loadLessons() {
         LessonProjectsDiv.innerHTML = ""
         LessonComponentsDiv.innerHTML = ""
         LessonCircuitsDiv.innerHTML = ""
-        let q = query(collection(db, "lessons"), where("lessonCategory", "!=", ""));
+        let q = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`), where("lessonCategory", "!=", ""));
         let querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let acess = false
@@ -69,7 +69,7 @@ async function loadLessons() {
             if (signatureToAcess != 1 && signatureToAcess != 3) {
                 signatureToAcess = 2
             }
-            getDownloadURL(ref(storage, `lessons/${doc.id}/mask`))
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${doc.id}/mask`))
                 .then((url) => {
                     const xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
@@ -107,8 +107,8 @@ async function loadLessons() {
                             evt.stopPropagation()
                             activeConfirmSection("Deseja excluir esta aula?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
                                 if (res == "confirmed") {
-                                    deleteAllsubDocs("lessons", `${doc.id}`, "coments").then(res => {
-                                        deleteThis("lessons", `${doc.id}`).then(res => {
+                                    deleteAllsubDocs(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`, `${doc.id}`, "coments").then(res => {
+                                        deleteThis(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`, `${doc.id}`).then(res => {
                                             alertThis("Aula deletada com sucesso", "sucess")
                                         })
                                     })
@@ -126,7 +126,7 @@ async function loadLessons() {
 
 function getLessonVideo(id) {
     return new Promise(async resolve => {
-        getDownloadURL(ref(storage, `lessons/${id}/video`))
+        getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${id}/video`))
             .then((url) => {
                 const xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
@@ -189,7 +189,7 @@ function loadLessonIntro(obj, id, url) {
 
 function getLessonExtraFile(id) {
     return new Promise(async resolve => {
-        getDownloadURL(ref(storage, `lessons/${id}/extraFile`))
+        getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${id}/extraFile`))
             .then((url) => {
                 const xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
@@ -239,7 +239,7 @@ function lessonWindowData(obj, id, url) {
         loadComents(lessonWindow.children[2].children[1].children[0], obj, id, url)
         lessonWindow.children[2].children[1].children[1].children[0].children[2].onclick = function () {
             if (lessonWindow.children[2].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                postComment("lessons", id, actualUser, lessonWindow.children[2].children[1].children[1].children[0].children[1].value).then(posted => {
+                postComment(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`, id, actualUser, lessonWindow.children[2].children[1].children[1].children[0].children[1].value).then(posted => {
                     lessonWindow.children[2].children[1].children[1].children[0].children[1].value = ""
                 })
             }
@@ -253,7 +253,7 @@ function loadComents(section, obj, id, url) {
     section.innerHTML = ""
     actualUserEmail().then(actualUser => {
         section.innerHTML = ""
-        monitorCollectionUpdates(`lessons/${id}/coments`, async (coment) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${id}/coments`, async (coment) => {
             coment.forEach(element => {
                 if (element.timestamp != null) {
                     thisUserData(element.email).then(UserData => {
@@ -277,7 +277,7 @@ function loadComents(section, obj, id, url) {
                         if (UserData.noPhoto == true) {
                             article.children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
                         } else {
-                            getDownloadURL(ref(storage, `users/${element.email}/photo`))
+                            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${element.email}/photo`))
                                 .then((url) => {
                                     let xhr = new XMLHttpRequest();
                                     xhr.responseType = 'blob';
@@ -305,7 +305,7 @@ function initHome() {
         if (actualUser.noPhoto == true) {
             document.getElementById("homeUserImg").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
         } else {
-            getDownloadURL(ref(storage, `users/${actualUser.email}/photo`))
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${actualUser.email}/photo`))
                 .then((url) => {
                     let xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
@@ -338,7 +338,7 @@ function initHome() {
             }
         }
     })
-    monitorCollectionUpdates("lessons", (updatedData) => {
+    monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`, (updatedData) => {
         loadLessons()
     });
 }

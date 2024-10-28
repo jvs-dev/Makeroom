@@ -49,7 +49,7 @@ closeManageUsersData.onclick = () => {
 async function verifyUserEmailExists(newEmail) {
   return new Promise(async (resolve) => {
     let userExists = false
-    const querySnapshot = await getDocs(collection(db, "users"));
+    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`));
     querySnapshot.forEach((usersData) => {
       if (usersData.data().email == newEmail) {
         userExists = true
@@ -82,7 +82,7 @@ createAccountBtn.onclick = function () {
 }
 
 async function registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom) {
-  await setDoc(doc(db, "users", `${createAccountEmail}`), {
+  await setDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${createAccountEmail}`), {
     name: `${createAccountName}`,
     class: `${createAccountClass}`,
     temporaryPassword: `${createAccountPassword}`,
@@ -107,7 +107,7 @@ onAuthStateChanged(auth, async (user) => {
     manageUsersDiv.innerHTML = ""
     actualUserData().then(async (userData) => {
       if (userData.admin == true) {
-        const querySnapshot = await getDocs(collection(db, "users"));
+        const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`));
         querySnapshot.forEach((usersData) => {
           let article = document.createElement("article")
           manageUsersDiv.insertAdjacentElement("beforeend", article)
@@ -121,7 +121,7 @@ onAuthStateChanged(auth, async (user) => {
           if (usersData.data().noPhoto == true) {
             article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
           } else {
-            getDownloadURL(ref(storage, `users/${usersData.data().email}/photo`))
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${usersData.data().email}/photo`))
               .then((url) => {
                 let xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
@@ -148,7 +148,7 @@ onAuthStateChanged(auth, async (user) => {
             if (usersData.data().noPhoto == true) {
               document.getElementById("manageUsersDataPhoto").src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
             } else {
-              getDownloadURL(ref(storage, `users/${usersData.data().email}/photo`))
+              getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${usersData.data().email}/photo`))
                 .then((url) => {
                   let xhr = new XMLHttpRequest();
                   xhr.responseType = 'blob';
@@ -164,7 +164,7 @@ onAuthStateChanged(auth, async (user) => {
               let uploadsCompleteds = 0
               activeLoading(uploadsCompleteds)
               if (usersData.data().noPhoto == false) {
-                const desertRef = ref(storage, `users/${usersData.data().email}/photo`);
+                const desertRef = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${usersData.data().email}/photo`);
                 deleteObject(desertRef).then(() => {
                   uploadsCompleteds = uploadsCompleteds + 50
                   activeLoading(uploadsCompleteds)
@@ -187,7 +187,7 @@ onAuthStateChanged(auth, async (user) => {
                   }, 500);
                 }
               }
-              await deleteDoc(doc(db, "users", `${usersData.data().email}`));
+              await deleteDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${usersData.data().email}`));
               uploadsCompleteds = uploadsCompleteds + 50
               activeLoading(uploadsCompleteds)
               if (uploadsCompleteds == 100) {
@@ -211,7 +211,7 @@ onAuthStateChanged(auth, async (user) => {
               } else {
                 noPhotoExists = false
               }
-              const washingtonRef = doc(db, "users", `${usersData.data().email}`);
+              const washingtonRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${usersData.data().email}`);
               await updateDoc(washingtonRef, {
                 class: `${document.getElementById("manageUsersDataClass").value.replace(/°/g, '')}°`,
                 email: `${document.getElementById("manageUsersDataEmail").value}`,
@@ -232,7 +232,7 @@ onAuthStateChanged(auth, async (user) => {
               activeLoading(uploadsCompleteds)
               if (noPhotoExists == false) {
                 if (`${document.getElementById("manageUsersDataPhoto").src}`.includes("https://firebasestorage") == false) {
-                  let storageRef = ref(storage, `users/${usersData.data().email}/photo`);
+                  let storageRef = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${usersData.data().email}/photo`);
                   uploadString(storageRef, `${document.getElementById("manageUsersDataPhoto").src}`, 'data_url').then(async (snapshot) => {
                     uploadsCompleteds = uploadsCompleteds + 50
                     if (uploadsCompleteds == 100) {

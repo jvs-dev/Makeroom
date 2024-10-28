@@ -54,7 +54,7 @@ loginBtn.onclick = function () {
 }
 
 async function verifyUserAccount(email, password) {
-    const docRef = doc(db, "users", `${email}`);
+    const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
         if (docSnap.data().firstUse == true) {
@@ -78,7 +78,7 @@ async function initAccount(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
-            const cityRef = doc(db, 'users', `${email}`);
+            const cityRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
             updateDoc(cityRef, {
                 firstUse: deleteField(),
                 temporaryPassword: deleteField()

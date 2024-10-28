@@ -49,7 +49,7 @@ async function loadChallenges() {
         challengesDiv6.innerHTML = ""
         challengesDiv7.innerHTML = ""
         /* let challengesDivExtra = document.getElementById("challengesDivExtra") */
-        let q = query(collection(db, "challenges"), where("challengeTitle", "!=", ""));
+        let q = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`), where("challengeTitle", "!=", ""));
         let querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             let acess = false
@@ -70,7 +70,7 @@ async function loadChallenges() {
             if (signatureToAcess != 1 && signatureToAcess != 3) {
                 signatureToAcess = 2
             }
-            getDownloadURL(ref(storage, `challenges/${doc.id}/mask`))
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges/${doc.id}/mask`))
                 .then(async (url) => {
                     const xhr = new XMLHttpRequest();
                     xhr.responseType = 'blob';
@@ -112,7 +112,7 @@ async function loadChallenges() {
                         }
                     });
                     let sendersImages = []
-                    const senderSnapshot = await getDocs(collection(db, "challenges", `${doc.id}`, "resolves"));
+                    const senderSnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${doc.id}`, "resolves"));
                     senderSnapshot.forEach((senderDoc) => {
                         if (senderDoc.data().senderNoPhoto == true) {
                             sendersImages.push(`https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d`)
@@ -223,21 +223,21 @@ function ChallengeWindowData(obj, id, url) {
                     if (res == "confirmed") {
                         let uploadsCompleteds = 0
                         activeLoading(uploadsCompleteds)
-                        deleteThis("challenges", `${id}`).then(res => {
+                        deleteThis(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${id}`).then(res => {
                             uploadsCompleteds = uploadsCompleteds + 20
                             activeLoading(uploadsCompleteds)
                             if (uploadsCompleteds == 100) {
                                 alertThis("Desafio deletado com sucesso", "sucess")
                             }
                         })
-                        deleteAllsubDocs("challenges", `${id}`, "coments").then(res => {
+                        deleteAllsubDocs(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${id}`, "coments").then(res => {
                             uploadsCompleteds = uploadsCompleteds + 20
                             activeLoading(uploadsCompleteds)
                             if (uploadsCompleteds == 100) {
                                 alertThis("Desafio deletado com sucesso", "sucess")
                             }
                         })
-                        deleteAllsubDocs("challenges", `${id}`, "resolves").then(res => {
+                        deleteAllsubDocs(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${id}`, "resolves").then(res => {
                             uploadsCompleteds = uploadsCompleteds + 20
                             activeLoading(uploadsCompleteds)
                             if (uploadsCompleteds == 100) {
@@ -286,7 +286,7 @@ function ChallengeWindowData(obj, id, url) {
             loadComents(challengeWindow.children[3].children[1].children[0], obj, id, url)
             challengeWindow.children[3].children[1].children[1].children[0].children[2].onclick = function () {
                 if (challengeWindow.children[3].children[1].children[1].children[0].children[1].value.replace(" ", "") != "") {
-                    postComment("challenges", id, actualUser, challengeWindow.children[3].children[1].children[1].children[0].children[1].value).then(posted => {
+                    postComment(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, id, actualUser, challengeWindow.children[3].children[1].children[1].children[0].children[1].value).then(posted => {
                         challengeWindow.children[3].children[1].children[1].children[0].children[1].value = ""
                     })
                 }
@@ -302,7 +302,7 @@ function ChallengeWindowData(obj, id, url) {
                             const month = String(today.getMonth() + 1).padStart(2, '0');
                             const year = String(today.getFullYear()).slice(-2);
                             const formattedDate = `${day}/${month}/${year}`;
-                            await setDoc(doc(db, "challenges", `${id}`, "resolves", `${userData.email}`), {
+                            await setDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${id}`, "resolves", `${userData.email}`), {
                                 resolved: false,
                                 senderEmail: `${userData.email}`,
                                 senderName: `${userData.name}`,
@@ -317,7 +317,7 @@ function ChallengeWindowData(obj, id, url) {
                                 challengeSended(challengeWindow.children[0])
                             }
                             if (sendChallengeFile.files[0] != undefined) {
-                                const storageRef3 = ref(storage, `challengesResolveds/${id}/${userData.email}`);
+                                const storageRef3 = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challengesResolveds/${id}/${userData.email}`);
                                 uploadBytes(storageRef3, sendChallengeFile.files[0]).then((snapshot) => {
                                     uploadsCompleteds = uploadsCompleteds + 50
                                     activeLoading(uploadsCompleteds)
@@ -361,7 +361,7 @@ challengeWindow.children[0].children[0].children[3].onclick = () => {
 
 async function verifySend(challengeId, email) {
     return new Promise(async (resolve) => {
-        const docRef = doc(db, "challenges", `${challengeId}`, "resolves", `${email}`);
+        const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${challengeId}`, "resolves", `${email}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             resolve(true)
@@ -374,7 +374,7 @@ async function verifySend(challengeId, email) {
 function loadComents(section, obj, id, url) {
     actualUserEmail().then(actualUser => {
         section.innerHTML = ""
-        monitorCollectionUpdates(`challenges/${id}/coments`, async (coment) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges/${id}/coments`, async (coment) => {
             coment.forEach(element => {
                 if (element.timestamp != null) {
                     thisUserData(element.email).then(UserData => {
@@ -398,7 +398,7 @@ function loadComents(section, obj, id, url) {
                         if (UserData.noPhoto == true) {
                             article.children[0].children[0].children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
                         } else {
-                            getDownloadURL(ref(storage, `users/${element.email}/photo`))
+                            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${element.email}/photo`))
                                 .then((url) => {
                                     let xhr = new XMLHttpRequest();
                                     xhr.responseType = 'blob';
@@ -421,7 +421,7 @@ function loadComents(section, obj, id, url) {
 onAuthStateChanged(auth, (user) => {
     if (user) {
         const uid = user.uid;
-        monitorCollectionUpdates("challenges", (updatedData) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, (updatedData) => {
             loadChallenges()
         });
     }

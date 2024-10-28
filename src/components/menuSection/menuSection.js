@@ -30,7 +30,6 @@ onAuthStateChanged(auth, (user) => {
         if (window.innerWidth > 600) {
             let menuSideUlToggle = document.getElementById("menuSideUlToggle")
             let menuSideUl = document.getElementById("menuSideUl")
-            switchSchool.parentElement.style.display = ""
             logOutBtn.parentElement.style.display = "none"
             actualUserData().then(userData => {
                 if (userData.admin == true) {

@@ -40,7 +40,7 @@ export function initCart() {
     cartItemsDiv.innerHTML = ""
     cartItemsDiv.classList.add("empity")
     actualUserEmail().then(async (email) => {
-        const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+        const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
         querySnapshot.forEach(async (cartDoc) => {
             const docRef = doc(db, "store", `${cartDoc.data().itemId}`);
             const docSnap = await getDoc(docRef);
@@ -93,7 +93,7 @@ export function initCart() {
                             }
                         }
                         article.children[3].onclick = async function () {
-                            await deleteDoc(doc(db, "users", `${email}`, "cart", `${cartDoc.id}`));
+                            await deleteDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${cartDoc.id}`));
                             article.style.display = "none"
                             article.parentNode.removeChild(article);
                         }
@@ -134,15 +134,15 @@ export function initCart() {
 
 async function alterCartQuanty(itemId, quanty) {
     actualUserEmail().then(async (email) => {
-        const docRef = doc(db, "users", `${email}`, "cart", `${itemId}`);
+        const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            const cartItemRef = doc(db, "users", `${email}`, "cart", `${itemId}`);
+            const cartItemRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`);
             await updateDoc(cartItemRef, {
                 quanty: Number(quanty)
             });
         } else {
-            await setDoc(doc(db, "users", `${email}`, "cart", `${itemId}`), {
+            await setDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`), {
                 itemId: `${itemId}`,
                 quanty: Number(quanty)
             });
@@ -153,9 +153,9 @@ async function alterCartQuanty(itemId, quanty) {
 function calcTotalValue() {
     cartTotalSpan.textContent = `$0.00`
     actualUserEmail().then(async (email) => {
-        monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${email}/cart`, async (dataItems) => {
             let cartCount = 0
-            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+            const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
             querySnapshot.forEach(async (item) => {
                 const docRef = doc(db, "store", `${item.data().itemId}`);
                 const docSnap = await getDoc(docRef);
@@ -214,7 +214,7 @@ function returnCartTotal() {
     return new Promise(resolve => {
         let value = 0;
         actualUserEmail().then(async (email) => {
-            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+            const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
             const promises = querySnapshot.docs.map(async (item) => {
                 const docRef = doc(db, "store", `${item.data().itemId}`);
                 const docSnap = await getDoc(docRef);
@@ -238,7 +238,7 @@ async function buyThisItems(email, items) {
                 const year = String(today.getFullYear()).slice(-2);
                 const formattedDate = `${day}/${month}/${year}`;
                 createPay(email, value, items).then(async (payRes) => {
-                    let docRef = await addDoc(collection(db, "payments"), {
+                    let docRef = await addDoc(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`), {
                         payerEmail: `${email}`,
                         paymentStatus: "pending",
                         totalAmount: Number(value),

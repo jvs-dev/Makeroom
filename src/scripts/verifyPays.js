@@ -18,7 +18,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 setInterval(async () => {
-    let q = query(collection(db, "payments"), where("paymentStatus", "==", "pending"));
+    let q = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`), where("paymentStatus", "==", "pending"));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
         verifyPay(doc.data(), doc.id)
@@ -51,11 +51,11 @@ async function getPayData(id) {
 }
 
 async function deletePay(id) {
-    await deleteDoc(doc(db, "payments", `${id}`));
+    await deleteDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, `${id}`));
 }
 
 async function userPayed(userData, id, payData, vouncherData) {
-    const paymentRef = doc(db, "payments", `${id}`);
+    const paymentRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, `${id}`);
     await updateDoc(paymentRef, {
         paymentStatus: `${payData.result.status}`
     });
@@ -90,13 +90,13 @@ function verifyPay(data, id) {
 
 async function noticeApproveds() {
     actualUserEmail().then(async (actualEmail) => {
-        let q = query(collection(db, "payments"), where("paymentStatus", "==", "approved"));
+        let q = query(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`), where("paymentStatus", "==", "approved"));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((payDoc) => {
             if (payDoc.data().noticed == false && actualEmail == payDoc.data().payerEmail) {
                 notifyThis(`Pagamento foi confirmado`, `Seus itens serão entregues em breve!`).then(async (res) => {
                     if (res == "closed") {
-                        let paymentRef = doc(db, "payments", `${payDoc.id}`);
+                        let paymentRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, `${payDoc.id}`);
                         await updateDoc(paymentRef, {
                             noticed: true
                         });

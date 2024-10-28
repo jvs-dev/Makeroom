@@ -31,7 +31,7 @@ export async function actualUserEmail() {
 export async function actualUserData() {
     return new Promise(resolve => {
         actualUserEmail().then(async userEmail => {
-            const docRef = doc(db, "users", `${userEmail}`);
+            const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${userEmail}`);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
                 resolve(docSnap.data());
@@ -44,7 +44,7 @@ export async function actualUserData() {
 
 export async function thisUserData(email) {
     return new Promise(async resolve => {
-        const docRef = doc(db, "users", `${email}`);
+        const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             resolve(docSnap.data());

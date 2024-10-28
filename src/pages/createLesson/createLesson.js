@@ -96,7 +96,7 @@ createLessonBtn.onclick = async function () {
     if (lessonTitleValue != "" && lessonIntroValue != "" && lessonMaskSrc != window.location.href && lessonVideoSrc != window.location.href && lessonCategoryValue != "" && lessonSelected.length != 0) {
         uploadsCompleteds = 0
         activeLoading(uploadsCompleteds)
-        let docRef = await addDoc(collection(db, "lessons"), {
+        let docRef = await addDoc(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons`), {
             lessonIntro: `${lessonIntroValue}`,
             lessonTitle: `${lessonTitleValue}`,
             lessonCategory: `${lessonCategoryValue}`,
@@ -111,7 +111,7 @@ createLessonBtn.onclick = async function () {
             clearInputs()
         }        
 
-        let storageRef = ref(storage, `lessons/${docRef.id}/mask`);
+        let storageRef = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${docRef.id}/mask`);
         uploadString(storageRef, lessonMaskSrc, 'data_url').then((snapshot) => {
             uploadsCompleteds = uploadsCompleteds + 25
             activeLoading(uploadsCompleteds)
@@ -123,7 +123,7 @@ createLessonBtn.onclick = async function () {
         });
 
 
-        let storageRef2 = ref(storage, `lessons/${docRef.id}/video`);
+        let storageRef2 = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${docRef.id}/video`);
         uploadString(storageRef2, lessonVideoSrc, 'data_url').then((snapshot) => {
             uploadsCompleteds = uploadsCompleteds + 25
             activeLoading(uploadsCompleteds)
@@ -134,7 +134,7 @@ createLessonBtn.onclick = async function () {
             }
         });
         if (lessonExtraFile != undefined) {
-            const storageRef3 = ref(storage, `lessons/${docRef.id}/extraFile`);
+            const storageRef3 = ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_lessons/${docRef.id}/extraFile`);
             uploadBytes(storageRef3, lessonExtraFile).then((snapshot) => {
                 uploadsCompleteds = uploadsCompleteds + 25
                 activeLoading(uploadsCompleteds)

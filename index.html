@@ -53,6 +53,7 @@
   <link rel="stylesheet" href="src/pages/resolvers/resolvers.css">
   <link rel="stylesheet" href="src/pages/notes/notes.css">
   <link rel="stylesheet" href="src/components/buttoms/checkBox.css">
+  <link rel="stylesheet" href="src/components/switchSchool/switchSchool.css">
   <link rel="stylesheet" href="src/pages/perfil/perfilDesktop.css">
   <link rel="stylesheet" href="src/styles/desktop.css">
 </head>
@@ -125,8 +126,7 @@
       </ul>
       <ul class="menuSection__sideUl" id="menuSideUl">
         <li><button class="menuSection__adminBtn" id="logOutBtn"><i class="bi bi-box-arrow-right"></i></button></li>
-        <li style="display: none;"><button class="menuSection__adminBtn" id="switchSchool"><i
-              class="bi bi-building-gear"></i></button></li>
+        <li><button class="menuSection__adminBtn" id="switchSchool"><i class="bi bi-building-gear"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToStock" style="display: none;"><i
               class="bi bi-box-seam"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToAddContent" style="display: none;"><i
@@ -148,6 +148,8 @@
               name="cart-outline"></ion-icon>Loja maker</button></li>
         <li class="menuSection__li"><button class="menuSection__btn" id="goToRanking"><ion-icon
               name="trophy-outline"></ion-icon>Ranking</button></li>
+        <li class="menuSection__li"><button class="menuSection__btn" id="goToTeams"><ion-icon
+              name="people-outline"></ion-icon>Times</button></li>
       </ul>
       <ul class="menuSection__desktopUl">
         <li class="menuSection__desktopUl__li"><button class="menuSection__desktopUl__btn"
@@ -156,6 +158,21 @@
               class="bi bi-box-arrow-right"></i></button></li>
       </ul>
     </section>
+    <div id="switchSchoolDiv" class="switchSchoolDiv">
+      <div class="switchSchoolDiv__div">
+        <h1 class="switchSchoolDiv__h1">Trocar Escola</h1>
+        <button class="switchSchoolDiv__close" id="closeSwitchSchoolDiv"><ion-icon
+            name="close-outline"></ion-icon></button>
+        <div id="schoolsCardDiv">
+          <div class="switchSchoolDiv__div--2 active"><button>Guadalupe<ion-icon
+                name="checkmark-circle-sharp"></ion-icon></button><ion-icon name="trash-outline"></ion-icon></div>
+          <div class="switchSchoolDiv__div--2"><button>Colégio Aprendiz<ion-icon
+                name="checkmark-circle-outline"></ion-icon></button><ion-icon name="trash-outline"></ion-icon></div>
+        </div>
+        <button class="switchSchoolDiv__addSchool"><ion-icon name="add-sharp"></ion-icon>Criar escola</button>
+        <button class="switchSchoolDiv__switchBtn" id="switchSchoolBtn">Trocar Escola</button>
+      </div>
+    </div>
     <section class="main__section section--home" id="homeSection">
       <header class="page__header">
         <img src="/logo.svg" alt="logo" class="header__logo">
@@ -570,9 +587,9 @@
         </div>
         <button class="notes__btn" id="createFolder"><ion-icon name="add-outline"></ion-icon>Criar pasta</button>
         <div class="notes__div--3" id="folderNotes">
-          
+
         </div>
-        <button class="notes__btn" id="createNote"><ion-icon name="add-outline"></ion-icon>Criar nota</button>        
+        <button class="notes__btn" id="createNote"><ion-icon name="add-outline"></ion-icon>Criar nota</button>
       </div>
     </section>
 
@@ -962,6 +979,7 @@
   <script type="module" src="src/scripts/verifyPays.js"></script>
   <script type="module" src="src/pages/resolvers/resolvers.js"></script>
   <script type="module" src="src/pages/notes/notes.js"></script>
+  <script type="module" src="src/components/switchSchool/switchSchool.js"></script>
 </body>
 
 </html>

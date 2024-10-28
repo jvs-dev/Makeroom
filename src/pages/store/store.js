@@ -210,16 +210,16 @@ async function loadStore() {
 async function addCartFct(itemId, quanty) {
     return new Promise(async (resolve) => {
         actualUserEmail().then(async (email) => {
-            const docRef = doc(db, "users", `${email}`, "cart", `${itemId}`);
+            const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`);
             const docSnap = await getDoc(docRef);
             if (docSnap.exists()) {
-                const cartItemRef = doc(db, "users", `${email}`, "cart", `${itemId}`);
+                const cartItemRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`);
                 await updateDoc(cartItemRef, {
                     quanty: increment(Number(quanty))
                 });
                 resolve("added")
             } else {
-                await setDoc(doc(db, "users", `${email}`, "cart", `${itemId}`), {
+                await setDoc(doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart", `${itemId}`), {
                     itemId: `${itemId}`,
                     quanty: Number(quanty)
                 });
@@ -232,9 +232,9 @@ async function addCartFct(itemId, quanty) {
 
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
-        monitorCollectionUpdates(`users/${email}/cart`, async (dataItems) => {
+        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${email}/cart`, async (dataItems) => {
             cartCount = 0
-            const querySnapshot = await getDocs(collection(db, "users", `${email}`, "cart"));
+            const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
             querySnapshot.forEach((doc) => {
                 storeCartBtn.children[1].textContent = ``
                 cartCount = cartCount + Number(doc.data().quanty)

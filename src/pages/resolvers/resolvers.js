@@ -25,9 +25,9 @@ let resolversSectionDiv = document.getElementById("resolversSectionDiv")
 
 async function loadResolves() {
     resolversSectionDiv.innerHTML = ""
-    const querySnapshot = await getDocs(collection(db, "challenges"));
+    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`));
     querySnapshot.forEach(async (challenge) => {
-        getDownloadURL(ref(storage, `challenges/${challenge.id}/mask`))
+        getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges/${challenge.id}/mask`))
             .then(async (url) => {
                 const xhr = new XMLHttpRequest();
                 xhr.responseType = 'blob';
@@ -58,7 +58,7 @@ async function loadResolves() {
                     }
 
                 }
-                const resolverSnapshot = await getDocs(collection(db, "challenges", `${challenge.id}`, "resolves"));
+                const resolverSnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${challenge.id}`, "resolves"));
                 resolverSnapshot.forEach((resolve) => {
                     if (resolve.data().resolved == false) {
                         let div = document.createElement("div")
@@ -75,7 +75,7 @@ async function loadResolves() {
                             <button class="resolverCard__resolvedBtn">Atividade Correta</button>
                             <button class="resolverCard__resolvedBtn--2">Atividade Errada</button>`
                         div.children[0].children[1].onclick = () => {
-                            getDownloadURL(ref(storage, `challengesResolveds/${challenge.id}/${resolve.data().senderEmail}`))
+                            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challengesResolveds/${challenge.id}/${resolve.data().senderEmail}`))
                                 .then(async (file) => {
                                     const a = document.createElement('a');
                                     a.href = file;
@@ -86,7 +86,7 @@ async function loadResolves() {
                                 })
                         }
                         div.children[1].onclick = async () => {
-                            const washingtonRef = doc(db, "challenges", `${challenge.id}`, "resolves", `${resolve.data().senderEmail}`);
+                            const washingtonRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${challenge.id}`, "resolves", `${resolve.data().senderEmail}`);
                             await updateDoc(washingtonRef, {
                                 resolved: true
                             });
@@ -98,7 +98,7 @@ async function loadResolves() {
                             }
                         }
                         div.children[2].onclick = async () => {
-                            const washingtonRef = doc(db, "challenges", `${challenge.id}`, "resolves", `${resolve.data().senderEmail}`);
+                            const washingtonRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_challenges`, `${challenge.id}`, "resolves", `${resolve.data().senderEmail}`);
                             await updateDoc(washingtonRef, {
                                 resolved: "incorrect"
                             });
