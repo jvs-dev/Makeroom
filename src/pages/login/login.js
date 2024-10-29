@@ -19,13 +19,17 @@ const storage = getStorage(app);
 let loginViewPassword = document.getElementById("loginViewPassword")
 let totalSchools = 0
 
-const docRef = doc(db, "schools", "all");
-const docSnap = await getDoc(docRef);
-if (docSnap.exists()) {
-    docSnap.data().schools.forEach((element, index) => {
-        totalSchools = totalSchools + 1
-    })
+async function loadTotal() {
+    const docRef = doc(db, "schools", "all");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        docSnap.data().schools.forEach((element, index) => {
+            totalSchools = totalSchools + 1
+        })
+    }   
 }
+
+loadTotal()
 
 loginViewPassword.onclick = () => {
     let password = document.getElementById("loginPassword")
