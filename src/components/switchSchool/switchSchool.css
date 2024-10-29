@@ -9,7 +9,7 @@
     justify-content: center;
     height: 100vh;
     width: 100vw;
-    z-index: 20;
+    z-index: 190;
 }
 
 .switchSchoolDiv__div {
@@ -21,6 +21,7 @@
     width: calc(100% - 20px);
     padding: 20px;
     position: relative;
+    max-width: 500px;
 }
 
 .switchSchoolDiv__h1 {
@@ -66,10 +67,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .switchSchoolDiv__div--2 button ion-icon {
-    font-size: 20px;
+    font-size: 20px;    
 }
 
 .switchSchoolDiv__div--2.active button {
@@ -93,6 +95,7 @@
     padding: 4px 0px;
     color: var(--white);
     margin: 10px 0px 0px 0px;
+    cursor: pointer;
 }
 
 .switchSchoolDiv__addSchool {
@@ -110,6 +113,7 @@
     font-size: 15px;
     font-weight: 600;
     opacity: 0.7;
+    cursor: pointer;
 }
 
 .switchSchoolDiv__addSchool ion-icon {

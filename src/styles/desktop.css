@@ -612,8 +612,7 @@
     }
 
     .main__section.section--lessonIntroduction {
-        opacity: 1;
-        display: flex;
+        opacity: 1;        
         z-index: 200;
         position: fixed;
         width: 100%;

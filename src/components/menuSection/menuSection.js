@@ -132,6 +132,20 @@ document.getElementById("goToRanking").onclick = function () {
     });
 }
 
+document.getElementById("goToTeams").onclick = function () {
+    menuToggle.forEach(menuBtn => {
+        if (menuBtn.classList.contains("active") || window.innerWidth > 600) {
+            alternatePage(document.getElementById("teamSection"))
+            if (window.innerWidth < 600) {
+                menuBtn.classList.remove("active")
+                menuSection.style.transform = "translateX(100vw)"
+            }
+            body.style.overflowY = "auto"
+            unColor(document.getElementById("goToTeams"))
+        }
+    });
+}
+
 document.getElementById("goToStore").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active") || window.innerWidth > 600) {

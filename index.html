@@ -54,6 +54,7 @@
   <link rel="stylesheet" href="src/pages/notes/notes.css">
   <link rel="stylesheet" href="src/components/buttoms/checkBox.css">
   <link rel="stylesheet" href="src/components/switchSchool/switchSchool.css">
+  <link rel="stylesheet" href="src/pages/teams/teams.css">
   <link rel="stylesheet" href="src/pages/perfil/perfilDesktop.css">
   <link rel="stylesheet" href="src/styles/desktop.css">
 </head>
@@ -532,6 +533,42 @@
       </div>
     </section>
 
+    <section class="main__section section--team" id="teamSection">
+      <header class="page__header">
+        <img src="/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <h1 class="rank__h1">Times da sua turma</h1>
+      <div class="rank__div--1" id="allTeamsDiv">
+        <article class="teamsCard">
+          <div class="teamsCard__div--1">
+            <p class="teamsCard__name">Team Name</p>
+            <div class="teamsCard__div--2">
+              <img src="" alt="" class="teamsCard__img">
+              <img src="" alt="" class="teamsCard__img">
+              <img src="" alt="" class="teamsCard__img">
+              <img src="" alt="" class="teamsCard__img">
+              <img src="" alt="" class="teamsCard__img">
+            </div>
+          </div>
+          <div class="teamsCard__div--3">
+            <span class="teamsCard__position">1º</span>
+            <p class="teamsCard__points">120 Pontos</p>
+          </div>
+        </article>
+      </div>
+      <div class="rank__div--1" id="yourTeamDiv" style="display: none;">
+      </div>
+      <div class="teamSection__div--1">
+        <div class="teamSection__div--2">Ranking<button type="button"><i
+              class="bi bi-bar-chart-fill"></i></button></div>
+        <div class="teamSection__div--2">Meu Grupo<button type="button"><ion-icon
+              name="people-outline"></ion-icon></button></div>
+      </div>
+    </section>
+
     <section class="main__section section--buyedsSection" id="buyedsSection">
       <header class="page__header">
         <img src="/logo.svg" alt="logo" class="header__logo">
@@ -954,6 +991,7 @@
   <script type="module" src="src/pages/buyeds/buyeds.js"></script>
   <script type="module" src="src/scripts/verifyPays.js"></script>
   <script type="module" src="src/pages/resolvers/resolvers.js"></script>
+  <script type="module" src="src/pages/teams/teams.js"></script>
   <script type="module" src="src/pages/notes/notes.js"></script>
   <script type="module" src="src/components/switchSchool/switchSchool.js"></script>
 </body>

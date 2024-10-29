@@ -1,0 +1,119 @@
+.section--team {
+    display: none;
+    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.rank__div--1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 20px;
+}
+
+.teamsCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: #eee;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.teamSection__div--1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 20px 10px 20px;
+    border-radius: 42px 42px 0px 0px;
+    box-shadow: 0px 0px 10px 2px #1e1e1e77;
+    background: #ffffffd2;
+    backdrop-filter: blur(2px);
+}
+
+.teamSection__div--2 {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 500;
+}
+
+.teamSection__div--2 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border: solid 1px var(--black);
+    width: 50px;
+    height: 50px;
+    background: transparent;
+    color: var(--black);
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.teamsCard__div--2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.teamsCard__div--1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    max-width: 70%;
+}
+
+.teamsCard__img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: solid 2px #fff;
+    margin-left: -10px;
+}
+
+.teamsCard__name {
+    margin: 0px;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--black);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.teamsCard__position {
+    font-family: 'Teko', sans-serif;
+    color: var(--black);
+    font-size: 34px;
+    margin: 0px;
+}
+
+.teamsCard__points {
+    font-family: 'Teko', sans-serif;
+    font-size: 22px;
+    margin: 0px;
+    color: var(--black);
+}
+
+.teamsCard__div--3 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-direction: column;
+}
