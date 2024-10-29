@@ -6,7 +6,7 @@
     justify-content: flex-start;
 }
 
-.rank__div--1 {
+.team__div--1 {
     display: flex;
     flex-direction: column;
     align-items: center;
