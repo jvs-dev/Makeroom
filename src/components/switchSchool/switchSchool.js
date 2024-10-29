@@ -36,10 +36,8 @@ async function loadSchools() {
     actualUserData().then(async (userData) => {
         if (userData.admin == true) {
             schoolsCardDiv.innerHTML = ""
-            const docRef = doc(db, "schools", "all");
-            const docSnap = await getDoc(docRef);
-            if (docSnap.exists()) {
-                docSnap.data().schools.forEach((element, index) => {
+            getSchools().then(schools => {
+                schools.forEach((element, index) => {
                     let actualSchool = 0
                     if (localStorage.getItem("schoolIndex") != undefined) {
                         actualSchool = localStorage.getItem("schoolIndex")
@@ -71,11 +69,21 @@ async function loadSchools() {
                     localStorage.setItem("schoolIndex", schoolToSwitch)
                     window.location.reload()
                 }
-            }
+            })
         }
     })
 }
 
+
+async function getSchools() {
+    return new Promise(async (resolve) => {
+        const docRef = doc(db, "schools", "all");
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            resolve(docSnap.data().schools)
+        }
+    })
+}
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
