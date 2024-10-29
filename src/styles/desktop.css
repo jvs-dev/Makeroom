@@ -613,6 +613,7 @@
 
     .main__section.section--lessonIntroduction {
         opacity: 1;        
+        display: none;
         z-index: 200;
         position: fixed;
         width: 100%;
