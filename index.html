@@ -541,7 +541,7 @@
         </button>
       </header>
       <h1 class="rank__h1">Times da sua turma</h1>
-      <div class="team__div--1" id="allTeamsDiv">
+      <div class="team__div--1" id="firtsAllTeamsDiv">
         <article class="teamsCard">
           <div class="teamsCard__div--1">
             <p class="teamsCard__name">Team Name</p>
@@ -559,11 +559,17 @@
           </div>
         </article>
       </div>
+      <div class="team__div--1" id="allTeamsDiv">
+
+      </div>
       <div class="team__div--1" id="yourTeamDiv" style="display: none;">
       </div>
       <div class="teamSection__div--1">
-        <div class="teamSection__div--2">Ranking<button type="button"><i
-              class="bi bi-bar-chart-fill"></i></button></div>
+        <div class="teamSection__div--2">Ranking<button type="button"><i class="bi bi-bar-chart-fill"></i></button>
+        </div>
+        <div class="teamSection__div--2" style="display: none;" id="createTeam">Criar Time<button
+            type="button"><ion-icon name="add-outline"></ion-icon></button>
+        </div>
         <div class="teamSection__div--2">Meu Grupo<button type="button"><ion-icon
               name="people-outline"></ion-icon></button></div>
       </div>
@@ -726,6 +732,79 @@
         <button class="createAccount loginSection__btn" type="button" id="createAccountBtn">Criar</button>
       </form>
       <div class="createAccount__manageUsersDiv" id="manageUsersDiv">
+      </div>
+      <div class="createAccount loginSquare--2"></div>
+      <div class="createAccount loginSquare--3"></div>
+      <div class="createAccount loginSquare--4"></div>
+      <div class="createAccount loginSquare--5"></div>
+    </section>
+
+    <section class="main__section section--createTeam" id="createTeamSection">
+      <div class="createTeam__searchUserDiv" id="teamSearchUserDiv">
+        <div class="createTeam__UsersDiv">
+          <h1 class="createTeam__UsersDiv__h1">Adicionar Integrante</h1>
+          <div class="createTeam__UsersDiv__div">
+            <ion-icon name="search"></ion-icon>
+            <input type="text" placeholder="Pesquisar">
+          </div>
+          <div class="createTeam__UsersDiv__div--2" id="teamAddUserDiv">
+
+          </div>
+          <button type="button" class="reateTeam__UsersDiv__btn" id="confirmAddUserTeamBtn">Confirmar</button>
+        </div>
+      </div>
+      <header class="page__header">
+        <img src="/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="header__menuToggle">
+          <div class="header__menuToggle__div"></div>
+        </button>
+      </header>
+      <form class="createAccount loginSection__form">
+        <h1 class="createAccount loginSection__h1">Criar Time</h1>
+        <p class="createAccount loginSection__p">Preencha os campos para criar um time</p>
+
+        <label for="createAccountName" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="people-outline" class="createAccount loginSection__icon"></ion-icon>
+            <input type="text" placeholder="Nome do time" class="createAccount loginSection__input" id="createTeamName">
+          </div>
+        </label>
+
+        <ul class="createTeam__ul" id="createTeamPersonUl">
+
+        </ul>
+        <div class="createTeam__div">
+          <button type="button" class="createTeam__btn" id="addPersonToTeam"><ion-icon
+              name="add-sharp"></ion-icon>Adicionar
+            integrante</button>
+        </div>
+
+        <label for="createAccountClass" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="school-outline" class="createAccount loginSection__icon"></ion-icon>
+            <select name="createAccountClass" id="createTeamClass" class="createAccount loginSection__input">
+              <option value="4°">4°</option>
+              <option value="5°">5°</option>
+              <option value="6°">6°</option>
+              <option value="7°">7°</option>
+            </select>
+          </div>
+        </label>
+
+        <label for="createAccountRoom" class="createAccount loginSection__label">
+          <div class="createAccount loginSection__div">
+            <ion-icon name="home-outline" class="createAccount loginSection__icon"></ion-icon>
+            <select name="createAccountRoom" id="createTeamRoom" class="createAccount loginSection__input">
+              <option value="A">A</option>
+              <option value="B">B</option>
+              <option value="C">C</option>
+            </select>
+          </div>
+        </label>
+
+        <button class="createAccount loginSection__btn" type="button" id="createTeamBtn">Criar</button>
+      </form>
+      <div class="createAccount__manageTeamsDiv" id="manageTeamsDiv">
       </div>
       <div class="createAccount loginSquare--2"></div>
       <div class="createAccount loginSquare--3"></div>

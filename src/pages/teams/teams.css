@@ -10,8 +10,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: 12px;
     padding: 20px;
+    width: 100%;
 }
 
 .teamsCard {
@@ -19,6 +21,7 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    max-width: 500px;
     background: #eee;
     padding: 20px;
     border-radius: 12px;
@@ -27,16 +30,17 @@
 .teamSection__div--1 {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 20px 20px 10px 20px;
-    border-radius: 42px 42px 0px 0px;
+    bottom: 20px;
+    width: calc(100% - 40px);
+    max-width: 350px;
+    padding: 14px 20px 8px 20px;
+    border-radius: 20px;
     box-shadow: 0px 0px 10px 2px #1e1e1e77;
-    background: #ffffffd2;
+    background: #fff;
     backdrop-filter: blur(2px);
+    gap: 25px;
 }
 
 .teamSection__div--2 {
@@ -45,8 +49,9 @@
     text-align: center;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 2px;
     font-weight: 500;
+    font-size: 14px;
 }
 
 .teamSection__div--2 button {
@@ -55,11 +60,11 @@
     justify-content: center;
     border-radius: 100%;
     border: solid 1px var(--black);
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: transparent;
     color: var(--black);
-    font-size: 22px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -87,7 +92,7 @@
 }
 
 .teamsCard__name {
-    margin: 0px;
+    margin: 0px 0px 4px 0px;
     font-size: 20px;
     font-weight: 500;
     color: var(--black);
@@ -98,10 +103,15 @@
 }
 
 .teamsCard__position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: end;
     font-family: 'Teko', sans-serif;
     color: var(--black);
     font-size: 34px;
-    margin: 0px;
+    margin: 0px 0px -4px 0px;
+    line-height: 90%;
 }
 
 .teamsCard__points {
@@ -116,4 +126,205 @@
     align-items: flex-end;
     justify-content: center;
     flex-direction: column;
+}
+
+.section--createTeam {
+    display: none;
+    background: #fff;
+    background-attachment: fixed;
+    min-height: 100vh;
+    justify-content: flex-start;
+}
+
+.createTeam__btn {
+    color: var(--black);
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 0px;
+    outline-width: 0px;
+    text-align: left;
+    margin: 20px 0px 10px 0px;
+    align-self: flex-start;
+    font-size: 15px;
+    font-weight: 600;
+    opacity: 0.7;
+    padding: 0px;
+    cursor: pointer;
+}
+
+.createTeam__btn ion-icon {
+    font-size: 18px;
+}
+
+.createTeam__ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+    padding: 0px;
+    margin: 10px 0px 0px 0px;
+}
+
+.createTeam__li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.createTeam__li div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.createTeam__removePerson {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+    color: rgb(192, 1, 1);
+    background: transparent;
+    border: 0px;
+    outline-width: 0px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.createTeam__personName {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--black);
+    margin: 0px;
+}
+
+.createTeam__select {
+    background: #eee;
+    margin: 0px 0px 0px 26px;
+    border: 0px;
+    outline-width: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.createTeam__div {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.createTeam__searchUserDiv {
+    background: #00000080;
+    backdrop-filter: blur(2px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    position: fixed;
+}
+
+.createTeam__UsersDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: calc(100% - 40px);
+    height: calc(100% - 80px);
+    background: #fff;
+    padding: 20px 10px;
+    border-radius: 18px;
+}
+
+.createTeam__UsersDiv__div {
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 12px;
+}
+
+.createTeam__UsersDiv__div ion-icon {
+    font-size: 20px;
+}
+
+.createTeam__UsersDiv__div input {
+    background: transparent;
+    color: var(--black);
+    border: 0px;
+    outline-width: 0px;
+    font-size: 18px;
+    width: 100%;
+}
+
+.createTeam__UsersDiv__div input::placeholder {
+    opacity: 0.7;
+}
+
+.createTeam__UsersDiv__h1 {
+    font-family: 'Teko', sans-serif;
+    font-size: 36px;
+    font-weight: 500;
+    margin: 0px;
+}
+
+.createTeam__UsersDiv__div--2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    margin: 20px 0px 0px 0px ;
+    gap: 10px;
+}
+
+.reateTeam__UsersDiv__btn {
+    background: var(--primary-color);
+    color: var(--white);
+    width: 100%;
+    padding: 6px 0px;
+    cursor: pointer;
+    margin: 10px 0px 0px 0px;
+    outline-width: 0px;
+    border: 0px;
+    border-radius: 12px;
+    font-size: 18px;
+}
+
+#teamAddUserDiv .manageUsersCard__div {
+    width: calc(100% - 70px);
+}
+
+#teamAddUserDiv .manageUsersCard__email {
+    white-space: nowrap;
+    width: 100% - 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#teamAddUserDiv .manageUsersCard.active {
+    border: solid 2px var(--primary-color);
+}
+
+.manageUsersCard__classRoom {
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0px 0px 0px 10px;
 }

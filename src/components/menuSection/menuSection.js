@@ -146,6 +146,12 @@ document.getElementById("goToTeams").onclick = function () {
     });
 }
 
+document.getElementById("createTeam").onclick = function () {
+    alternatePage(document.getElementById("createTeamSection"))
+    menuSection.style.transform = "translateX(100vw)"
+    body.style.overflowY = "auto"
+}
+
 document.getElementById("goToStore").onclick = function () {
     menuToggle.forEach(menuBtn => {
         if (menuBtn.classList.contains("active") || window.innerWidth > 600) {

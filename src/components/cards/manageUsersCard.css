@@ -5,7 +5,7 @@
     background: #eee;
     box-shadow: 0px 4px 4px rgba(00, 00, 00, 0.25);
     border-radius: 16px;
-    padding: 10px ;
+    padding: 10px;
     width: 100%;
 }
 
@@ -19,12 +19,23 @@
 }
 
 .manageUsersCard__name {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     font-family: 'Teko', sans-serif;
     font-size: 26px;
     text-transform: capitalize;
     color: #000;
     margin: 0px;
     line-height: 100%;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.manageUsersCard__div {
+    width: calc(100% - 70px);
 }
 
 .manageUsersCard__email {
@@ -32,4 +43,8 @@
     font-weight: 500;
     color: var(--black);
     margin: 0px;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

@@ -36,9 +36,9 @@
     background: transparent;
     border: 0px;
     outline-width: 0px;
-    border: solid 2px var(--black);
+    border: solid 2px #1e1e1e4f;
     width: 190px;
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 2px 0px;
 }
 
