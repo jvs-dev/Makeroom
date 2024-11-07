@@ -348,10 +348,10 @@ function challengeSended(section) {
 }
 
 challengeWindow.children[0].children[0].children[3].onclick = () => {
-    challengeWindow.children[5].textContent = "Enviado"
-    challengeWindow.children[5].style.background = "#20E3BB"
-    challengeWindow.children[5].style.boxShadow = "0px 0px 6px #20E3BB"
-    challengeWindow.children[5].style.color = "#fff"
+    challengeWindow.children[2].children[3].textContent = "Enviado"
+    challengeWindow.children[2].children[3].style.background = "#20E3BB"
+    challengeWindow.children[2].children[3].style.boxShadow = "0px 0px 6px #20E3BB"
+    challengeWindow.children[2].children[3].style.color = "#fff"
     challengeWindow.children[0].style.opacity = "0"
     setTimeout(() => {
         challengeWindow.children[0].style.transition = ""

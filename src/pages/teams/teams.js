@@ -217,7 +217,7 @@ async function loadMyTeams(userData) {
                     yourAllTeamsDiv.style.display = "none"
                     yourTeamDiv.style.display = "flex"
                     yourTeamDiv.children[1].innerHTML = ""
-                    teams.teamUsers.forEach(person => {                        
+                    teams.teamUsers.forEach(person => {
                         let personCard = document.createElement("article")
                         yourTeamDiv.children[1].insertAdjacentElement("beforeend", personCard)
                         personCard.classList.add("yourTeamDiv__teamUsersCard")

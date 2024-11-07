@@ -2,7 +2,7 @@ import { postComment, getThisComment } from "../../scripts/postGetcoments"
 import { actualUserData, thisUserData, actualUserEmail } from "../../scripts/returnUserInfos"
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, updateDoc, setDoc, onSnapshot, addDoc, collection, query, where, getDoc, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, increment, doc, updateDoc, setDoc, onSnapshot, addDoc, collection, query, where, getDoc, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { activeLoading } from "../../components/uploadingSection/uploadingSection";
 import { alertThis } from "../../components/alerts/alert";
@@ -90,6 +90,7 @@ async function loadResolves() {
                             await updateDoc(washingtonRef, {
                                 resolved: true
                             });
+                            addUserPoints(resolve.data().senderEmail, challenge.data().challengePoints)
                             div.style.display = "none"
                             div.parentNode.removeChild(div);
                             if (article.children[1] == undefined) {
@@ -122,6 +123,14 @@ async function loadResolves() {
             })
     });
 }
+
+async function addUserPoints(email, points) {
+    const washingtonRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
+    await updateDoc(washingtonRef, {
+        points: increment(Number(points))
+    });
+}
+
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
