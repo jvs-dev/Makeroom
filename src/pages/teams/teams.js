@@ -26,7 +26,12 @@ let confirmAddUserTeamBtn = document.getElementById("confirmAddUserTeamBtn")
 let createTeamPersonUl = document.getElementById("createTeamPersonUl")
 let createTeamBtn = document.getElementById("createTeamBtn")
 let firtsAllTeamsDiv = document.getElementById("firtsAllTeamsDiv")
-
+let allTeamsDiv = document.getElementById("allTeamsDiv")
+let myGroupBtn = document.getElementById("myGroupBtn")
+let yourAllTeamsDiv = document.getElementById("yourAllTeamsDiv")
+let rankingTeamBtn = document.getElementById("rankingTeamBtn")
+let teamSectionTitle = document.getElementById("teamSectionTitle")
+let yourTeamDiv = document.getElementById("yourTeamDiv")
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -36,12 +41,33 @@ onAuthStateChanged(auth, async (user) => {
                 createTeam.style.display = "flex"
                 loadTeams()
                 loadPersons()
+                loadMyTeams(userData)
             } else {
                 createTeam.style.margin = "0px 20px"
             }
         })
     }
 })
+
+myGroupBtn.onclick = function () {
+    firtsAllTeamsDiv.style.display = "none"
+    allTeamsDiv.style.display = "none"
+    yourTeamDiv.style.display = "none"
+    yourAllTeamsDiv.style.display = "flex"
+    myGroupBtn.classList.add("active")
+    rankingTeamBtn.classList.remove("active")
+    teamSectionTitle.textContent = "Suas equipes"
+}
+
+rankingTeamBtn.onclick = function () {
+    firtsAllTeamsDiv.style.display = "flex"
+    allTeamsDiv.style.display = "flex"
+    yourAllTeamsDiv.style.display = "none"
+    yourTeamDiv.style.display = "none"
+    myGroupBtn.classList.remove("active")
+    rankingTeamBtn.classList.add("active")
+    teamSectionTitle.textContent = "Ranking da turma"
+}
 
 addPersonToTeam.onclick = function () {
     teamSearchUserDiv.style.display = "flex"
@@ -153,6 +179,62 @@ createTeamBtn.onclick = function () {
 
 }
 
+async function loadMyTeams(userData) {
+    let teamsArray = []
+    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_teams`));
+    querySnapshot.forEach((doc) => {
+        teamsArray.push(doc.data())
+    });
+    const sortedTeams = teamsArray.sort((a, b) => b.teamPoints - a.teamPoints);
+    const rankedTeams = sortedTeams.map((team, index) => ({
+        teamPosition: index + 1,
+        teamUsers: team.teamUsers,
+        teamName: team.teamName,
+        teamPoints: team.teamPoints,
+        teamclass: team.teamclass,
+        teamRoom: team.teamRoom
+    }));
+    yourAllTeamsDiv.innerHTML = ""
+    rankedTeams.forEach(teams => {
+        teams.teamUsers.forEach(element => {
+            if (element.email == userData.email) {
+                let article = document.createElement("article")
+                yourAllTeamsDiv.insertAdjacentElement("beforeend", article)
+                article.classList.add("teamsCard")
+                article.innerHTML = `
+                        <div class="teamsCard__div--1">
+                            <p class="teamsCard__name">${teams.teamName}</p>
+                            <div class="teamsCard__div--2">
+            
+                            </div>
+                        </div>
+                        <span class="teamsCard__span"><ion-icon name="arrow-forward-outline"></ion-icon></span>`
+                loadUserPhoto(teams.teamUsers, article.children[0].children[1])
+                article.onclick = function () {
+                    yourTeamDiv.children[0].children[0].textContent = `${teams.teamPosition}º Lugar`
+                    yourTeamDiv.children[0].children[1].textContent = `${teams.teamPoints} Pontos`
+                    teamSectionTitle.textContent = `${teams.teamName}`
+                    yourAllTeamsDiv.style.display = "none"
+                    yourTeamDiv.style.display = "flex"
+                    yourTeamDiv.children[1].innerHTML = ""
+                    teams.teamUsers.forEach(person => {                        
+                        let personCard = document.createElement("article")
+                        yourTeamDiv.children[1].insertAdjacentElement("beforeend", personCard)
+                        personCard.classList.add("yourTeamDiv__teamUsersCard")
+                        personCard.innerHTML = `
+                        <img class="teamUsersCard__img" src="" alt="">
+                        <p class="teamUsersCard__p">${person.specialization}</p>
+                        `
+                        returnUserPhoto(person.email, personCard.children[0])
+                    });
+                }
+            }
+        });
+    });
+}
+
+
+
 async function loadTeams() {
     firtsAllTeamsDiv.innerHTML = ""
     let teamsArray = []
@@ -173,8 +255,6 @@ async function loadTeams() {
     allTeamsDiv.innerHTML = ""
     for (let index = 0; index < 3; index++) {
         if (rankedTeams[index] != undefined) {
-            console.log("oi");
-
             let article = document.createElement("article")
             firtsAllTeamsDiv.insertAdjacentElement("beforeend", article)
             article.classList.add("teamsCard")
@@ -182,31 +262,89 @@ async function loadTeams() {
                 <div class="teamsCard__div--1">
                     <p class="teamsCard__name">${rankedTeams[index].teamName}</p>
                     <div class="teamsCard__div--2">
-                        <img src="" alt="" class="teamsCard__img">
-                        <img src="" alt="" class="teamsCard__img">
-                        <img src="" alt="" class="teamsCard__img">
-                        <img src="" alt="" class="teamsCard__img">
-                        <img src="" alt="" class="teamsCard__img">
+
                     </div>
                 </div>
                 <div class="teamsCard__div--3">
                     <span class="teamsCard__position">${rankedTeams[index].teamPosition}º</span>
                     <p class="teamsCard__points">${rankedTeams[index].teamPoints} Pontos</p>
                 </div>`
+            article.classList.add(`position-${rankedTeams[index].teamPosition}`)
+            loadUserPhoto(rankedTeams[index].teamUsers, article.children[0].children[1])
         }
     }
 
     rankedTeams.forEach(element => {
-        if (element.rankPosition > 3) {
+        if (element.teamPosition > 3) {
             let article = document.createElement("article")
-            article.classList.add("rankOuthersCard")
+            article.classList.add("teamsCard")
             allTeamsDiv.insertAdjacentElement("beforeend", article)
             article.innerHTML = `                    
-                                     
+                <div class="teamsCard__div--1">
+                    <p class="teamsCard__name">${element.teamName}</p>
+                    <div class="teamsCard__div--2">
+
+                    </div>
+                </div>
+                <div class="teamsCard__div--3">
+                    <span class="teamsCard__position">${element.teamPosition}º</span>
+                    <p class="teamsCard__points">${element.teamPoints} Pontos</p>
+                </div>                
                 `
+            loadUserPhoto(element.teamUsers, article.children[0].children[1])
         }
     });
 }
+
+
+async function loadUserPhoto(usersArray, htmlElement) {
+    usersArray.forEach(async (element) => {
+        const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${element.email}`);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            if (docSnap.data().noPhoto == true) {
+                htmlElement.insertAdjacentHTML("beforeend", `<img src="https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d" class="teamsCard__img">`)
+            } else {
+                getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${element.email}/photo`))
+                    .then((url) => {
+                        let xhr = new XMLHttpRequest();
+                        xhr.responseType = 'blob';
+                        xhr.onload = (event) => {
+                            let blob = xhr.response;
+                        };
+                        xhr.open('GET', url);
+                        xhr.send();
+                        htmlElement.insertAdjacentHTML("beforeend", `<img src="${url}" class="teamsCard__img">`)
+                    })
+            }
+        }
+    });
+}
+
+
+async function returnUserPhoto(email, element) {
+    const docRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        if (docSnap.data().noPhoto == true) {
+            element.src = `https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d`
+        } else {
+            getDownloadURL(ref(storage, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${email}/photo`))
+                .then((url) => {
+                    let xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = (event) => {
+                        let blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                    element.src = `${url}`
+                })
+        }
+    }
+}
+
+
 
 async function registerTeam() {
     let docRef = await addDoc(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_teams`), {

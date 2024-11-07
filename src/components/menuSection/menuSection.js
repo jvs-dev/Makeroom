@@ -148,7 +148,17 @@ document.getElementById("goToTeams").onclick = function () {
 
 document.getElementById("createTeam").onclick = function () {
     alternatePage(document.getElementById("createTeamSection"))
-    menuSection.style.transform = "translateX(100vw)"
+    if (window.innerWidth < 600) {
+        menuSection.style.transform = "translateX(100vw)"
+    }
+    body.style.overflowY = "auto"
+}
+
+document.getElementById("backTeamsBtn").onclick = function () {
+    alternatePage(document.getElementById("teamSection"))
+    if (window.innerWidth < 600) {
+        menuSection.style.transform = "translateX(100vw)"
+    }
     body.style.overflowY = "auto"
 }
 

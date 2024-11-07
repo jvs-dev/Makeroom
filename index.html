@@ -540,37 +540,33 @@
           <div class="header__menuToggle__div"></div>
         </button>
       </header>
-      <h1 class="rank__h1">Times da sua turma</h1>
+      <h1 class="rank__h1" id="teamSectionTitle">Ranking da turma</h1>
       <div class="team__div--1" id="firtsAllTeamsDiv">
-        <article class="teamsCard">
-          <div class="teamsCard__div--1">
-            <p class="teamsCard__name">Team Name</p>
-            <div class="teamsCard__div--2">
-              <img src="" alt="" class="teamsCard__img">
-              <img src="" alt="" class="teamsCard__img">
-              <img src="" alt="" class="teamsCard__img">
-              <img src="" alt="" class="teamsCard__img">
-              <img src="" alt="" class="teamsCard__img">
-            </div>
-          </div>
-          <div class="teamsCard__div--3">
-            <span class="teamsCard__position">1º</span>
-            <p class="teamsCard__points">120 Pontos</p>
-          </div>
-        </article>
+
       </div>
       <div class="team__div--1" id="allTeamsDiv">
 
       </div>
+      <div class="team__div--1" id="yourAllTeamsDiv" style="display: none;">
+
+      </div>
       <div class="team__div--1" id="yourTeamDiv" style="display: none;">
+        <div class="yourTeamDiv__div--1">
+          <p class="yourTeamDiv__position">4° Lugar</p>
+          <p class="yourTeamDiv__points">630 pontos</p>
+        </div>
+        <div class="yourTeamDiv__div--2">
+          
+        </div>
       </div>
       <div class="teamSection__div--1">
-        <div class="teamSection__div--2">Ranking<button type="button"><i class="bi bi-bar-chart-fill"></i></button>
+        <div class="teamSection__div--2 active" id="rankingTeamBtn">Ranking<button type="button"><i
+              class="bi bi-bar-chart-fill"></i></button>
         </div>
         <div class="teamSection__div--2" style="display: none;" id="createTeam">Criar Time<button
             type="button"><ion-icon name="add-outline"></ion-icon></button>
         </div>
-        <div class="teamSection__div--2">Meu Grupo<button type="button"><ion-icon
+        <div class="teamSection__div--2" id="myGroupBtn">Meu Grupo<button type="button"><ion-icon
               name="people-outline"></ion-icon></button></div>
       </div>
     </section>
@@ -754,7 +750,8 @@
         </div>
       </div>
       <header class="page__header">
-        <img src="/logo.svg" alt="logo" class="header__logo">
+        <button type="button" class="notes__back" id="backTeamsBtn"><ion-icon
+            name="arrow-back-outline"></ion-icon>Voltar</button>
         <button type="button" class="header__menuToggle">
           <div class="header__menuToggle__div"></div>
         </button>

@@ -11,8 +11,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 20px;
+    gap: 26px;
+    padding: 0px 20px;
     width: 100%;
 }
 
@@ -22,9 +22,11 @@
     justify-content: space-between;
     width: 100%;
     max-width: 500px;
-    background: #eee;
-    padding: 20px;
-    border-radius: 12px;
+    background: #ebfdff;
+    box-shadow: -1px 2px 4px rgba(00, 00, 00, 0.25);
+    padding: 14px 20px;
+    border-radius: 16px;
+    position: relative;
 }
 
 .teamSection__div--1 {
@@ -68,6 +70,15 @@
     cursor: pointer;
 }
 
+.teamSection__div--2.active {
+    color: #ff8203;
+}
+
+.teamSection__div--2.active button {
+    border: solid 1px #ff8203;
+    color: #ff8203;
+}
+
 .teamsCard__div--2 {
     display: flex;
     align-items: center;
@@ -85,21 +96,22 @@
 
 .teamsCard__img {
     width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 100%;
-    border: solid 2px #fff;
+    border: solid 2px var(--primary-color);
     margin-left: -10px;
 }
 
 .teamsCard__name {
     margin: 0px 0px 4px 0px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 500;
-    color: var(--black);
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
+    text-transform: capitalize;
 }
 
 .teamsCard__position {
@@ -108,17 +120,42 @@
     justify-content: center;
     text-align: end;
     font-family: 'Teko', sans-serif;
-    color: var(--black);
-    font-size: 34px;
+    font-size: 45px;
+    font-weight: 400;
     margin: 0px 0px -4px 0px;
     line-height: 90%;
+}
+
+.teamsCard.position-1 {
+    background: #FFBF00;
+    box-shadow: 0px 0px 20px 2px #FFBF00;
+    color: #fff;
+}
+
+.teamsCard.position-1 .teamsCard__img {
+    border: solid 2px #fff;
+}
+
+.teamsCard.position-2 {
+    background: #CAC7C7;
+    box-shadow: 0px 0px 8px 1px #CAC7C7;
+    color: #1e1e1e;
+}
+
+.teamsCard.position-3 {
+    background: #EA7600;
+    box-shadow: 0px 0px 8px 1px #EA7600;
+    color: #fff;
+}
+
+.teamsCard.position-3 .teamsCard__img {
+    border: solid 2px #fff;
 }
 
 .teamsCard__points {
     font-family: 'Teko', sans-serif;
     font-size: 22px;
     margin: 0px;
-    color: var(--black);
 }
 
 .teamsCard__div--3 {
@@ -126,6 +163,24 @@
     align-items: flex-end;
     justify-content: center;
     flex-direction: column;
+}
+
+.teamsCard__span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #1e1e1ec4;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px 0px;
+    padding: 10px 14px;
+    font-size: 24px;
+}
+
+#yourAllTeamsDiv {
+    margin-top: 20px;
 }
 
 .section--createTeam {
@@ -290,7 +345,7 @@
     width: 100%;
     height: 100%;
     overflow: auto;
-    margin: 20px 0px 0px 0px ;
+    margin: 20px 0px 0px 0px;
     gap: 10px;
 }
 
@@ -327,4 +382,78 @@
     font-size: 18px;
     font-weight: 600;
     margin: 0px 0px 0px 10px;
+}
+
+#allTeamsDiv {
+    margin-bottom: 130px;
+    margin-top: 26px;
+}
+
+#firtsAllTeamsDiv {
+    margin-top: 30px;
+}
+
+.yourTeamDiv__div--1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+#yourTeamDiv {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 100%;
+}
+
+.yourTeamDiv__div--2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin: 0px 0px 130px 0px;
+}
+
+.yourTeamDiv__teamUsersCard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.teamUsersCard__img {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+    border: solid 2px var(--primary-color);
+}
+
+.teamUsersCard__p {    
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0px;
+    background: #ffffffa4;
+    padding: 3px 15px;
+    border-radius: 100px;
+}
+
+.yourTeamDiv__position {
+    font-family: 'Teko', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--primary-color);
+    margin: 0px;
+}
+
+.yourTeamDiv__points {
+    font-family: 'Teko', sans-serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: #1e1e1e;
+    margin: 0px;
 }
