@@ -152,6 +152,14 @@ async function loadNotes(folderId) {
                 noteCard.children[1].classList.remove("resolved")
                 noteCard.children[1].classList.add(`${actualStatus == true ? "resolved" : ""}`)
             }
+            noteCard.children[0].children[1].onclick = async function () {
+                arr.splice(index, 1);
+                const washingtonRef = doc(db, `notes`, `${thisFolder}`);
+                await updateDoc(washingtonRef, {
+                    allNotes: arr
+                });
+                noteCard.parentNode.removeChild(noteCard);
+            }
         });
     }
 
