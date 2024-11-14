@@ -93,7 +93,7 @@ async function registerAccount(createAccountClass, createAccountPassword, create
     firstUse: true,
     noPhoto: true,
     noCover: true,
-    schoolIndex: Number(createAccountSchool)
+    schoolIndex: Number(createAccountSchool.value)
   });
   document.getElementById("createAccountPassword").value = ""
   document.getElementById("createAccountEmail").value = ""

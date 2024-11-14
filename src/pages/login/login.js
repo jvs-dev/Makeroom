@@ -26,7 +26,7 @@ async function loadTotal() {
         docSnap.data().schools.forEach((element, index) => {
             totalSchools = totalSchools + 1
         })
-    }   
+    }
 }
 
 loadTotal()
@@ -57,7 +57,16 @@ loginBtn.onclick = function () {
                     const docSnap = await getDoc(docRef);
                     if (docSnap.exists()) {
                         localStorage.setItem("schoolIndex", index)
-                        window.location.reload()
+                        if (docSnap.data().firstUse == true) {
+                            const cityRef = doc(db, `${index}_users`, `${email}`);
+                            updateDoc(cityRef, {
+                                firstUse: deleteField(),
+                                temporaryPassword: deleteField()
+                            });
+                            window.location.reload()
+                        } else {
+                            window.location.reload()
+                        }
                     }
                 }
                 logoAlternateAnimation(document.getElementById("homeSection"))

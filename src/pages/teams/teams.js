@@ -236,29 +236,32 @@ async function loadMyTeams(userData) {
 
 
 async function loadTeams() {
-    firtsAllTeamsDiv.innerHTML = ""
-    let teamsArray = []
-    const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_teams`));
-    querySnapshot.forEach((doc) => {
-        teamsArray.push(doc.data())
-    });
-    const sortedTeams = teamsArray.sort((a, b) => b.teamPoints - a.teamPoints);
-    const rankedTeams = sortedTeams.map((team, index) => ({
-        teamPosition: index + 1,
-        teamUsers: team.teamUsers,
-        teamName: team.teamName,
-        teamPoints: team.teamPoints,
-        teamclass: team.teamclass,
-        teamRoom: team.teamRoom
-    }));
-    firtsAllTeamsDiv.innerHTML = ""
-    allTeamsDiv.innerHTML = ""
-    for (let index = 0; index < 3; index++) {
-        if (rankedTeams[index] != undefined) {
-            let article = document.createElement("article")
-            firtsAllTeamsDiv.insertAdjacentElement("beforeend", article)
-            article.classList.add("teamsCard")
-            article.innerHTML = `
+    actualUserData().then(async (userData) => {
+        firtsAllTeamsDiv.innerHTML = ""
+        let teamsArray = []
+        const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_teams`));
+        querySnapshot.forEach((doc) => {
+            if (doc.data().teamclass == userData.class && doc.data().teamRoom == userData.room) {
+                teamsArray.push(doc.data())
+            }
+        })
+        const sortedTeams = teamsArray.sort((a, b) => b.teamPoints - a.teamPoints);
+        const rankedTeams = sortedTeams.map((team, index) => ({
+            teamPosition: index + 1,
+            teamUsers: team.teamUsers,
+            teamName: team.teamName,
+            teamPoints: team.teamPoints,
+            teamclass: team.teamclass,
+            teamRoom: team.teamRoom
+        }));
+        firtsAllTeamsDiv.innerHTML = ""
+        allTeamsDiv.innerHTML = ""
+        for (let index = 0; index < 3; index++) {
+            if (rankedTeams[index] != undefined) {
+                let article = document.createElement("article")
+                firtsAllTeamsDiv.insertAdjacentElement("beforeend", article)
+                article.classList.add("teamsCard")
+                article.innerHTML = `
                 <div class="teamsCard__div--1">
                     <p class="teamsCard__name">${rankedTeams[index].teamName}</p>
                     <div class="teamsCard__div--2">
@@ -269,17 +272,17 @@ async function loadTeams() {
                     <span class="teamsCard__position">${rankedTeams[index].teamPosition}º</span>
                     <p class="teamsCard__points">${rankedTeams[index].teamPoints} Pontos</p>
                 </div>`
-            article.classList.add(`position-${rankedTeams[index].teamPosition}`)
-            loadUserPhoto(rankedTeams[index].teamUsers, article.children[0].children[1])
+                article.classList.add(`position-${rankedTeams[index].teamPosition}`)
+                loadUserPhoto(rankedTeams[index].teamUsers, article.children[0].children[1])
+            }
         }
-    }
 
-    rankedTeams.forEach(element => {
-        if (element.teamPosition > 3) {
-            let article = document.createElement("article")
-            article.classList.add("teamsCard")
-            allTeamsDiv.insertAdjacentElement("beforeend", article)
-            article.innerHTML = `                    
+        rankedTeams.forEach(element => {
+            if (element.teamPosition > 3) {
+                let article = document.createElement("article")
+                article.classList.add("teamsCard")
+                allTeamsDiv.insertAdjacentElement("beforeend", article)
+                article.innerHTML = `                    
                 <div class="teamsCard__div--1">
                     <p class="teamsCard__name">${element.teamName}</p>
                     <div class="teamsCard__div--2">
@@ -291,9 +294,10 @@ async function loadTeams() {
                     <p class="teamsCard__points">${element.teamPoints} Pontos</p>
                 </div>                
                 `
-            loadUserPhoto(element.teamUsers, article.children[0].children[1])
-        }
-    });
+                loadUserPhoto(element.teamUsers, article.children[0].children[1])
+            }
+        });
+    })
 }
 
 
