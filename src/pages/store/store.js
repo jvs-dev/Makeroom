@@ -7,6 +7,8 @@ import { alertThis } from "../../components/alerts/alert";
 import { alternatePage } from "../../scripts/alternatePages";
 import { initCart } from "../cart/cart";
 import { monitorAllCollectionUpdates, monitorCollectionUpdates } from "../../scripts/returnDataInfos";
+import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
+import { deleteThis } from "../../scripts/deleteThis";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -50,21 +52,21 @@ async function loadStore() {
                         storeDiv.insertAdjacentElement("beforeend", article)
                         article.classList.add("store-card")
                         article.innerHTML = `
-                        <img class="storeCard__img" src="${url}">
-                        <div class="storeCard__div--1">
-                            <div class="storeCard__divInput" style="display: none;">
-                                <button type="button" class="storeCard__inputIcon"><i class="bi bi-dash"></i></button>
-                                <input type="number" class="storeCard__input">
-                                <button type="button" class="storeCard__inputIcon"><i class="bi bi-plus"></i></i></button>
+                            <img class="storeCard__img" src="${url}">
+                            <div class="storeCard__div--1">
+                                <div class="storeCard__divInput" style="display: none;">
+                                    <button type="button" class="storeCard__inputIcon"><i class="bi bi-dash"></i></button>
+                                    <input type="number" class="storeCard__input">
+                                    <button type="button" class="storeCard__inputIcon"><i class="bi bi-plus"></i></i></button>
+                                </div>
+                                <div class="storeCard__div--2">
+                                    <p class="storeCard__name">${doc.data().name}</p>
+                                    <p class="storeCard__price">$${doc.data().price.toFixed(2)}</p>
+                                </div>
+                                <button type="button" class="storeCard__addCart"><i class="bi bi-cart-plus"></i></button>
+                                <button type="button" class="storeCard__addCart" style="display: none;"><i class="bi bi-check2" style="font-size: 24px;"></i></button>
                             </div>
-                            <div class="storeCard__div--2">
-                                <p class="storeCard__name">${doc.data().name}</p>
-                                <p class="storeCard__price">$${doc.data().price.toFixed(2)}</p>
-                            </div>
-                            <button type="button" class="storeCard__addCart"><i class="bi bi-cart-plus"></i></button>
-                            <button type="button" class="storeCard__addCart" style="display: none;"><i class="bi bi-check2" style="font-size: 24px;"></i></button>
-                        </div>
-                    `
+                        `
                         let addCartInput = article.children[1].children[0].children[1]
                         let addCartIcon = article.children[1].children[0].children[2]
                         let removeCartIcon = article.children[1].children[0].children[0]
@@ -114,6 +116,26 @@ async function loadStore() {
                                 }
                             })
                         }
+                        actualUserData().then(userData => {
+                            if (userData.admin == true) {
+                                let deleteBtn = document.createElement("button")
+                                article.insertAdjacentElement("beforeend", deleteBtn)
+                                deleteBtn.classList.add("storeCard__deleteBtn")
+                                deleteBtn.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`
+                                deleteBtn.onclick = (evt) => {
+                                    evt.stopPropagation()
+                                    activeConfirmSection("Deseja excluir este item?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+                                        if (res == "confirmed") {
+                                            deleteThis(`store`, `${doc.id}`).then(res => {
+                                                deleteItemForAll(`${doc.id}`)
+                                                alertThis("Aula deletada com sucesso", "sucess")
+                                                loadStore()
+                                            })
+                                        }
+                                    })
+                                }
+                            }
+                        })
                     })
                     .catch((error) => {
                         // Handle any errors
@@ -199,12 +221,51 @@ async function loadStore() {
                             }
                         })
                     }
+                    actualUserData().then(userData => {
+                        if (userData.admin == true) {
+                            let deleteBtn = document.createElement("button")
+                            article.insertAdjacentElement("beforeend", deleteBtn)
+                            deleteBtn.classList.add("storeCard__deleteBtn")
+                            deleteBtn.innerHTML = `<ion-icon name="trash-outline"></ion-icon>`
+                            deleteBtn.onclick = (evt) => {
+                                evt.stopPropagation()
+                                activeConfirmSection("Deseja excluir este item?", "Esta ação não poderá ser desfeita", "#f00", "sad").then(res => {
+                                    if (res == "confirmed") {
+                                        deleteThis(`store`, `${doc.id}`).then(res => {
+                                            deleteItemForAll(`${doc.id}`)
+                                            alertThis("Aula deletada com sucesso", "sucess")
+                                            loadStore()
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                    })
                 })
                 .catch((error) => {
                     // Handle any errors
                 });
         }
     });
+}
+
+
+async function deleteItemForAll(id) {
+    const scRef = doc(db, "schools", "all");
+    const scSnap = await getDoc(scRef);
+    if (scSnap.exists()) {
+        scSnap.data().schools.forEach(async (scName, index) => {
+            const userSnapshot = await getDocs(collection(db, `${index}_users`));
+            userSnapshot.forEach(async (user) => {
+                const querySnapshot = await getDocs(collection(db, `${index}_users`, `${user.id}`, "cart"));
+                querySnapshot.forEach(async (item) => {
+                    if (item.id == id) {
+                        await deleteDoc(doc(db, `${index}_users`, `${user.id}`, "cart", `${id}`));
+                    }
+                });
+            });
+        });
+    }
 }
 
 async function addCartFct(itemId, quanty) {
