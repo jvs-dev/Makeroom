@@ -6,6 +6,7 @@ import { activeLoading } from "../../components/uploadingSection/uploadingSectio
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 import { deleteAllFiles, deleteAllsubDocs, deleteFiles, deleteThis } from "../../scripts/deleteThis";
 import { alertThis } from "../../components/alerts/alert";
+import { alternatePage } from "../../scripts/alternatePages";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -49,7 +50,22 @@ backNotesBtn.onclick = async function () {
                 loadNotes(thisFolder)
             }
         }
+    } else {
+        alternatePage(document.getElementById("homeSection"))
+        unColor(document.getElementById("goToHome"))
     }
+}
+
+function unColor(btn) {
+    let adminBtn = document.querySelectorAll(".menuSection__adminBtn")
+    let allBtns = document.querySelectorAll(".menuSection__btn")
+    adminBtn.forEach(element => {
+        element.classList.remove("active")
+    });
+    allBtns.forEach(element => {
+        element.classList.remove("active")
+    });
+    btn.classList.add("active")
 }
 
 createFolder.onclick = async function () {
