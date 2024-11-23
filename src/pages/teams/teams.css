@@ -297,6 +297,7 @@
     align-items: center;
     justify-content: flex-start;
     width: calc(100% - 40px);
+    max-width: 600px;
     height: calc(100% - 80px);
     background: #fff;
     padding: 20px 10px;
@@ -311,6 +312,8 @@
     gap: 8px;
     padding: 6px 12px;
     border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
 }
 
 .createTeam__UsersDiv__div ion-icon {
@@ -353,6 +356,7 @@
     background: var(--primary-color);
     color: var(--white);
     width: 100%;
+    max-width: 500px;
     padding: 6px 0px;
     cursor: pointer;
     margin: 10px 0px 0px 0px;

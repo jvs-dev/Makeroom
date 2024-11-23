@@ -65,11 +65,12 @@ createAccountBtn.onclick = function () {
   let createAccountEmail = document.getElementById("createAccountEmail").value.toLowerCase()
   let createAccountName = document.getElementById("createAccountName").value
   let createAccountRoom = document.getElementById("createAccountRoom").value
+  let createAccountAdmin = document.getElementById("createAccountAdmin").value
   createAccountBtn.disabled = true
   if (createAccountClass != "" && createAccountPassword != "" && createAccountEmail != "" && createAccountName != "" && createAccountRoom != "" && createAccountSchool.value != "") {
     verifyUserEmailExists(createAccountEmail).then(userExists => {
       if (userExists == false) {
-        registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom)
+        registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom, createAccountAdmin)
       } else {
         createAccountBtn.disabled = false
         alertThis("Este email já existe", "error")
@@ -81,25 +82,65 @@ createAccountBtn.onclick = function () {
   }
 }
 
-async function registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom) {
-  await setDoc(doc(db, `${Number(createAccountSchool.value)}_users`, `${createAccountEmail}`), {
-    name: `${createAccountName}`,
-    class: `${createAccountClass}`,
-    temporaryPassword: `${createAccountPassword}`,
-    room: `${createAccountRoom}`,
-    signature: `basic`,
-    points: 0,
-    email: `${createAccountEmail}`,
-    firstUse: true,
-    noPhoto: true,
-    noCover: true,
-    schoolIndex: Number(createAccountSchool.value)
-  });
-  document.getElementById("createAccountPassword").value = ""
-  document.getElementById("createAccountEmail").value = ""
-  document.getElementById("createAccountName").value = ""
-  alertThis("Conta criada", "sucess")
-  createAccountBtn.disabled = false
+async function registerAccount(createAccountClass, createAccountPassword, createAccountEmail, createAccountName, createAccountRoom, createAccountAdmin) {
+  if (createAccountAdmin == "true") {
+    const docRef = doc(db, "schools", "all");
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      docSnap.data().schools.forEach(async (element, index) => {
+        await setDoc(doc(db, `${index}_users`, `${createAccountEmail}`), {
+          name: `${createAccountName}`,
+          class: `${createAccountClass}`,
+          temporaryPassword: `${createAccountPassword}`,
+          room: `${createAccountRoom}`,
+          signature: `basic`,
+          points: 0,
+          email: `${createAccountEmail}`,
+          firstUse: true,
+          noPhoto: true,
+          noCover: true,
+          admin: true
+        });
+      })
+    }
+    document.getElementById("createAccountPassword").value = ""
+    document.getElementById("createAccountEmail").value = ""
+    document.getElementById("createAccountName").value = ""
+    alertThis("Conta criada", "sucess")
+    createAccountBtn.disabled = false
+  } else {
+    await setDoc(doc(db, `${Number(createAccountSchool.value)}_users`, `${createAccountEmail}`), {
+      name: `${createAccountName}`,
+      class: `${createAccountClass}`,
+      temporaryPassword: `${createAccountPassword}`,
+      room: `${createAccountRoom}`,
+      signature: `basic`,
+      points: 0,
+      email: `${createAccountEmail}`,
+      firstUse: true,
+      noPhoto: true,
+      noCover: true,
+      schoolIndex: Number(createAccountSchool.value)
+    });
+    let article = document.createElement("article")
+    manageUsersDiv.insertAdjacentElement("beforeend", article)
+    article.classList.add("manageUsersCard")
+    article.innerHTML = `
+            <img class="manageUsersCard__img" src="" alt="">
+            <div class="manageUsersCard__div">
+              <p class="manageUsersCard__name">${createAccountName}</p>
+              <p class="manageUsersCard__email">${createAccountEmail}</p>
+            </div>`
+    article.children[0].src = "https://img.freepik.com/vetores-gratis/ilustracao-do-icone-da-lampada_53876-43730.jpg?w=740&t=st=1705192551~exp=1705193151~hmac=3347369c888609a6def2a1cd13bfb02dc519c8fbc965419dd1b5f091ef79982d"
+    article.onclick = () => {
+      alertThis("Reinicie para editar.", "error")
+    }
+    alertThis("Conta criada", "sucess")
+    document.getElementById("createAccountPassword").value = ""
+    document.getElementById("createAccountEmail").value = ""
+    document.getElementById("createAccountName").value = ""
+    createAccountBtn.disabled = false
+  }
 }
 
 onAuthStateChanged(auth, async (user) => {

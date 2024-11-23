@@ -54,10 +54,10 @@ async function loadLessons() {
             let acess = false
             let signatureToAcess
             doc.data().lessonClass.forEach(element => {
-                if (element == UserData.class.replace("°", "")) {
+                /* if (element == UserData.class.replace("°", "")) { */
                     acess = true
                     signatureToAcess = 1
-                }
+                /* } */
             });
             if (acess == false) {
                 doc.data().lessonClass.forEach(element => {
