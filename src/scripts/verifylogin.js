@@ -2,6 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { alternatePage } from "./alternatePages";
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -15,10 +16,12 @@ const auth = getAuth();
 const db = getFirestore(app);
 const storage = getStorage(app);
 let i = 0
+let urlParams = new URLSearchParams(window.location.search);
+let page = urlParams.get("page");
 
 export function verifyIfUserLogged() {
     onAuthStateChanged(auth, (user) => {
-        if (user) {            
+        if (user) {
             if (i == 0) {
                 const uid = user.uid;
                 let homeSection = document.getElementById("homeSection")
@@ -27,9 +30,18 @@ export function verifyIfUserLogged() {
             }
         } else {
             if (i == 0) {
-                let loginSection = document.getElementById("loginSection")
-                loginSection.style.display = "flex"
-                i++
+                if (page == "lojamaker") {
+                    console.log("oi");
+                    let sections = document.querySelectorAll(".main__section")
+                    sections.forEach(section => {
+                        section.style.display = "none"
+                    });
+                    document.getElementById("storeSection").style.display = "flex"
+                } else {
+                    let loginSection = document.getElementById("loginSection")
+                    loginSection.style.display = "flex"
+                    i++
+                }
             }
         }
     });

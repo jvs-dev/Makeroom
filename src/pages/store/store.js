@@ -25,6 +25,8 @@ const storage = getStorage(app);
 const storeCartBtn = document.getElementById("storeCartBtn")
 let searchInput = document.getElementById("searchInput")
 let cartCount = 0
+let urlParams = new URLSearchParams(window.location.search);
+let page = urlParams.get("page");
 
 searchInput.onchange = () => {
     loadStore()
@@ -112,7 +114,17 @@ async function loadStore() {
                                         alertThis("Adicionado com sucesso", "sucess")
                                     })
                                 } else {
-                                    alertThis("Faça login para continuar", "")
+                                    if (page == "lojamaker") {
+                                        let anonimyousCart = localStorage.getItem("anonimyousCart")
+                                        if (anonimyousCart == null) {
+                                            localStorage.setItem("anonimyousCart", `${doc.id}:${addCartInput.value}`)
+                                        } else {
+                                            localStorage.setItem("anonimyousCart", `${anonimyousCart},${doc.id}:${addCartInput.value}`)
+                                        }
+                                        alertThis("Adicionado com sucesso", "sucess")
+                                    } else {
+                                        alertThis("Faça login para continuar", "")
+                                    }
                                 }
                             })
                         }
@@ -128,7 +140,7 @@ async function loadStore() {
                                         if (res == "confirmed") {
                                             deleteThis(`store`, `${doc.id}`).then(res => {
                                                 deleteItemForAll(`${doc.id}`)
-                                                alertThis("Aula deletada com sucesso", "sucess")
+                                                alertThis("Item deletado com sucesso", "sucess")
                                                 loadStore()
                                             })
                                         }
@@ -217,7 +229,17 @@ async function loadStore() {
                                     alertThis("Adicionado com sucesso", "sucess")
                                 })
                             } else {
-                                alertThis("Faça login para continuar", "")
+                                if (page == "lojamaker") {
+                                    let anonimyousCart = localStorage.getItem("anonimyousCart")
+                                    if (anonimyousCart == null) {
+                                        localStorage.setItem("anonimyousCart", `${doc.id}:${addCartInput.value}`)
+                                    } else {
+                                        localStorage.setItem("anonimyousCart", `${anonimyousCart},${doc.id}:${addCartInput.value}`)
+                                    }
+                                    alertThis("Adicionado com sucesso", "sucess")
+                                } else {
+                                    alertThis("Faça login para continuar", "")
+                                }
                             }
                         })
                     }
@@ -293,18 +315,24 @@ async function addCartFct(itemId, quanty) {
 
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
-        monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${email}/cart`, async (dataItems) => {
-            cartCount = 0
-            const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
-            querySnapshot.forEach((doc) => {
-                storeCartBtn.children[1].textContent = ``
-                cartCount = cartCount + Number(doc.data().quanty)
-                storeCartBtn.children[1].textContent = `${cartCount}`
-            });
-            if (querySnapshot.size == 0) {
-                storeCartBtn.children[1].textContent = `0`
-            }
-        })
+        if (email == "no user conected" && page == "lojamaker") {            
+            setInterval(() => {
+                localStorage.getItem("anonimyousCart") != null ? storeCartBtn.children[1].textContent = `${localStorage.getItem("anonimyousCart").split(",").length}` : storeCartBtn.children[1].textContent = `0`
+            }, 500)
+        } else {
+            monitorCollectionUpdates(`${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users/${email}/cart`, async (dataItems) => {
+                cartCount = 0
+                const querySnapshot = await getDocs(collection(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_users`, `${email}`, "cart"));
+                querySnapshot.forEach((doc) => {
+                    storeCartBtn.children[1].textContent = ``
+                    cartCount = cartCount + Number(doc.data().quanty)
+                    storeCartBtn.children[1].textContent = `${cartCount}`
+                });
+                if (querySnapshot.size == 0) {
+                    storeCartBtn.children[1].textContent = `0`
+                }
+            })
+        }
     })
 }
 
@@ -323,5 +351,12 @@ onAuthStateChanged(auth, (user) => {
         const uid = user.uid;
         loadStore()
         updateCartQuanty()
+    } else {
+        if (page == "lojamaker") {
+            loadStore()
+            updateCartQuanty()
+            document.querySelectorAll(".header__menuToggle").forEach(menuBtn => { menuBtn.parentNode.removeChild(menuBtn); })
+            document.getElementById("menuSection").parentNode.removeChild(document.getElementById("menuSection"));
+        }
     }
 });
