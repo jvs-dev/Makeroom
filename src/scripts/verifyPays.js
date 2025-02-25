@@ -66,7 +66,6 @@ async function userPayed(userData, id, payData, vouncherData) {
             });
         }
     })
-    //...
 }
 
 function verifyPay(data, id) {

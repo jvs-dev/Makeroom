@@ -115,13 +115,25 @@ async function loadStore() {
                                     })
                                 } else {
                                     if (page == "lojamaker") {
-                                        let anonimyousCart = localStorage.getItem("anonimyousCart")
-                                        if (anonimyousCart == null) {
-                                            localStorage.setItem("anonimyousCart", `${doc.id}:${addCartInput.value}`)
-                                        } else {
-                                            localStorage.setItem("anonimyousCart", `${anonimyousCart},${doc.id}:${addCartInput.value}`)
+                                        let anonimyousCart = localStorage.getItem("anonimyousCart") || "";
+                                        let updatedCart = [];
+                                        let itemExists = false;
+
+                                        if (anonimyousCart) {
+                                            anonimyousCart.split(",").forEach((item) => {
+                                                let [id, quantity] = item.split(":");
+                                                if (id === doc.id) {
+                                                    quantity = parseInt(quantity) + parseInt(addCartInput.value);
+                                                    itemExists = true;
+                                                }
+                                                updatedCart.push(`${id}:${quantity}`);
+                                            });
                                         }
-                                        alertThis("Adicionado com sucesso", "sucess")
+                                        if (!itemExists) {
+                                            updatedCart.push(`${doc.id}:${addCartInput.value}`);
+                                        }
+                                        localStorage.setItem("anonimyousCart", updatedCart.join(","));
+                                        alertThis("Adicionado com sucesso", "sucess");
                                     } else {
                                         alertThis("Faça login para continuar", "")
                                     }
@@ -230,13 +242,24 @@ async function loadStore() {
                                 })
                             } else {
                                 if (page == "lojamaker") {
-                                    let anonimyousCart = localStorage.getItem("anonimyousCart")
-                                    if (anonimyousCart == null) {
-                                        localStorage.setItem("anonimyousCart", `${doc.id}:${addCartInput.value}`)
-                                    } else {
-                                        localStorage.setItem("anonimyousCart", `${anonimyousCart},${doc.id}:${addCartInput.value}`)
+                                    let anonimyousCart = localStorage.getItem("anonimyousCart") || "";
+                                    let updatedCart = [];
+                                    let itemExists = false;
+                                    if (anonimyousCart) {
+                                        anonimyousCart.split(",").forEach((item) => {
+                                            let [id, quantity] = item.split(":");
+                                            if (id === doc.id) {
+                                                quantity = parseInt(quantity) + parseInt(addCartInput.value);
+                                                itemExists = true;
+                                            }
+                                            updatedCart.push(`${id}:${quantity}`);
+                                        });
                                     }
-                                    alertThis("Adicionado com sucesso", "sucess")
+                                    if (!itemExists) {
+                                        updatedCart.push(`${doc.id}:${addCartInput.value}`);
+                                    }
+                                    localStorage.setItem("anonimyousCart", updatedCart.join(","));
+                                    alertThis("Adicionado com sucesso", "sucess");
                                 } else {
                                     alertThis("Faça login para continuar", "")
                                 }
@@ -315,7 +338,7 @@ async function addCartFct(itemId, quanty) {
 
 function updateCartQuanty() {
     actualUserEmail().then(async (email) => {
-        if (email == "no user conected" && page == "lojamaker") {            
+        if (email == "no user conected" && page == "lojamaker") {
             setInterval(() => {
                 localStorage.getItem("anonimyousCart") != null ? storeCartBtn.children[1].textContent = `${localStorage.getItem("anonimyousCart").split(",").length}` : storeCartBtn.children[1].textContent = `0`
             }, 500)

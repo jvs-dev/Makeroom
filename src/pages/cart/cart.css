@@ -39,13 +39,16 @@
 
 .cart__div--2 {
     width: 100%;
-    padding: 0px 20px;
+    padding: 0px 20px 30px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
     margin: 10px 0px 20px 0px;
+    overflow: auto;
+    max-height: 63vh;
+    border-bottom: solid 2px #20e3bb;
 }
 
 .cart__div--2.empity::after {
