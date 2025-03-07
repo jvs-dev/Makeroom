@@ -419,3 +419,7 @@ async function buyThisItems(email, items) {
 }
 
 calcTotalValue()
+
+export function updateCartOff() {
+    calcTotalValue()
+}

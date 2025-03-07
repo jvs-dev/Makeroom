@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, updat
 import { getStorage, ref, uploadString, deleteObject, uploadBytesResumable, getDownloadURL, uploadBytes } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { alertThis } from "../../components/alerts/alert";
 import { alternatePage } from "../../scripts/alternatePages";
-import { initCart } from "../cart/cart";
+import { initCart, updateCartOff } from "../cart/cart";
 import { monitorAllCollectionUpdates, monitorCollectionUpdates } from "../../scripts/returnDataInfos";
 import { activeConfirmSection } from "../../components/confirmSection/confirmSection";
 import { deleteThis } from "../../scripts/deleteThis";
@@ -362,9 +362,11 @@ function updateCartQuanty() {
 document.getElementById("storeCartBtn").onclick = function () {
     if (window.innerWidth > 600) {
         document.getElementById("cartSection").style.display = "flex"
+        updateCartOff()
         initCart()
     } else {
         alternatePage(document.getElementById("cartSection"))
+        updateCartOff()
         initCart()
     }
 }
