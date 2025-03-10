@@ -56,6 +56,42 @@ async function loadBuyeds(user) {
                     }
                 }
             })
+            const anonymusSnapshot = await getDocs(collection(db, `anonymus_payments`));
+            anonymusSnapshot.forEach((payData) => {
+                if (payData.data().delivered == false && payData.data().paymentStatus == "approved") {
+                    let article = document.createElement("article")
+                    buyedsSectionDiv.insertAdjacentElement("beforeend", article)
+                    article.classList.add("buyedsCard")
+                    article.classList.add("noAccount")
+                    article.innerHTML = `
+                        <div class="buyedsCard__div--1">
+                            <span class="buyedsCard__span"><ion-icon name="warning-outline"></ion-icon>Sem Conta</span>
+                            <div class="buyedsCard__div--2">
+                                <p class="buyedsCard__name">Aluno: ${payData.data().alunoName}</p>
+                                <p class="buyedsCard__name" style="margin: 10px 0px;" >Responsável: ${payData.data().resName}</p>
+                                <p class="buyedsCard__price">R$ ${payData.data().totalAmount.toFixed(2)}</p>
+                            </div>
+                            <p class="buyedsCard__date">${payData.data().payDate}</p>
+                        </div>
+                        <ul class="buyedsCard__ul">
+                            ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
+                        </ul>
+                        <p class="buyedsCard__phone">Número: ${payData.data().phone}</p>
+                        <button class="buyedsCard__Btn">Entregue</button>`
+                    article.children[3].onclick = () => {
+                        activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
+                            if (res == "confirmed") {
+                                const cartItemRef = doc(db, `anonymus_payments`, `${payData.id}`);
+                                await updateDoc(cartItemRef, {
+                                    delivered: true
+                                });
+                                alertThis("Entrega registrada com sucesso", "sucess")
+                                article.style.display = "none"
+                            }
+                        })
+                    }
+                }
+            })
         }
     })
 }

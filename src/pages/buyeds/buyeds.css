@@ -16,6 +16,7 @@
 }
 
 .buyedsCard {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -24,6 +25,9 @@
     border-radius: 12px;
     padding: 20px;
     width: 100%;
+}
+.buyedsCard.noAccount {
+    padding: 40px 20px 20px 20px;
 }
 
 .buyedsCard__div--1 {
@@ -86,4 +90,23 @@
     font-size: 20px;
     font-weight: 500;
     text-transform: uppercase;
+}
+
+.buyedsCard__span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #f00;
+}
+
+.buyedsCard__phone {
+    color: var(--black);
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0px 0px 20px 0px;
+    text-transform: capitalize;
+    line-height: 100%;
 }

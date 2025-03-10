@@ -160,6 +160,7 @@ export function initCart() {
                     let ConfirmCartFormBtn = document.getElementById("ConfirmCartFormBtn")
                     cartFormDiv.style.display = "flex"
                     ConfirmCartFormBtn.onclick = function () {
+
                         let cartFormResName = document.getElementById("cartFormResName")
                         let cartFormAlunoName = document.getElementById("cartFormAlunoName")
                         let cartFormTel = document.getElementById("cartFormTel")
@@ -168,34 +169,32 @@ export function initCart() {
                             alertThis("Preencha todos os campos", "error")
                         } else {
                             cartFormDiv.style.display = ""
-                            returnAnonymusCartTotal().then(cartCount => {
-                                createPay(cartFormEmail.value, cartCount, items).then(payRes => {
-                                    let cartPaymentDiv = document.getElementById("cartPaymentDiv")
-                                    cartPaymentDiv.style.display = "flex"
-                                    generateQRCode(payRes.result.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
-                                        cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
-                                    })
-                                    cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.result.point_of_interaction.transaction_data.qr_code}`
-                                    cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
-                                        let tempTextArea = document.createElement("textarea");
-                                        tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
-                                        document.body.appendChild(tempTextArea);
-                                        tempTextArea.select();
-                                        document.execCommand("copy");
-                                        document.body.removeChild(tempTextArea);
-                                        cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon>`
-                                        cartPaymentDiv.children[0].children[3].children[0].style.background = "#20E3BB"
-                                        cartPaymentDiv.children[0].children[3].children[0].style.color = "#fff"
-                                        setTimeout(() => {
-                                            cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="copy-outline"></ion-icon>`
-                                            cartPaymentDiv.children[0].children[3].children[0].style.background = ""
-                                            cartPaymentDiv.children[0].children[3].children[0].style.color = ""
-                                        }, 3000);
-                                    }
-                                    cartPaymentDiv.children[0].children[4].onclick = () => {
-                                        cartPaymentDiv.style.display = ""
-                                    }
+                            anonymusBuyThisItems(cartFormEmail.value, cartFormTel.value, cartFormResName.value, cartFormAlunoName.value, items).then(payRes => {
+                                let cartPaymentDiv = document.getElementById("cartPaymentDiv")
+                                cartPaymentDiv.style.display = "flex"
+                                generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                                    cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
                                 })
+                                cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
+                                cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
+                                    let tempTextArea = document.createElement("textarea");
+                                    tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
+                                    document.body.appendChild(tempTextArea);
+                                    tempTextArea.select();
+                                    document.execCommand("copy");
+                                    document.body.removeChild(tempTextArea);
+                                    cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon>`
+                                    cartPaymentDiv.children[0].children[3].children[0].style.background = "#20E3BB"
+                                    cartPaymentDiv.children[0].children[3].children[0].style.color = "#fff"
+                                    setTimeout(() => {
+                                        cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="copy-outline"></ion-icon>`
+                                        cartPaymentDiv.children[0].children[3].children[0].style.background = ""
+                                        cartPaymentDiv.children[0].children[3].children[0].style.color = ""
+                                    }, 3000);
+                                }
+                                cartPaymentDiv.children[0].children[4].onclick = () => {
+                                    cartPaymentDiv.style.display = ""
+                                }
                             })
                         }
                     }
@@ -264,6 +263,7 @@ export function initCart() {
             })
             buyCartItens.onclick = function () {
                 buyThisItems(email, items).then(payRes => {
+
                     let cartPaymentDiv = document.getElementById("cartPaymentDiv")
                     cartPaymentDiv.style.display = "flex"
                     generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
@@ -449,6 +449,36 @@ async function buyThisItems(email, items) {
                     });
                     resolve(payRes.result)
                 })
+            })
+        })
+    })
+}
+
+async function anonymusBuyThisItems(email, phone, resName, alunoName, items) {
+    return new Promise(resolve => {
+        returnAnonymusCartTotal().then(cartCount => {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const year = String(today.getFullYear()).slice(-2);
+            const formattedDate = `${day}/${month}/${year}`;
+            createPay(email, cartCount, items).then(async (payRes) => {
+                let docRef = await addDoc(collection(db, `anonymus_payments`), {
+                    payerEmail: `${email}`,
+                    phone: `${phone}`,
+                    resName: `${resName}`,
+                    alunoName: `${alunoName}`,
+                    paymentStatus: "pending",
+                    totalAmount: Number(cartCount),
+                    items: items,
+                    paymentId: payRes.result.id,
+                    delivered: false,
+                    noticed: false,
+                    payDate: formattedDate,
+                    payerName: resName,
+                    anonymusBuy: true
+                });
+                resolve(payRes.result)
             })
         })
     })
