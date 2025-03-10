@@ -214,3 +214,47 @@
     border: none;
     transition: 0.5s;
 }
+
+.cartFormDiv {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    background: rgba(00, 00, 00, 0.69);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.cartFormDiv__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--white);
+    border-radius: 15px;
+    padding: 20px 20px 30px 20px;
+    max-width: calc(100% - 40px);
+    min-width: 520px;
+    position: relative;
+}
+.cartFormDiv__form .loginSection__p {
+    margin: 0px 0px 20px 0px;
+}
+
+.cartFormDiv__close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: transparent;
+    color: var(--black);
+    font-size: 30px;
+    border: none;
+    outline-width: 0px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+}
