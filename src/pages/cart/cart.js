@@ -172,10 +172,10 @@ export function initCart() {
                                 createPay(cartFormEmail.value, cartCount, items).then(payRes => {
                                     let cartPaymentDiv = document.getElementById("cartPaymentDiv")
                                     cartPaymentDiv.style.display = "flex"
-                                    generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                                    generateQRCode(payRes.result.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
                                         cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
                                     })
-                                    cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
+                                    cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.result.point_of_interaction.transaction_data.qr_code}`
                                     cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
                                         let tempTextArea = document.createElement("textarea");
                                         tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
@@ -191,6 +191,9 @@ export function initCart() {
                                             cartPaymentDiv.children[0].children[3].children[0].style.background = ""
                                             cartPaymentDiv.children[0].children[3].children[0].style.color = ""
                                         }, 3000);
+                                    }
+                                    cartPaymentDiv.children[0].children[4].onclick = () => {
+                                        cartPaymentDiv.style.display = ""
                                     }
                                 })
                             })
