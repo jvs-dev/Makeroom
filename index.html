@@ -131,7 +131,7 @@
         <li><button class="menuSection__adminBtn" id="goToStock" style="display: none;"><i
               class="bi bi-box-seam"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToAddContent" style="display: none;"><i
-              class="bi bi-plus-circle"></i></button></li>
+              class="bi bi-plus-circle"></ion-icon></button></li>
         <li><button class="menuSection__adminBtn" id="goToFolders" style="display: none;"><i
               class="bi bi-folder"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToBuyeds" style="display: none;"><ion-icon
@@ -1081,6 +1081,27 @@
 
       </div>
     </section>
+
+    <!-- Global User Selection Interface -->
+    <div class="global-user-selection-overlay" id="globalUserSelectionOverlay">
+      <div class="global-user-selection-modal">
+        <div class="global-user-selection-header">
+          <h2>Selecionar Usuários</h2>
+          <button class="global-user-selection-close" id="closeGlobalUserSelection">&times;</button>
+        </div>
+        <div class="global-user-selection-search">
+          <ion-icon name="search"></ion-icon>
+          <input type="text" placeholder="Pesquisar usuários..." id="globalUserSearchInput">
+        </div>
+        <div class="global-user-selection-list" id="globalUserList">
+          <!-- Users will be populated here dynamically -->
+        </div>
+        <div class="global-user-selection-footer">
+          <button type="button" class="global-user-selection-confirm" id="confirmGlobalUserSelection">Confirmar</button>
+          <button type="button" class="global-user-selection-cancel" id="cancelGlobalUserSelection">Cancelar</button>
+        </div>
+      </div>
+    </div>
 
   </main>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
