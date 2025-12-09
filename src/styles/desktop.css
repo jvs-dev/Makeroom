@@ -139,11 +139,7 @@
 
     .cartItemCard__div--2 {
         padding: 0px 26px 0px 0px;
-    }
-
-    .section--store {
-        background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, #5DB9E6 100%);
-    }
+    }    
 
     .cart__div--3 {
         position: absolute;
