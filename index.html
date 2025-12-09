@@ -131,11 +131,11 @@
         <li><button class="menuSection__adminBtn" id="goToStock" style="display: none;"><i
               class="bi bi-box-seam"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToAddContent" style="display: none;"><i
-              class="bi bi-plus-circle"></ion-icon></button></li>
+              class="bi bi-plus-circle"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToFolders" style="display: none;"><i
               class="bi bi-folder"></i></button></li>
         <li><button class="menuSection__adminBtn" id="goToBuyeds" style="display: none;"><ion-icon
-              name="cart-outline"></ion-icon></i></button></li>
+              name="cart-outline"></ion-icon></button></li>
         <li><button class="menuSection__adminBtn" id="goToResolvers" style="display: none;"><i
               class="bi bi-journal-check"></i></button></li>
       </ul>
@@ -498,6 +498,15 @@
           <div class="cartPaymentDiv__div--2"><button class="cartPaymentDiv__copy"><ion-icon
                 name="copy-outline"></ion-icon></button><span class="cartPaymentDiv__span"></span></div>
           <button class="cartPaymentDiv__btn">Confirmar</button>
+        </div>
+      </div>
+      
+      <!-- Loading Overlay for Store Checkout -->
+      <div class="store-loading-overlay" id="storeLoadingOverlay">
+        <div class="store-loading-content">
+          <div class="store-loading-spinner"></div>
+          <h2 class="store-loading-title">Processando pagamento...</h2>
+          <p class="store-loading-message">Gerando QR Code para pagamento</p>
         </div>
       </div>
       <div class="cart__div--1">

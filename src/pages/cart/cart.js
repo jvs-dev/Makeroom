@@ -169,12 +169,26 @@ export function initCart() {
                             alertThis("Preencha todos os campos", "error")
                         } else {
                             cartFormDiv.style.display = ""
+                            
+                            // Show loading overlay
+                            const loadingOverlay = document.getElementById("storeLoadingOverlay");
+                            if (loadingOverlay) {
+                                loadingOverlay.style.display = "flex";
+                            }
+                            
                             anonymusBuyThisItems(cartFormEmail.value, cartFormTel.value, cartFormResName.value, cartFormAlunoName.value, items).then(payRes => {
                                 let cartPaymentDiv = document.getElementById("cartPaymentDiv")
                                 cartPaymentDiv.style.display = "flex"
+                                
                                 generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                                    // Hide loading overlay when QR code is generated
+                                    if (loadingOverlay) {
+                                        loadingOverlay.style.display = "none";
+                                    }
+                                    
                                     cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
                                 })
+                                
                                 cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
                                 cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
                                     let tempTextArea = document.createElement("textarea");
@@ -195,6 +209,12 @@ export function initCart() {
                                 cartPaymentDiv.children[0].children[4].onclick = () => {
                                     cartPaymentDiv.style.display = ""
                                 }
+                            }).catch(error => {
+                                // Hide loading overlay if there's an error
+                                if (loadingOverlay) {
+                                    loadingOverlay.style.display = "none";
+                                }
+                                alertThis("Erro ao processar pagamento: " + error.message, "error");
                             })
                         }
                     }
@@ -262,13 +282,25 @@ export function initCart() {
                 }
             })
             buyCartItens.onclick = function () {
+                // Show loading overlay
+                const loadingOverlay = document.getElementById("storeLoadingOverlay");
+                if (loadingOverlay) {
+                    loadingOverlay.style.display = "flex";
+                }
+                
                 buyThisItems(email, items).then(payRes => {
-
                     let cartPaymentDiv = document.getElementById("cartPaymentDiv")
                     cartPaymentDiv.style.display = "flex"
+                    
                     generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                        // Hide loading overlay when QR code is generated
+                        if (loadingOverlay) {
+                            loadingOverlay.style.display = "none";
+                        }
+                        
                         cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
                     })
+                    
                     cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
                     cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
                         let tempTextArea = document.createElement("textarea");
@@ -289,6 +321,12 @@ export function initCart() {
                     cartPaymentDiv.children[0].children[4].onclick = () => {
                         cartPaymentDiv.style.display = ""
                     }
+                }).catch(error => {
+                    // Hide loading overlay if there's an error
+                    if (loadingOverlay) {
+                        loadingOverlay.style.display = "none";
+                    }
+                    alertThis("Erro ao processar pagamento: " + error.message, "error");
                 })
             }
         }

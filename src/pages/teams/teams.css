@@ -6,6 +6,10 @@
     justify-content: flex-start;
 }
 
+#teamSectionTitle {    
+    margin: 20px 0;
+}
+
 .team__div--1 {
     display: flex;
     flex-direction: column;
