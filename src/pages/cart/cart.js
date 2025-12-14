@@ -161,62 +161,75 @@ export function initCart() {
                     cartFormDiv.style.display = "flex"
                     ConfirmCartFormBtn.onclick = function () {
 
-                        let cartFormResName = document.getElementById("cartFormResName")
-                        let cartFormAlunoName = document.getElementById("cartFormAlunoName")
-                        let cartFormTel = document.getElementById("cartFormTel")
+                        // Get form elements
+                        let cartFormFullName = document.getElementById("cartFormFullName")
+                        let cartFormCPF = document.getElementById("cartFormCPF")
+                        let cartFormAddress = document.getElementById("cartFormAddress")
+                        let cartFormCEP = document.getElementById("cartFormCEP")
+                        let cartFormPhone = document.getElementById("cartFormPhone")
                         let cartFormEmail = document.getElementById("cartFormEmail")
-                        if (cartFormResName.value == "" || cartFormAlunoName.value == "" || cartFormTel.value == "" || cartFormEmail.value == "") {
-                            alertThis("Preencha todos os campos", "error")
-                        } else {
-                            cartFormDiv.style.display = ""
+                        
+                        // Validate form data
+                        if (!validateFormData()) {
+                            return;
+                        }
+                        
+                        cartFormDiv.style.display = ""
+                        
+                        // Show loading overlay
+                        const loadingOverlay = document.getElementById("storeLoadingOverlay");
+                        if (loadingOverlay) {
+                            loadingOverlay.style.display = "flex";
+                        }
+                        
+                        anonymusBuyThisItems(
+                            cartFormFullName.value,
+                            cartFormCPF.value,
+                            cartFormAddress.value,
+                            cartFormCEP.value,
+                            cartFormPhone.value,
+                            cartFormEmail.value,
+                            items
+                        ).then(payRes => {
+                            let cartPaymentDiv = document.getElementById("cartPaymentDiv")
+                            cartPaymentDiv.style.display = "flex"
                             
-                            // Show loading overlay
-                            const loadingOverlay = document.getElementById("storeLoadingOverlay");
-                            if (loadingOverlay) {
-                                loadingOverlay.style.display = "flex";
-                            }
-                            
-                            anonymusBuyThisItems(cartFormEmail.value, cartFormTel.value, cartFormResName.value, cartFormAlunoName.value, items).then(payRes => {
-                                let cartPaymentDiv = document.getElementById("cartPaymentDiv")
-                                cartPaymentDiv.style.display = "flex"
-                                
-                                generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
-                                    // Hide loading overlay when QR code is generated
-                                    if (loadingOverlay) {
-                                        loadingOverlay.style.display = "none";
-                                    }
-                                    
-                                    cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
-                                })
-                                
-                                cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
-                                cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
-                                    let tempTextArea = document.createElement("textarea");
-                                    tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
-                                    document.body.appendChild(tempTextArea);
-                                    tempTextArea.select();
-                                    document.execCommand("copy");
-                                    document.body.removeChild(tempTextArea);
-                                    cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon>`
-                                    cartPaymentDiv.children[0].children[3].children[0].style.background = "#20E3BB"
-                                    cartPaymentDiv.children[0].children[3].children[0].style.color = "#fff"
-                                    setTimeout(() => {
-                                        cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="copy-outline"></ion-icon>`
-                                        cartPaymentDiv.children[0].children[3].children[0].style.background = ""
-                                        cartPaymentDiv.children[0].children[3].children[0].style.color = ""
-                                    }, 3000);
-                                }
-                                cartPaymentDiv.children[0].children[4].onclick = () => {
-                                    cartPaymentDiv.style.display = ""
-                                }
-                            }).catch(error => {
-                                // Hide loading overlay if there's an error
+                            generateQRCode(payRes.point_of_interaction.transaction_data.qr_code).then((qrCodeLink) => {
+                                // Hide loading overlay when QR code is generated
                                 if (loadingOverlay) {
                                     loadingOverlay.style.display = "none";
                                 }
-                                alertThis("Erro ao processar pagamento: " + error.message, "error");
+                                
+                                cartPaymentDiv.children[0].children[2].src = `${qrCodeLink}`
                             })
-                        }
+                            
+                            cartPaymentDiv.children[0].children[3].children[1].textContent = `${payRes.point_of_interaction.transaction_data.qr_code}`
+                            cartPaymentDiv.children[0].children[3].children[0].onclick = () => {
+                                let tempTextArea = document.createElement("textarea");
+                                tempTextArea.value = cartPaymentDiv.children[0].children[3].children[1].innerText;
+                                document.body.appendChild(tempTextArea);
+                                tempTextArea.select();
+                                document.execCommand("copy");
+                                document.body.removeChild(tempTextArea);
+                                cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="checkmark-circle-outline"></ion-icon>`
+                                cartPaymentDiv.children[0].children[3].children[0].style.background = "#20E3BB"
+                                cartPaymentDiv.children[0].children[3].children[0].style.color = "#fff"
+                                setTimeout(() => {
+                                    cartPaymentDiv.children[0].children[3].children[0].innerHTML = `<ion-icon name="copy-outline"></ion-icon>`
+                                    cartPaymentDiv.children[0].children[3].children[0].style.background = ""
+                                    cartPaymentDiv.children[0].children[3].children[0].style.color = ""
+                                }, 3000);
+                            }
+                            cartPaymentDiv.children[0].children[4].onclick = () => {
+                                cartPaymentDiv.style.display = ""
+                            }
+                        }).catch(error => {
+                            // Hide loading overlay if there's an error
+                            if (loadingOverlay) {
+                                loadingOverlay.style.display = "none";
+                            }
+                            alertThis("Erro ao processar pagamento: " + error.message, "error");
+                        })
                     }
                 }
             }
@@ -492,7 +505,7 @@ async function buyThisItems(email, items) {
     })
 }
 
-async function anonymusBuyThisItems(email, phone, resName, alunoName, items) {
+async function anonymusBuyThisItems(fullName, cpf, address, cep, phone, email, items) {
     return new Promise(resolve => {
         returnAnonymusCartTotal().then(cartCount => {
             const today = new Date();
@@ -502,10 +515,12 @@ async function anonymusBuyThisItems(email, phone, resName, alunoName, items) {
             const formattedDate = `${day}/${month}/${year}`;
             createPay(email, cartCount, items).then(async (payRes) => {
                 let docRef = await addDoc(collection(db, `anonymus_payments`), {
-                    payerEmail: `${email}`,
+                    fullName: `${fullName}`,
+                    cpf: `${cpf}`,
+                    address: `${address}`,
+                    cep: `${cep}`,
                     phone: `${phone}`,
-                    resName: `${resName}`,
-                    alunoName: `${alunoName}`,
+                    payerEmail: `${email}`,
                     paymentStatus: "pending",
                     totalAmount: Number(cartCount),
                     items: items,
@@ -513,7 +528,7 @@ async function anonymusBuyThisItems(email, phone, resName, alunoName, items) {
                     delivered: false,
                     noticed: false,
                     payDate: formattedDate,
-                    payerName: resName,
+                    payerName: fullName,
                     anonymusBuy: true
                 });
                 resolve(payRes.result)
@@ -527,3 +542,96 @@ calcTotalValue()
 export function updateCartOff() {
     calcTotalValue()
 }
+
+// Add form validation function
+function validateFormData() {
+    let cartFormFullName = document.getElementById("cartFormFullName")
+    let cartFormCPF = document.getElementById("cartFormCPF")
+    let cartFormAddress = document.getElementById("cartFormAddress")
+    let cartFormCEP = document.getElementById("cartFormCEP")
+    let cartFormPhone = document.getElementById("cartFormPhone")
+    let cartFormEmail = document.getElementById("cartFormEmail")
+    
+    // Check if all fields are filled
+    if (cartFormFullName.value.trim() === "" || 
+        cartFormCPF.value.trim() === "" || 
+        cartFormAddress.value.trim() === "" || 
+        cartFormCEP.value.trim() === "" || 
+        cartFormPhone.value.trim() === "" || 
+        cartFormEmail.value.trim() === "") {
+        alertThis("Preencha todos os campos", "error")
+        return false
+    }
+    
+    // Validate CPF (basic format: xxx.xxx.xxx-xx)
+    const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/
+    if (!cpfRegex.test(cartFormCPF.value)) {
+        alertThis("CPF inválido. Formato correto: 000.000.000-00", "error")
+        return false
+    }
+    
+    // Validate CEP (basic format: xxxxx-xxx)
+    const cepRegex = /^\d{5}-\d{3}$/
+    if (!cepRegex.test(cartFormCEP.value)) {
+        alertThis("CEP inválido. Formato correto: 00000-000", "error")
+        return false
+    }
+    
+    // Validate phone (basic format: (xx) xxxxx-xxxx)
+    const phoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/
+    if (!phoneRegex.test(cartFormPhone.value)) {
+        alertThis("Telefone inválido. Formato correto: (00) 00000-0000", "error")
+        return false
+    }
+    
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(cartFormEmail.value)) {
+        alertThis("Email inválido", "error")
+        return false
+    }
+    
+    return true
+}
+
+// Add input formatting helpers
+document.getElementById("cartFormCPF").addEventListener("input", function(e) {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 11) value = value.substring(0, 11);
+    
+    if (value.length > 9) {
+        value = value.replace(/(\d{3})(\d{3})(\d{3})(\d{2}).*/, "$1.$2.$3-$4");
+    } else if (value.length > 6) {
+        value = value.replace(/(\d{3})(\d{3})(\d{1,3}).*/, "$1.$2.$3");
+    } else if (value.length > 3) {
+        value = value.replace(/(\d{3})(\d{1,3}).*/, "$1.$2");
+    }
+    
+    e.target.value = value;
+});
+
+document.getElementById("cartFormCEP").addEventListener("input", function(e) {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 8) value = value.substring(0, 8);
+    
+    if (value.length > 5) {
+        value = value.replace(/(\d{5})(\d{1,3}).*/, "$1-$2");
+    }
+    
+    e.target.value = value;
+});
+
+document.getElementById("cartFormPhone").addEventListener("input", function(e) {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 11) value = value.substring(0, 11);
+    
+    if (value.length > 7) {
+        value = value.replace(/(\d{2})(\d{5})(\d{1,4}).*/, "($1) $2-$3");
+    } else if (value.length > 2) {
+        value = value.replace(/(\d{2})(\d{1,5}).*/, "($1) $2");
+    } else if (value.length > 0) {
+        value = value.replace(/(\d{1,2}).*/, "($1");
+    }
+    
+    e.target.value = value;
+});
