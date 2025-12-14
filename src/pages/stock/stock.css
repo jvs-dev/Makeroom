@@ -1,14 +1,17 @@
 .section--stock {
     display: none;
-    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, #1e1e1e 100%);
+    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
     background-attachment: fixed;
     min-height: 100vh;
     justify-content: flex-start;
 }
 .stockSection__divStockCards {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;    
-    width: 100%;
+    align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 0px 20px;
+    gap: 10px;
+    margin: 20px 0px;
 }

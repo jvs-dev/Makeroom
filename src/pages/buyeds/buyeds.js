@@ -31,19 +31,24 @@ async function loadBuyeds(user) {
                     buyedsSectionDiv.insertAdjacentElement("beforeend", article)
                     article.classList.add("buyedsCard")
                     article.innerHTML = `
-                        <div class="buyedsCard__div--1">
-                            <div class="buyedsCard__div--2">
+                        <div class="buyedsCard__header">
+                            <div class="buyedsCard__userInfo">
                                 <p class="buyedsCard__name">${payData.data().payerName}</p>
                                 <p class="buyedsCard__price">R$ ${payData.data().totalAmount.toFixed(2)}</p>
                             </div>
-                            <p class="buyedsCard__date">${payData.data().payDate}</p>
+                            <span class="buyedsCard__date">${payData.data().payDate}</span>
                         </div>
-                        <ul class="buyedsCard__ul">
-                            ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
-                        </ul>
-                        <button class="buyedsCard__Btn">Entregue</button>`
-                    article.children[2].onclick = () => {
-                        activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
+                        <div class="buyedsCard__itemsSection">
+                            <h3 class="buyedsCard__itemsTitle"><i class="bi bi-cart-check"></i> Itens Comprados</h3>
+                            <ul class="buyedsCard__ul">
+                                ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
+                            </ul>
+                        </div>
+                        <div class="buyedsCard__actions">
+                            <button class="buyedsCard__Btn">Marcar como Entregue</button>
+                        </div>`
+                    article.querySelector('.buyedsCard__Btn').onclick = () => {
+                        activeConfirmSection("Os itens foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
                             if (res == "confirmed") {
                                 const cartItemRef = doc(db, `${localStorage.getItem("schoolIndex") != undefined ? `${localStorage.getItem("schoolIndex")}` : "0"}_payments`, `${payData.id}`);
                                 await updateDoc(cartItemRef, {
@@ -64,22 +69,30 @@ async function loadBuyeds(user) {
                     article.classList.add("buyedsCard")
                     article.classList.add("noAccount")
                     article.innerHTML = `
-                        <div class="buyedsCard__div--1">
-                            <span class="buyedsCard__span"><ion-icon name="warning-outline"></ion-icon>Sem Conta</span>
-                            <div class="buyedsCard__div--2">
+                        <div class="buyedsCard__header">
+                            <div class="buyedsCard__userInfo">
+                                <span class="buyedsCard__tag warning"><i class="bi bi-exclamation-triangle"></i> Sem Conta</span>
                                 <p class="buyedsCard__name">Aluno: ${payData.data().alunoName}</p>
-                                <p class="buyedsCard__name" style="margin: 10px 0px;" >Responsável: ${payData.data().resName}</p>
+                                <p class="buyedsCard__name">Responsável: ${payData.data().resName}</p>
                                 <p class="buyedsCard__price">R$ ${payData.data().totalAmount.toFixed(2)}</p>
                             </div>
-                            <p class="buyedsCard__date">${payData.data().payDate}</p>
+                            <span class="buyedsCard__date">${payData.data().payDate}</span>
                         </div>
-                        <ul class="buyedsCard__ul">
-                            ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
-                        </ul>
-                        <p class="buyedsCard__phone">Número: ${payData.data().phone}</p>
-                        <button class="buyedsCard__Btn">Entregue</button>`
-                    article.children[3].onclick = () => {
-                        activeConfirmSection("Os items foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
+                        <div class="buyedsCard__itemsSection">
+                            <h3 class="buyedsCard__itemsTitle"><i class="bi bi-cart-check"></i> Itens Comprados</h3>
+                            <ul class="buyedsCard__ul">
+                                ${payData.data().items.map(element => `<li class="buyedsCard__li">${element}</li>`).join('')}                        
+                            </ul>
+                        </div>
+                        <div class="buyedsCard__contactInfo">
+                            <h4 class="buyedsCard__contactTitle"><i class="bi bi-telephone"></i> Informações de Contato</h4>
+                            <p class="buyedsCard__phone"><i class="bi bi-phone"></i> Número: ${payData.data().phone}</p>
+                        </div>
+                        <div class="buyedsCard__actions">
+                            <button class="buyedsCard__Btn">Marcar como Entregue</button>
+                        </div>`
+                    article.querySelector('.buyedsCard__Btn').onclick = () => {
+                        activeConfirmSection("Os itens foram entregues?", "Confirme para continuar", "#20E3BB", "happy").then(async res => {
                             if (res == "confirmed") {
                                 const cartItemRef = doc(db, `anonymus_payments`, `${payData.id}`);
                                 await updateDoc(cartItemRef, {
