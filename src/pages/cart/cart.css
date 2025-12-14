@@ -295,6 +295,7 @@
     min-width: 520px;
     position: relative;
 }
+
 .cartFormDiv__form .loginSection__p {
     margin: 0px 0px 20px 0px;
 }
@@ -311,4 +312,17 @@
     margin: 0px;
     padding: 0px;
     cursor: pointer;
+}
+
+/* Add responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+    .cartFormDiv__form {
+        min-width: calc(100% - 40px);
+        padding: 20px 15px 25px 15px;
+    }
+    
+    .cartFormDiv__close {
+        right: 15px;
+        top: 15px;
+    }
 }

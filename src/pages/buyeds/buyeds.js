@@ -72,8 +72,7 @@ async function loadBuyeds(user) {
                         <div class="buyedsCard__header">
                             <div class="buyedsCard__userInfo">
                                 <span class="buyedsCard__tag warning"><i class="bi bi-exclamation-triangle"></i> Sem Conta</span>
-                                <p class="buyedsCard__name">Aluno: ${payData.data().alunoName}</p>
-                                <p class="buyedsCard__name">Responsável: ${payData.data().resName}</p>
+                                <p class="buyedsCard__name">Cliente: ${payData.data().fullName}</p>
                                 <p class="buyedsCard__price">R$ ${payData.data().totalAmount.toFixed(2)}</p>
                             </div>
                             <span class="buyedsCard__date">${payData.data().payDate}</span>
@@ -85,10 +84,17 @@ async function loadBuyeds(user) {
                             </ul>
                         </div>
                         <div class="buyedsCard__contactInfo">
-                            <h4 class="buyedsCard__contactTitle"><i class="bi bi-telephone"></i> Informações de Contato</h4>
-                            <p class="buyedsCard__phone"><i class="bi bi-phone"></i> Número: ${payData.data().phone}</p>
+                            <h4 class="buyedsCard__contactTitle"><i class="bi bi-person-badge"></i> Dados do Cliente</h4>
+                            <p class="buyedsCard__info"><i class="bi bi-card-text"></i> CPF: ${payData.data().cpf}</p>
+                            <p class="buyedsCard__info"><i class="bi bi-geo-alt"></i> Endereço: ${payData.data().address}</p>
+                            <p class="buyedsCard__info"><i class="bi bi-mailbox"></i> CEP: ${payData.data().cep}</p>
+                            <p class="buyedsCard__phone"><i class="bi bi-telephone"></i> Telefone: ${payData.data().phone}</p>
+                            <p class="buyedsCard__info"><i class="bi bi-envelope"></i> Email: ${payData.data().payerEmail}</p>
                         </div>
                         <div class="buyedsCard__actions">
+                            <a href="https://wa.me/${payData.data().phone.replace(/\D/g, '')}" target="_blank" class="buyedsCard__whatsappBtn">
+                                <i class="bi bi-whatsapp"></i> Contatar via WhatsApp
+                            </a>
                             <button class="buyedsCard__Btn">Marcar como Entregue</button>
                         </div>`
                     article.querySelector('.buyedsCard__Btn').onclick = () => {
