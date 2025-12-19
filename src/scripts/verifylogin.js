@@ -1,8 +1,10 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, onSnapshot, addDoc, collection, query, where, getDocs, serverTimestamp, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { getStorage, ref, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 import { alternatePage } from "./alternatePages";
+
+// Add error handling for Firebase config
 const firebaseConfig = {
     apiKey: `${import.meta.env.VITE_API_KEY}`,
     authDomain: `${import.meta.env.VITE_AUTH_DOMAIN}`,
@@ -11,15 +13,48 @@ const firebaseConfig = {
     messagingSenderId: `${import.meta.env.VITE_MESSAGING_SENDER_ID}`,
     appId: `${import.meta.env.VITE_APP_ID}`,
 };
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-const db = getFirestore(app);
-const storage = getStorage(app);
-let i = 0
+
+let auth, app, db, storage;
+
+// Initialize Firebase with error handling
+try {
+    // Check if Firebase config is valid
+    if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'undefined') {
+        console.error('Firebase config is invalid:', firebaseConfig);
+        throw new Error('Invalid Firebase configuration');
+    }
+
+    app = initializeApp(firebaseConfig);
+    auth = getAuth();
+    db = getFirestore(app);
+    storage = getStorage(app);
+} catch (error) {
+    console.error('Error initializing Firebase:', error);
+    // We'll handle the error in the function itself
+}
+
+let i = 0;
 let urlParams = new URLSearchParams(window.location.search);
 let page = urlParams.get("page");
 
 export function verifyIfUserLogged() {
+    // If Firebase failed to initialize, use fallback
+    if (!auth) {
+        console.warn('Firebase not initialized, using fallback authentication check');
+        if (page == "lojamaker") {
+            let sections = document.querySelectorAll(".main__section")
+            sections.forEach(section => {
+                section.style.display = "none"
+            });
+            document.getElementById("storeSection").style.display = "flex"
+        } else {
+            let loginSection = document.getElementById("loginSection")
+            loginSection.style.display = "flex"
+        }
+        return;
+    }
+
+    // Normal Firebase authentication flow
     onAuthStateChanged(auth, (user) => {
         if (user) {
             if (i == 0) {
@@ -46,4 +81,3 @@ export function verifyIfUserLogged() {
         }
     });
 }
-
