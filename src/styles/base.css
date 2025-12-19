@@ -3,10 +3,16 @@
     --black: #0F0F0F;
     --primary-color: #FD9327;
     --secundary-color: #199CDB;
-    --light-gray: #E4ECED;
+    --light-gray: #F5F7FA;
     --dark-blue: #303198;
+    --background-light: #FAFBFC;
+    --background-dark: #E4ECED;
 }
 
 body {
     margin: 0px;
+    background-color: var(--background-light);
+    background-image: linear-gradient(180deg, var(--background-light) 0%, var(--background-dark) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
 }

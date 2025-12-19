@@ -1,6 +1,6 @@
 .section--team {
     display: none;
-    background: radial-gradient(100% 100% at 0% 0%, #FFF 0%, #FFF 84.85%, #fff 84.85%, #fff 99.56%, var(--primary-color) 100%);
+    background: transparent;
     background-attachment: fixed;
     min-height: 100vh;
     justify-content: flex-start;

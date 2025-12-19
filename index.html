@@ -65,7 +65,7 @@
     <h2 class="introduction__p" id="introductionText2">Desperte o maker dentro de você</h2>
     <img class="introduction__logo" id="introductionLogo" src="/logo.svg" alt="">
     <span class="cube_loader introduction__loading" id="introductionLoader"></span>
-    <span class="version-display">v1.4.20</span>
+    <span class="version-display">v1.4.23</span>
   </section>
   <main id="main">
     <section class="main__section section--login" id="loginSection">
@@ -253,7 +253,7 @@
           </div>
           <div class="lessonWindow comentControls">
             <div class="comentControls__div">
-              <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
+              <div></div>
               <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
               <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
             </div>
@@ -444,7 +444,7 @@
           </div>
           <div class="comentControls">
             <div class="comentControls__div">
-              <ion-icon name="happy-outline" class="comentControls__emoji"></ion-icon>
+              <div></div>
               <input type="text" class="comentControls__input" placeholder="Digite sua mensagem">
               <ion-icon name="send-outline" class="comentControls__send"></ion-icon>
             </div>
@@ -461,52 +461,53 @@
     <section class="main__section section--cart" id="cartSection">
       <div class="cartFormDiv" id="cartFormDiv">
         <form class="cartFormDiv__form">
-          <button class="cartFormDiv__close" id="closeCartForm" type="button"><ion-icon name="close-outline"></ion-icon></button>
+          <button class="cartFormDiv__close" id="closeCartForm" type="button"><ion-icon
+              name="close-outline"></ion-icon></button>
           <h1 class="loginSection__h1">Finalizar Compra</h1>
           <p class="loginSection__p">Preencha seus dados para entrega</p>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="person-outline" class="loginSection__icon"></ion-icon>
               <input type="text" placeholder="Nome Completo" class="loginSection__input" id="cartFormFullName">
             </div>
           </label>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="card-outline" class="loginSection__icon"></ion-icon>
               <input type="text" placeholder="CPF (000.000.000-00)" class="loginSection__input" id="cartFormCPF">
             </div>
           </label>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="location-outline" class="loginSection__icon"></ion-icon>
               <input type="text" placeholder="Endereço Completo" class="loginSection__input" id="cartFormAddress">
             </div>
           </label>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="mail-outline" class="loginSection__icon"></ion-icon>
               <input type="text" placeholder="CEP (00000-000)" class="loginSection__input" id="cartFormCEP">
             </div>
           </label>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="call-outline" class="loginSection__icon"></ion-icon>
               <input type="tel" placeholder="Telefone (00) 00000-0000" class="loginSection__input" id="cartFormPhone">
             </div>
           </label>
-          
+
           <label for="" class="loginSection__label">
             <div class="loginSection__div">
               <ion-icon name="mail-outline" class="loginSection__icon"></ion-icon>
               <input type="email" placeholder="Email" class="loginSection__input" id="cartFormEmail">
             </div>
           </label>
-          
+
           <button class="loginSection__btn" type="button" id="ConfirmCartFormBtn">CONTINUAR</button>
         </form>
       </div>
@@ -520,7 +521,7 @@
           <button class="cartPaymentDiv__btn">Confirmar</button>
         </div>
       </div>
-      
+
       <!-- Loading Overlay for Store Checkout -->
       <div class="store-loading-overlay" id="storeLoadingOverlay">
         <div class="store-loading-content">
